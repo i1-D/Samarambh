@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__claude_ai_Figma__get_design_context",
+      "WebFetch(domain:tenutacentoporte.it)",
+      "Bash(curl -s https://tenutacentoporte.it/)",
+      "Bash(curl -s https://tenutacentoporte.it/wp-content/uploads/elementor/css/post-104.css)",
+      "WebFetch(domain:telhaclarke.com.au)",
+      "Bash(curl -s https://telhaclarke.com.au/)",
+      "Bash(curl -s https://telhaclarke.com.au/works/)",
+      "Bash(curl -s \"https://telhaclarke.com.au/wp-content/themes/gl/public/build/assets/app-Sq9rcrZY.css\")",
+      "Bash(curl -s \"https://telhaclarke.com.au/wp-content/themes/gl/public/build/assets/app-xdznotNO.js\")"
+    ]
+  }
+}
