@@ -151,6 +151,10 @@ document.addEventListener('DOMContentLoaded', () => {
   // Watermark text starts at rest
   gsap.set('.moments-watermark', { x: 0 });
 
+  // Text lines start hidden below
+  gsap.set('.wedding-section .text-line-inner',      { y: '101%' });
+  gsap.set('.celebrations-section .text-line-inner', { y: '101%' });
+
   const momentsTl = gsap.timeline({
     scrollTrigger: {
       trigger: '.moments-wrapper',
@@ -193,10 +197,63 @@ document.addEventListener('DOMContentLoaded', () => {
       y: 0, opacity: 1,
       duration: 0.8, stagger: 0.12,
       ease: 'power2.out',
-    }, 3.4);
+    }, 3.4)
+
+    // Wedding text enters (phase 1)
+    .to('.wedding-section .text-line-inner', {
+      y: '0%', duration: 0.5, stagger: 0.12, ease: 'power3.out',
+    }, 0.2)
+
+    // Wedding text exits upward (before fade-out at 1.6)
+    .to('.wedding-section .text-line-inner', {
+      y: '-101%', duration: 0.4, stagger: 0.08, ease: 'power2.in',
+    }, 1.1)
+
+    // Celebrations text enters (phase 2, alongside section fade-in)
+    .to('.celebrations-section .text-line-inner', {
+      y: '0%', duration: 0.5, stagger: 0.12, ease: 'power3.out',
+    }, 1.8)
+
+    // Celebrations text exits upward (before fade-out at 3.2)
+    .to('.celebrations-section .text-line-inner', {
+      y: '-101%', duration: 0.4, stagger: 0.08, ease: 'power2.in',
+    }, 2.8);
 
 
-  // ─── 6. Text Reveal with GSAP ScrollTrigger ──────────
+  // ─── 6. Services — Scroll-Driven Tab Switching ───────
+  const servicesBgs    = gsap.utils.toArray('.services-bg-slide');
+  const servicesTabs   = document.querySelectorAll('.services-tab');
+  const servicesPanels = document.querySelectorAll('.services-desc-panel');
+  let activeServiceTab = 0;
+
+  function activateServicesTab(index) {
+    if (index === activeServiceTab) return;
+
+    servicesBgs[activeServiceTab].classList.remove('is-active');
+    servicesBgs[index].classList.add('is-active');
+
+    servicesTabs[activeServiceTab].classList.remove('is-active');
+    servicesTabs[index].classList.add('is-active');
+
+    servicesPanels[activeServiceTab].classList.remove('is-active');
+    servicesPanels[index].classList.add('is-active');
+
+    activeServiceTab = index;
+  }
+
+  ScrollTrigger.create({
+    trigger: '.services-section',
+    start: 'top top',
+    end: '+=300vh',
+    pin: true,
+    onUpdate: (self) => {
+      const tab = Math.min(2, Math.floor(self.progress * 3));
+      activateServicesTab(tab);
+    }
+  });
+
+
+  // ─── 7. Text Reveal with GSAP ScrollTrigger ──────────
   // Replaces IntersectionObserver (unreliable with Lenis).
   // GSAP ScrollTrigger integrates properly via
   // lenis.on('scroll', ScrollTrigger.update).

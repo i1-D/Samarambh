@@ -38,7 +38,7 @@
        ═══════════════════════════════════════════════════ -->
   <section class="intro-section" id="intro">
     <div class="intro-texture">
-      <img src="images/1632226452_DJI_0860%201.jpg" alt="">
+      <img src="images/cover.jpg" alt="">
     </div>
 
     <!-- Headline + video stacked -->
@@ -58,7 +58,7 @@
       </div>
 
       <div class="intro-headline intro-bottom">
-        <p>Finds its Stage</p>
+        <p>Finds its <em>Stage</em></p>
       </div>
     </div>
 
@@ -158,8 +158,8 @@
       <!-- Center text -->
       <div class="moments-center-text">
         <h2>
-          Every Wedding<br>
-          <em class="gold-line">Perfectly Curated</em>
+          <span class="text-line"><span class="text-line-inner">Every Wedding</span></span>
+          <em class="gold-line"><span class="text-line"><span class="text-line-inner">Perfectly Curated</span></span></em>
         </h2>
       </div>
 
@@ -182,8 +182,8 @@
       <!-- Center text -->
       <div class="moments-center-text">
         <h2>
-          Every Celebration<br>
-          <em class="green-line">A Moment to Remember</em>
+          <span class="text-line"><span class="text-line-inner">Every Celebration</span></span>
+          <em class="green-line"><span class="text-line"><span class="text-line-inner">A Moment to Remember</span></span></em>
         </h2>
       </div>
 
@@ -228,57 +228,61 @@
 
 
   <!-- ═══════════════════════════════════════════════════
-       SERVICES SECTION
+       SERVICES SECTION (scroll-tab)
        ═══════════════════════════════════════════════════ -->
   <section class="services-section" id="services">
+
+    <!-- Stacked background images — only active layer is visible -->
     <div class="services-bg">
-      <img src="images/1632226452_DJI_0860%201.jpg" alt="">
+      <div class="services-bg-slide is-active">
+        <img src="images/Services1.jpg" alt="">
+      </div>
+      <div class="services-bg-slide">
+        <img src="images/Services2.jpg" alt="">
+      </div>
+      <div class="services-bg-slide">
+        <img src="images/Services3.jpg" alt="">
+      </div>
+      <div class="services-overlay"></div>
     </div>
 
-    <!-- Rotated label -->
-    <div class="services-label">
-      <div class="services-label-inner">
-        <span>FEATURED SERVICES</span>
-      </div>
-    </div>
+    <!-- Main content -->
+    <div class="services-content">
 
-    <!-- Service cards -->
-    <div class="services-grid">
-      <div class="service-card reveal-fade">
-        <div class="service-image">
-          <img src="images/samarambh-lawn-and-banquets-samarambh-lawn-and-banquets-6 1.jpg" alt="In-House Catering">
+      <!-- Eyebrow + Tabs -->
+      <div class="services-header">
+        <div class="eyebrow-badge">
+          <span>What's Included</span>
         </div>
-        <h3>In-House Catering</h3>
-        <p>Chefs crafting both vegetarian and non-vegetarian menus. Live counters, buffet spreads, and plated service — all managed in-house.</p>
-        <ul>
-          <li>Veg &amp; Non-veg menus</li>
-          <li>Live cooking stations</li>
-          <li>Fusion &amp; Traditional cuisines</li>
-          <li>Custom menu planning</li>
-        </ul>
+        <div class="services-tabs">
+          <button class="services-tab is-active" data-tab="0">Décor, Florals &amp; Lighting</button>
+          <button class="services-tab" data-tab="1">In-house Catering</button>
+          <button class="services-tab" data-tab="2">Accommodation &amp; Parking</button>
+        </div>
       </div>
 
-      <div class="service-card reveal-fade" style="transition-delay:0.15s">
-        <div class="service-image">
-          <img src="images/samarambh-lawn-and-banquets-samarambh-lawn-and-banquets-1 1.jpg" alt="Décor, Florals & Lighting">
+      <!-- Description card — bottom right, swaps per tab -->
+      <div class="services-desc">
+        <div class="services-desc-panel is-active" data-tab="0">
+          <ul>
+            <li>Thematic décor crafted by our in-house design team. From floral mandaps to modern minimalist setups.</li>
+            <li>State-of-the-art sound systems, intelligent lighting rigs, LED walls, and professional technicians on standby.</li>
+          </ul>
         </div>
-        <h3>Décor, Florals &amp; Lighting</h3>
-        <ul>
-          <li>Thematic décor crafted by our in-house design team. From floral mandaps to modern minimalist setups.</li>
-          <li>State-of-the-art sound systems, intelligent lighting rigs, LED walls, and professional technicians on standby.</li>
-        </ul>
+        <div class="services-desc-panel" data-tab="1">
+          <ul>
+            <li>Chefs crafting both vegetarian and non-vegetarian menus. Live counters, buffet spreads, and plated service — all managed in-house.</li>
+            <li>Veg &amp; Non-veg menus · Live cooking stations · Fusion &amp; Traditional cuisines · Custom menu planning</li>
+          </ul>
+        </div>
+        <div class="services-desc-panel" data-tab="2">
+          <ul>
+            <li>Covered parking for 400+ vehicles with professional valet service available on request.</li>
+            <li>Partner hotel tie-ups for outstation guests, with preferential rates and complimentary shuttle service.</li>
+          </ul>
+        </div>
       </div>
 
-      <div class="service-card reveal-fade" style="transition-delay:0.3s">
-        <div class="service-image">
-          <img src="images/1632226850_IMG_7075_2 1.jpg" alt="Parking & Accommodation">
-        </div>
-        <h3>Parking &amp; Accommodation</h3>
-        <ul>
-          <li>Covered parking for 400+ vehicles with professional valet service available on request.</li>
-          <li>Partner hotel tie-ups for outstation guests, with preferential rates and complimentary shuttle service.</li>
-        </ul>
-      </div>
     </div>
   </section>
 

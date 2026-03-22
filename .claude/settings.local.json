@@ -9,7 +9,8 @@
       "Bash(curl -s https://telhaclarke.com.au/)",
       "Bash(curl -s https://telhaclarke.com.au/works/)",
       "Bash(curl -s \"https://telhaclarke.com.au/wp-content/themes/gl/public/build/assets/app-Sq9rcrZY.css\")",
-      "Bash(curl -s \"https://telhaclarke.com.au/wp-content/themes/gl/public/build/assets/app-xdznotNO.js\")"
+      "Bash(curl -s \"https://telhaclarke.com.au/wp-content/themes/gl/public/build/assets/app-xdznotNO.js\")",
+      "WebFetch(domain:www.aupalevodka.com)"
     ]
   }
 }
