@@ -334,12 +334,22 @@ document.addEventListener('DOMContentLoaded', () => {
     onLeaveBack: () => nav.classList.add('nav--dark'),
   });
 
-  // Dark: gallery and beyond (find-us, reviews, footer)
+  // Dark: gallery and beyond (find-us, reviews)
   ScrollTrigger.create({
     trigger: '.gallery-section',
     start: 'top top',
     onEnter:     () => nav.classList.add('nav--dark'),
     onLeaveBack: () => nav.classList.remove('nav--dark'),
+  });
+
+  // Light: FAQ section (cream bg, between reviews and footer)
+  ScrollTrigger.create({
+    trigger: '.faq-section',
+    start: 'top top',
+    onEnter:     () => nav.classList.remove('nav--dark'),
+    onLeaveBack: () => nav.classList.add('nav--dark'),
+    onLeave:     () => nav.classList.add('nav--dark'),
+    onEnterBack: () => nav.classList.remove('nav--dark'),
   });
 
 
