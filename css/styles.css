@@ -962,7 +962,7 @@ p { margin: 0; }
   gap: var(--sp-1);
   align-items: stretch;
   width: max-content;
-  animation: gallery-scroll 500s linear infinite;
+  animation: gallery-scroll 100s linear infinite;
 }
 
 .gallery-track:hover {
