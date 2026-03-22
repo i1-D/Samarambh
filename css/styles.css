@@ -294,19 +294,14 @@ p { margin: 0; }
 /* Navigation */
 .hero-nav {
   position: fixed;
-  top: var(--sp-6);
   left: 0;
   right: 0;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 16px var(--sp-6);
-  margin: 0 var(--sp-6);
+  padding: 24px var(--sp-11);
   z-index: 1000;
   pointer-events: none;
-  background: rgb(49 68 58 / 80%);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
 }
 
 .hero-nav .nav-group {
@@ -785,7 +780,7 @@ p { margin: 0; }
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: 80px var(--sp-11, 180px) 96px;
+  padding: var(--sp-11, 180px);
 }
 
 /* Background layers */
@@ -824,19 +819,30 @@ p { margin: 0; }
 
 /* Header: eyebrow + tabs */
 .services-header {
+  position: relative;
   display: flex;
   flex-direction: column;
   gap: 20px;
+}
+/* Fixed gold line that doesn't move with the sliding tabs */
+.services-header::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--color-gold-primary);
 }
 
 /* Tabs row */
 .services-tabs {
   display: flex;
   align-items: flex-end;
-  justify-content: space-between;
-  border-bottom: 2px solid var(--color-gold-primary);
+  justify-content: flex-start;
   padding-bottom: 16px;
   gap: 300px;
+  overflow: visible;
 }
 
 .services-tab {

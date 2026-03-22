@@ -238,6 +238,13 @@ document.addEventListener('DOMContentLoaded', () => {
     servicesPanels[activeServiceTab].classList.remove('is-active');
     servicesPanels[index].classList.add('is-active');
 
+    // Slide the tab row left so the active tab lands at the leftmost position
+    gsap.to('.services-tabs', {
+      x: -servicesTabs[index].offsetLeft,
+      duration: 0.7,
+      ease: 'power3.inOut',
+    });
+
     activeServiceTab = index;
   }
 
