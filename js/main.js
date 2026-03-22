@@ -370,7 +370,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const wrapWidth = reviewsWrap.offsetWidth;
       const offset = index * (cardWidth + gap) - (wrapWidth - cardWidth) / 2;
 
-      reviewsTrack.style.transform = `translateX(${-offset}px)`;
+      gsap.to(reviewsTrack, { x: -offset, duration: 0.7, ease: 'power3.inOut' });
 
       [...cards].forEach((c, i) => c.classList.toggle('is-active', i === index));
       reviewDots.forEach((d, i) => d.classList.toggle('is-active', i === index));
