@@ -334,12 +334,62 @@ document.addEventListener('DOMContentLoaded', () => {
     onLeaveBack: () => nav.classList.add('nav--dark'),
   });
 
-  // Dark: gallery and beyond (find-us, footer)
+  // Dark: gallery and beyond (find-us, reviews, footer)
   ScrollTrigger.create({
     trigger: '.gallery-section',
     start: 'top top',
     onEnter:     () => nav.classList.add('nav--dark'),
     onLeaveBack: () => nav.classList.remove('nav--dark'),
   });
+
+
+  // ─── Reviews Carousel ────────────────────────────────
+  const reviewsWrap  = document.querySelector('.reviews-carousel-wrap');
+  const reviewsTrack = document.querySelector('.reviews-track');
+  const reviewDots   = document.querySelectorAll('.reviews-dot');
+
+  if (reviewsTrack) {
+    let activeReview = 0;
+
+    function goToReview(index) {
+      const cards = reviewsTrack.children;
+      const cardWidth = cards[0].offsetWidth;
+      const gap = 32;
+      const wrapWidth = reviewsWrap.offsetWidth;
+      const offset = index * (cardWidth + gap) - (wrapWidth - cardWidth) / 2;
+
+      reviewsTrack.style.transform = `translateX(${-offset}px)`;
+
+      [...cards].forEach((c, i) => c.classList.toggle('is-active', i === index));
+      reviewDots.forEach((d, i) => d.classList.toggle('is-active', i === index));
+
+      activeReview = index;
+      updateArrows();
+    }
+
+    const prevBtn = document.querySelector('.reviews-arrow--prev');
+    const nextBtn = document.querySelector('.reviews-arrow--next');
+
+    function updateArrows() {
+      prevBtn.disabled = activeReview === 0;
+      nextBtn.disabled = activeReview === reviewDots.length - 1;
+    }
+
+    prevBtn.addEventListener('click', () => {
+      if (activeReview > 0) goToReview(activeReview - 1);
+    });
+
+    nextBtn.addEventListener('click', () => {
+      if (activeReview < reviewDots.length - 1) goToReview(activeReview + 1);
+    });
+
+    reviewDots.forEach((dot, i) => {
+      dot.addEventListener('click', () => goToReview(i));
+    });
+
+    goToReview(0);
+
+    window.addEventListener('resize', () => goToReview(activeReview));
+  }
 
 });

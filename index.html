@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500;1,600&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
-
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,1,0" />
   <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
@@ -358,7 +358,7 @@
 
       <div class="contact-list">
         <div class="contact-item">
-          <div class="contact-icon">📍</div>
+          <div class="contact-icon"><span class="material-symbols-outlined">location_on</span></div>
           <div class="contact-info">
             <p class="contact-label">ADDRESS</p>
             <p class="contact-value">Ghodbunder Road, Thane West&#10;Mumbai, Maharashtra 400 607</p>
@@ -366,7 +366,7 @@
         </div>
 
         <div class="contact-item">
-          <div class="contact-icon">📞</div>
+          <div class="contact-icon"><span class="material-symbols-outlined">call</span></div>
           <div class="contact-info">
             <p class="contact-label">PHONE</p>
             <p class="contact-value">+91 91525 47777&#10;+91 84540 27777</p>
@@ -374,7 +374,7 @@
         </div>
 
         <div class="contact-item">
-          <div class="contact-icon">🕐</div>
+          <div class="contact-icon"><span class="material-symbols-outlined">nest_clock_farsight_analog</span></div>
           <div class="contact-info">
             <p class="contact-label">OFFICE HOURS</p>
             <p class="contact-value">Monday – Sunday&#10;10:00 AM – 8:00 PM</p>
@@ -383,6 +383,80 @@
       </div>
     </div>
 
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════════════
+       REVIEWS
+       ═══════════════════════════════════════════════════ -->
+  <section class="reviews-section" id="reviews">
+    <div class="gallery-header">
+      <div class="gallery-title-block">
+        <div class="eyebrow-badge reveal-fade">
+          <span>What Families Say</span>
+        </div>
+        <h2 class="reveal-text">
+          Stories created for <em> A Lifetime</em>
+        </h2>
+      </div>
+      <p class="gallery-desc reveal-fade-delay">Every photograph tells the story of a celebration&#10;we had the honour of hosting.</p>
+    </div>
+
+    
+
+    <div class="reviews-carousel-wrap">
+      <div class="reviews-track">
+
+        <article class="review-card">
+          <p class="review-quote">Best venue in Thane, period. We compared 12 places and chose right.</p>
+          <p class="review-name">Anita Mahajan</p>
+          <p class="review-meta">Wedding · Jan 2024</p>
+        </article>
+
+        <article class="review-card is-active">
+          <div class="review-stars">★★★★★</div>
+          <div class="review-qmark">"</div>
+          <p class="review-quote">Our 3-day Marwari wedding spanned 4 halls and the coordination across all of them was completely seamless.</p>
+          <div class="review-divider"></div>
+          <p class="review-name">Vikram Singhania</p>
+          <p class="review-meta">3-day wedding · Feb 2024</p>
+        </article>
+
+        <article class="review-card">
+          <p class="review-quote">Every detail was flawless — from the mandap to the last garland.</p>
+          <p class="review-name">Priya &amp; Rahul</p>
+          <p class="review-meta">Wedding · March 2024</p>
+        </article>
+
+        <article class="review-card">
+          <p class="review-quote">The team went above and beyond to make our daughter's wedding perfect from start to finish.</p>
+          <p class="review-name">Sunita Sharma</p>
+          <p class="review-meta">Wedding · Dec 2023</p>
+        </article>
+
+      </div>
+    </div>
+
+    <div class="reviews-controls">
+      <button class="reviews-arrow reviews-arrow--prev" aria-label="Previous review">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+          <path d="M12.5 15L7.5 10L12.5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+
+      <div class="reviews-dots">
+        <button class="reviews-dot is-active" aria-label="Review 1"></button>
+        <button class="reviews-dot" aria-label="Review 2"></button>
+        <button class="reviews-dot" aria-label="Review 3"></button>
+        <button class="reviews-dot" aria-label="Review 4"></button>
+      </div>
+
+      <button class="reviews-arrow reviews-arrow--next" aria-label="Next review">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+          <path d="M7.5 5L12.5 10L7.5 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+    </div>
   </section>
 
 
