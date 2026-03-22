@@ -10,7 +10,8 @@
       "Bash(curl -s https://telhaclarke.com.au/works/)",
       "Bash(curl -s \"https://telhaclarke.com.au/wp-content/themes/gl/public/build/assets/app-Sq9rcrZY.css\")",
       "Bash(curl -s \"https://telhaclarke.com.au/wp-content/themes/gl/public/build/assets/app-xdznotNO.js\")",
-      "WebFetch(domain:www.aupalevodka.com)"
+      "WebFetch(domain:www.aupalevodka.com)",
+      "Bash(ls \"c:\\\\Users\\\\ivanm\\\\Documents\\\\Samarambh\\\\images\"\" | grep -i \".svg \")"
     ]
   }
 }

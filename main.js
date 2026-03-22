@@ -9,18 +9,90 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 document.addEventListener('DOMContentLoaded', () => {
 
-  // ─── 1. GSAP Plugin Registration ────────────────────
-  gsap.registerPlugin(ScrollTrigger);
-
-
-  // ─── 2. Lenis Smooth Scroll ─────────────────────────
+  // ─── 0. Loader ───────────────────────────────────────
   const lenis = new Lenis({
     duration: 1.4,
     easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
     smoothWheel: true,
     wheelMultiplier: 0.9,
   });
+  lenis.stop();
 
+  // SVG path draw animation — immediately
+  const loaderPaths = document.querySelectorAll('.loader-logo path');
+  loaderPaths.forEach(path => {
+    const len = path.getTotalLength();
+    path.style.strokeDasharray = len;
+    path.style.strokeDashoffset = len;
+  });
+
+  gsap.to(loaderPaths, {
+    strokeDashoffset: 0,
+    duration: 1.2,
+    stagger: 0.07,
+    ease: 'power2.inOut',
+    onComplete() {
+      gsap.to(loaderPaths, {
+        fill: 'white',
+        stroke: 'transparent',
+        duration: 0.4,
+        stagger: 0.04,
+      });
+    },
+  });
+
+  // Counter 0 → 100
+  const counterEl = document.getElementById('loader-count');
+  const counterObj = { val: 0 };
+  gsap.to(counterObj, {
+    val: 100,
+    duration: 2.6,
+    ease: 'power1.inOut',
+    onUpdate() {
+      counterEl.textContent = Math.round(counterObj.val);
+    },
+  });
+
+  // Exit: left slides left, right slides right — after ≥3s AND video loaded
+  const heroVideo = document.querySelector('.hero-video');
+  let videoReady = heroVideo ? heroVideo.readyState >= 4 : true;
+  let timerDone  = false;
+
+  function exitLoader() {
+    gsap.to('.loader-content', { opacity: 0, duration: 0.3, ease: 'power2.in' });
+    gsap.to('.loader-left',  { x: '-100%', duration: 0.9, ease: 'power3.inOut', delay: 0.15 });
+    gsap.to('.loader-right', {
+      x: '100%', duration: 0.9, ease: 'power3.inOut', delay: 0.15,
+      onComplete() {
+        document.getElementById('loader').style.display = 'none';
+        lenis.start();
+        ScrollTrigger.refresh();
+      },
+    });
+  }
+
+  function tryExit() {
+    if (videoReady && timerDone) exitLoader();
+  }
+
+  if (heroVideo) {
+    heroVideo.addEventListener('canplaythrough', () => {
+      videoReady = true;
+      tryExit();
+    }, { once: true });
+  }
+
+  setTimeout(() => {
+    timerDone = true;
+    tryExit();
+  }, 3000);
+
+
+  // ─── 1. GSAP Plugin Registration ────────────────────
+  gsap.registerPlugin(ScrollTrigger);
+
+
+  // ─── 2. Lenis — connect to GSAP ticker ──────────────
   // Connect Lenis to GSAP ticker
   lenis.on('scroll', ScrollTrigger.update);
   gsap.ticker.add((time) => lenis.raf(time * 1000));

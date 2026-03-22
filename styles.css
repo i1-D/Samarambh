@@ -65,6 +65,60 @@ ul { list-style: none; }
 p { margin: 0; }
 
 
+/* ─── Loader ───────────────────────────────────────────── */
+.loader {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+}
+
+.loader-panel {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 50%;
+  background: var(--color-green-primary);
+}
+
+.loader-left  { left: 0; }
+.loader-right { right: 0; }
+
+.loader-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 48px;
+  z-index: 1;
+  white-space: nowrap;
+}
+
+.loader-logo svg {
+  width: 713px;
+  max-width: 80vw;
+  display: block;
+}
+
+.loader-logo path {
+  fill: transparent;
+  stroke: white;
+  stroke-width: 0.5;
+}
+
+.loader-counter {
+  font-family: var(--font-sans);
+  font-size: 60px;
+  font-weight: 400;
+  color: white;
+  letter-spacing: -0.5px;
+  text-align: center;
+  line-height: 1;
+}
+
+
 /* ─── Material Symbols ────────────────────────────────── */
 .material-symbols-outlined {
   font-family: 'Material Symbols Outlined', sans-serif;
