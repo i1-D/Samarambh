@@ -164,6 +164,18 @@ p { margin: 0; }
   color: var(--color-green-medium);
 }
 
+.nav-logo {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+.nav-logo img {
+  width: 80px;
+  display: block;
+}
+
 
 /* ═══════════════════════════════════════════════════════
    INTRO SECTION

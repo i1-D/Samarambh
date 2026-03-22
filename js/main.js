@@ -26,6 +26,15 @@ document.addEventListener('DOMContentLoaded', () => {
   gsap.ticker.add((time) => lenis.raf(time * 1000));
   gsap.ticker.lagSmoothing(0);
 
+  // Smooth-scroll nav anchor links via Lenis
+  document.querySelectorAll('.hero-nav a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', (e) => {
+      e.preventDefault();
+      const target = document.querySelector(anchor.getAttribute('href'));
+      if (target) lenis.scrollTo(target, { offset: 0 });
+    });
+  });
+
 
   // ─── 3. Intro Video Shrink (tenutacentoporte.it style) ──────
   // Video starts fullscreen: GSAP pins .intro-title-block (100vh)
@@ -46,6 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   gsap.set(['.intro-top', '.intro-bottom'], { opacity: 0 });
+  gsap.set('.nav-logo', { opacity: 0 });
 
   const introVideoTl = gsap.timeline({
     scrollTrigger: {
@@ -70,7 +80,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 0)
     .to('.intro-video-overlay', { opacity: 0, ease: 'none', duration: 0.1 }, 0)
     .to('.intro-top',    { opacity: 1, ease: 'none', duration: 0.4 }, 0.45)
-    .to('.intro-bottom', { opacity: 1, ease: 'none', duration: 0.4 }, 0.5);
+    .to('.intro-bottom', { opacity: 1, ease: 'none', duration: 0.4 }, 0.5)
+    .to('.nav-logo',     { opacity: 1, ease: 'none', duration: 0.3 }, 0.8);
 
 
 
@@ -334,7 +345,7 @@ document.addEventListener('DOMContentLoaded', () => {
     onLeaveBack: () => nav.classList.add('nav--dark'),
   });
 
-  // Dark: gallery and beyond (find-us, reviews)
+  // Dark: gallery and beyond (find-us, reviews, faq, footer)
   ScrollTrigger.create({
     trigger: '.gallery-section',
     start: 'top top',
@@ -342,15 +353,6 @@ document.addEventListener('DOMContentLoaded', () => {
     onLeaveBack: () => nav.classList.remove('nav--dark'),
   });
 
-  // Light: FAQ section (cream bg, between reviews and footer)
-  ScrollTrigger.create({
-    trigger: '.faq-section',
-    start: 'top top',
-    onEnter:     () => nav.classList.remove('nav--dark'),
-    onLeaveBack: () => nav.classList.add('nav--dark'),
-    onLeave:     () => nav.classList.add('nav--dark'),
-    onEnterBack: () => nav.classList.remove('nav--dark'),
-  });
 
 
   // ─── Reviews Carousel ────────────────────────────────
