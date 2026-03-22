@@ -74,40 +74,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
-  // ─── 4. Hero Shrink Effect (if hero section present) ─────
-  // tenutacentoporte.it style: hero is position:fixed and
-  // shrinks inward as user scrolls through hero-spacer,
-  // revealing intro content behind the shrinking card.
-  const heroFixed = document.querySelector('.hero-fixed');
-
-  gsap.to('.hero-inner', {
-    margin: '48px',
-    borderRadius: '24px',
-    ease: 'none',
-    scrollTrigger: {
-      trigger: '.hero-spacer',
-      start: 'top top',
-      end: 'bottom top',
-      scrub: 1.2,
-      onLeave: () => {
-        heroFixed.classList.add('is-done');
-        gsap.set(heroFixed, { position: 'absolute', top: 0 });
-      },
-      onEnterBack: () => {
-        heroFixed.classList.remove('is-done');
-        gsap.set(heroFixed, { position: 'fixed', top: 0 });
-      },
-    }
-  });
-
-
   // ─── 4. Lawn Sections — Stacked Panel Effect ────────
   // tenutacentoporte.it rooms/suites reference:
   // each lawn panel pins at the top; the next slides up
   // from below and takes over, creating a stacking reveal.
   const lawns = gsap.utils.toArray('.lawn-section');
 
-  lawns.forEach((lawn, i) => {
+  lawns.forEach((lawn) => {
     // Pin each section
     ScrollTrigger.create({
       trigger: lawn,
@@ -117,17 +90,6 @@ document.addEventListener('DOMContentLoaded', () => {
       end: () => `+=${lawn.offsetHeight}`,
     });
 
-    // Snap outgoing panel to fixed 80% brightness when next section scrolls over it
-    if (i < lawns.length - 1) {
-      gsap.to(lawn, {
-        duration: 0,
-        scrollTrigger: {
-          trigger: lawn,
-          start: 'top top',
-          toggleActions: 'play none none reverse',
-        }
-      });
-    }
   });
 
 
@@ -332,6 +294,52 @@ document.addEventListener('DOMContentLoaded', () => {
         start: 'top 60%',
       }
     });
+  });
+
+
+  // ─── Nav dark/light mode by section ─────────────────
+  const nav = document.querySelector('.hero-nav');
+  const lawnsAll = gsap.utils.toArray('.lawn-section');
+
+  // Dark: intro video collapses (~100vh into the 150vh pin = ~2/3 collapsed)
+  ScrollTrigger.create({
+    trigger: '.intro-title-block',
+    start: 'top top',
+    end: '+=100vh',
+    onLeave:      () => nav.classList.add('nav--dark'),
+    onEnterBack:  () => nav.classList.remove('nav--dark'),
+  });
+
+  // Light: lawn 2 (removes dark; lawn 1 stays dark from intro trigger)
+  ScrollTrigger.create({
+    trigger: lawnsAll[1],
+    start: 'top top',
+    onEnter:     () => nav.classList.remove('nav--dark'),
+    onLeaveBack: () => nav.classList.add('nav--dark'),
+  });
+
+  // Dark: moments (lawn 3 was light, moments needs dark)
+  ScrollTrigger.create({
+    trigger: '.moments-wrapper',
+    start: 'top top',
+    onEnter:     () => nav.classList.add('nav--dark'),
+    onLeaveBack: () => nav.classList.remove('nav--dark'),
+  });
+
+  // Light: services section
+  ScrollTrigger.create({
+    trigger: '.services-section',
+    start: 'top top',
+    onEnter:     () => nav.classList.remove('nav--dark'),
+    onLeaveBack: () => nav.classList.add('nav--dark'),
+  });
+
+  // Dark: gallery and beyond (find-us, footer)
+  ScrollTrigger.create({
+    trigger: '.gallery-section',
+    start: 'top top',
+    onEnter:     () => nav.classList.add('nav--dark'),
+    onLeaveBack: () => nav.classList.remove('nav--dark'),
   });
 
 });
