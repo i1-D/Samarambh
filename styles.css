@@ -1352,7 +1352,7 @@ p { margin: 0; }
    ═══════════════════════════════════════════════════════ */
 
 .site-footer {
-  background: #1a1614;
+  background: linear-gradient(90deg, #1A1614 0%, #14452F 60%, #1A1614 100%), #FFF;
   padding: 24px;
 }
 
