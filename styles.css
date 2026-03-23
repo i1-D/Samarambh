@@ -1054,6 +1054,7 @@ p { margin: 0; }
 
 .reviews-carousel-wrap {
   width: 100%;
+  padding-left: var(--sp-11);
 }
 
 .reviews-track {
@@ -1454,8 +1455,8 @@ p { margin: 0; }
   justify-content: center;
   height: 48px;
   padding: 0 32px;
-  background: var(--color-green-primary);
-  color: var(--color-icon-bg);
+  background: var(--color-bg);
+  color: var(--color-green-primary);
   font-family: var(--font-sans);
   font-size: 13px;
   font-weight: 600;
@@ -1466,7 +1467,7 @@ p { margin: 0; }
 }
 
 .footer-cta:hover {
-  background: var(--color-green-dark);
+  background: var(--color-icon-bg);
 }
 
 .footer-divider {

@@ -393,12 +393,19 @@ document.addEventListener('DOMContentLoaded', () => {
     onEnterBack:  () => nav.classList.remove('nav--dark'),
   });
 
-  // Light: lawn 2 (removes dark; lawn 1 stays dark from intro trigger)
+  // Light: lawn 1
   ScrollTrigger.create({
-    trigger: lawnsAll[1],
+    trigger: lawnsAll[0],
     start: 'top top',
     onEnter:     () => nav.classList.remove('nav--dark'),
     onLeaveBack: () => nav.classList.add('nav--dark'),
+  });
+
+  // Light: lawn 2
+  ScrollTrigger.create({
+    trigger: lawnsAll[1],
+    start: 'top top',
+    onEnter: () => nav.classList.remove('nav--dark'),
   });
 
   // Dark: moments (lawn 3 was light, moments needs dark)
@@ -428,7 +435,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
   // ─── Reviews Carousel ────────────────────────────────
-  const reviewsWrap  = document.querySelector('.reviews-carousel-wrap');
   const reviewsTrack = document.querySelector('.reviews-track');
   const reviewDots   = document.querySelectorAll('.reviews-dot');
 
@@ -439,8 +445,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const cards = reviewsTrack.children;
       const cardWidth = cards[0].offsetWidth;
       const gap = 32;
-      const wrapWidth = reviewsWrap.offsetWidth;
-      const offset = index * (cardWidth + gap) - (wrapWidth - cardWidth) / 2;
+      const offset = index * (cardWidth + gap);
 
       gsap.to(reviewsTrack, { x: -offset, duration: 0.7, ease: 'power3.inOut' });
 
@@ -455,16 +460,16 @@ document.addEventListener('DOMContentLoaded', () => {
     const nextBtn = document.querySelector('.reviews-arrow--next');
 
     function updateArrows() {
-      prevBtn.disabled = activeReview === 0;
-      nextBtn.disabled = activeReview === reviewDots.length - 1;
+      prevBtn.disabled = false;
+      nextBtn.disabled = false;
     }
 
     prevBtn.addEventListener('click', () => {
-      if (activeReview > 0) goToReview(activeReview - 1);
+      goToReview((activeReview - 1 + reviewDots.length) % reviewDots.length);
     });
 
     nextBtn.addEventListener('click', () => {
-      if (activeReview < reviewDots.length - 1) goToReview(activeReview + 1);
+      goToReview((activeReview + 1) % reviewDots.length);
     });
 
     reviewDots.forEach((dot, i) => {

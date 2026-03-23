@@ -11,7 +11,12 @@
       "Bash(curl -s \"https://telhaclarke.com.au/wp-content/themes/gl/public/build/assets/app-Sq9rcrZY.css\")",
       "Bash(curl -s \"https://telhaclarke.com.au/wp-content/themes/gl/public/build/assets/app-xdznotNO.js\")",
       "WebFetch(domain:www.aupalevodka.com)",
-      "Bash(ls \"c:\\\\Users\\\\ivanm\\\\Documents\\\\Samarambh\\\\images\"\" | grep -i \".svg \")"
+      "Bash(ls \"c:\\\\Users\\\\ivanm\\\\Documents\\\\Samarambh\\\\images\"\" | grep -i \".svg \")",
+      "Bash(ls -la \"c:\\\\Users\\\\ivanm\\\\Documents\\\\Samarambh\\\\dist\\\\assets\"/*.js)",
+      "Bash(git -C /c/Users/ivanm/Documents/Samarambh remote -v)",
+      "Bash(git -C /c/Users/ivanm/Documents/Samarambh log --oneline -5)",
+      "Bash(npx vite:*)",
+      "Bash(npm install:*)"
     ]
   }
 }
