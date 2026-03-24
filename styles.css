@@ -1054,15 +1054,15 @@ p { margin: 0; }
 .reviews-section .section-header {
   padding: 0 var(--sp-11);
   display: flex;
-  align-items: flex-start;
+  align-items: flex-end;
   justify-content: space-between;
   gap: var(--sp-6);
 }
 
 .reviews-section .section-desc {
-  max-width: 549px;
+  max-width: 45%;
   font-family: var(--font-sans);
-  font-size: 20px;
+  font-size: var(--fs-heading-subtitle);
   line-height: 1.6;
   color: var(--color-warm-gray);
   flex-shrink: 0;
@@ -1070,24 +1070,28 @@ p { margin: 0; }
 
 .reviews-carousel-wrap {
   width: 100%;
-  padding: 0 var(--sp-7);
-  overflow: visible;
+  overflow: hidden;
 }
 
 .reviews-track {
   display: flex;
-  gap: 32px;
+  gap: 8px;
   align-items: stretch;
-  will-change: transform;
+  width: max-content;
+  animation: reviews-scroll 50s linear infinite;
+}
+
+@keyframes reviews-scroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
 }
 
 /* ── Card ── */
 .review-card {
   position: relative;
   flex-shrink: 0;
-  width: clamp(300px, 41.67vw, 800px);
-  height: clamp(400px, 41.67vw, 600px);
-  border-radius: 8px;
+  width: clamp(300px, 41.67vw, 600px);
+  height: clamp(400px, 41.67vw, 480px);
   overflow: hidden;
   border: 1px solid transparent;
   cursor: pointer;
@@ -1135,20 +1139,20 @@ p { margin: 0; }
 /* Sliding content */
 .review-content {
   position: absolute;
-  bottom: -216px;
+  bottom: -120px;
   left: 0;
   right: 0;
-  padding: 24px;
+  padding: 16px 32px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 40px;
+  gap: 24px;
   transition: bottom 0.5s var(--ease-out);
 }
 
 .review-card.is-active .review-content,
 .review-card:hover .review-content {
-  bottom: 33px;
+  bottom: 24px;
 }
 
 .review-stars {
@@ -1161,7 +1165,7 @@ p { margin: 0; }
 .review-quote {
   font-family: var(--font-serif);
   font-style: italic;
-  font-size: clamp(18px, 2.22vw, 32px);
+  font-size: clamp(18px, 1.5vw, 24px);
   font-weight: 400;
   line-height: 1.5;
   color: var(--color-text-on-dark);
@@ -1183,7 +1187,7 @@ p { margin: 0; }
 
 .review-name {
   font-family: var(--font-sans);
-  font-size: 24px;
+  font-size: 18px;
   font-weight: 500;
   color: var(--color-gold-primary);
   letter-spacing: 0.5px;
@@ -1191,7 +1195,7 @@ p { margin: 0; }
 
 .review-meta {
   font-family: var(--font-sans);
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 400;
   color: var(--color-text-on-dark);
 }

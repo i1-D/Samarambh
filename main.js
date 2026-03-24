@@ -438,39 +438,28 @@ document.addEventListener('DOMContentLoaded', () => {
   const reviewsTrack = document.querySelector('.reviews-track');
 
   if (reviewsTrack) {
-    let activeReview = 0;
-    let autoScrollTimer = null;
-    const cards = reviewsTrack.children;
-    const totalCards = cards.length;
+    // Duplicate cards for seamless infinite loop
+    [...reviewsTrack.children].forEach(card => {
+      reviewsTrack.appendChild(card.cloneNode(true));
+    });
 
-    function goToReview(index) {
-      activeReview = (index + totalCards) % totalCards;
-      const cardWidth = cards[0].offsetWidth;
-      const gap = 32;
-      const offset = activeReview * (cardWidth + gap);
+    // Per-card hover: activate card & pause scroll
+    reviewsTrack.querySelectorAll('.review-card').forEach(card => {
+      card.addEventListener('mouseenter', () => {
+        reviewsTrack.style.animationPlayState = 'paused';
+        reviewsTrack.querySelectorAll('.review-card').forEach(c => c.classList.remove('is-active'));
+        card.classList.add('is-active');
+      });
+      card.addEventListener('mouseleave', () => {
+        card.classList.remove('is-active');
+        reviewsTrack.style.animationPlayState = 'running';
+      });
+    });
 
-      gsap.to(reviewsTrack, { x: -offset, duration: 0.7, ease: 'power3.inOut' });
-      [...cards].forEach((c, i) => c.classList.toggle('is-active', i === activeReview));
-    }
-
-    function startAutoScroll() {
-      autoScrollTimer = setInterval(() => {
-        goToReview(activeReview + 1);
-      }, 4000);
-    }
-
-    function stopAutoScroll() {
-      clearInterval(autoScrollTimer);
-    }
-
-    const carouselWrap = document.querySelector('.reviews-carousel-wrap');
-    carouselWrap.addEventListener('mouseenter', stopAutoScroll);
-    carouselWrap.addEventListener('mouseleave', startAutoScroll);
-
-    goToReview(0);
-    startAutoScroll();
-
-    window.addEventListener('resize', () => goToReview(activeReview));
+    // Pause when tab is hidden
+    document.addEventListener('visibilitychange', () => {
+      reviewsTrack.style.animationPlayState = document.hidden ? 'paused' : 'running';
+    });
   }
 
 });
