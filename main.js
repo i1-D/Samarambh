@@ -436,47 +436,39 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // ─── Reviews Carousel ────────────────────────────────
   const reviewsTrack = document.querySelector('.reviews-track');
-  const reviewDots   = document.querySelectorAll('.reviews-dot');
 
   if (reviewsTrack) {
     let activeReview = 0;
+    let autoScrollTimer = null;
+    const cards = reviewsTrack.children;
+    const totalCards = cards.length;
 
     function goToReview(index) {
-      const cards = reviewsTrack.children;
+      activeReview = (index + totalCards) % totalCards;
       const cardWidth = cards[0].offsetWidth;
       const gap = 32;
-      const offset = index * (cardWidth + gap);
+      const offset = activeReview * (cardWidth + gap);
 
       gsap.to(reviewsTrack, { x: -offset, duration: 0.7, ease: 'power3.inOut' });
-
-      [...cards].forEach((c, i) => c.classList.toggle('is-active', i === index));
-      reviewDots.forEach((d, i) => d.classList.toggle('is-active', i === index));
-
-      activeReview = index;
-      updateArrows();
+      [...cards].forEach((c, i) => c.classList.toggle('is-active', i === activeReview));
     }
 
-    const prevBtn = document.querySelector('.reviews-arrow--prev');
-    const nextBtn = document.querySelector('.reviews-arrow--next');
-
-    function updateArrows() {
-      prevBtn.disabled = false;
-      nextBtn.disabled = false;
+    function startAutoScroll() {
+      autoScrollTimer = setInterval(() => {
+        goToReview(activeReview + 1);
+      }, 4000);
     }
 
-    prevBtn.addEventListener('click', () => {
-      goToReview((activeReview - 1 + reviewDots.length) % reviewDots.length);
-    });
+    function stopAutoScroll() {
+      clearInterval(autoScrollTimer);
+    }
 
-    nextBtn.addEventListener('click', () => {
-      goToReview((activeReview + 1) % reviewDots.length);
-    });
-
-    reviewDots.forEach((dot, i) => {
-      dot.addEventListener('click', () => goToReview(i));
-    });
+    const carouselWrap = document.querySelector('.reviews-carousel-wrap');
+    carouselWrap.addEventListener('mouseenter', stopAutoScroll);
+    carouselWrap.addEventListener('mouseleave', startAutoScroll);
 
     goToReview(0);
+    startAutoScroll();
 
     window.addEventListener('resize', () => goToReview(activeReview));
   }
