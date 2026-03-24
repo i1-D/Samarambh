@@ -18,7 +18,8 @@
       "Bash(npx vite:*)",
       "Bash(npm install:*)",
       "Bash(npm run:*)",
-      "Bash(curl -s http://localhost:5173 -o /dev/null -w \"%{http_code}\")"
+      "Bash(curl -s http://localhost:5173 -o /dev/null -w \"%{http_code}\")",
+      "WebFetch(domain:claude.ai)"
     ]
   }
 }
