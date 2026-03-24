@@ -28,15 +28,29 @@
   --sp-4:  16px;
   --sp-5:  24px;
   --sp-6:  32px;
-  --sp-7:  48px;
-  --sp-8:  64px;
-  --sp-9:  96px;
-  --sp-10: 128px;
-  --sp-11: 180px;
+  --sp-7:  2.5vw;
+  --sp-8:  3.333vw;
+  --sp-9:  5vw;
+  --sp-10: 6.667vw;
+  --sp-11: 9.375vw;
 
   /* Typography */
   --font-serif: 'Cormorant Garamond', serif;
   --font-sans:  'Outfit', sans-serif;
+
+  /* Fluid Typography Scale */
+  --fs-watermark-wedding:   clamp(60px,  8vw, 200px);
+  --fs-watermark-celebrate: clamp(48px,  8vw, 150px);
+  --fs-hero-headline:       clamp(36px,   4.944vw, 80px);
+  --fs-lawn-name:           clamp(32px,   4.556vw,  72px);
+  --fs-moments-h2:          clamp(28px,   4.556vw,  72px);
+  --fs-display-61:          clamp(24px,   3.236vw,  61px);
+  --fs-loader-counter:      clamp(28px,   4.167vw,  60px);
+  --fs-faq-heading:         clamp(22px,   3.056vw,  44px);
+  --fs-lawn-capacity:       clamp(18px,   2vw,  36px);
+  --fs-review-qmark:        clamp(20px,   2.500vw,  36px);
+  --fs-heading-subtitle:    clamp(15px,   1.150vw,  16px);
+  --fs-body-18:             clamp(14px,   1.250vw,  18px);
 
   /* Transitions */
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
@@ -110,7 +124,7 @@ p { margin: 0; }
 
 .loader-counter {
   font-family: var(--font-sans);
-  font-size: 60px;
+  font-size: var(--fs-loader-counter);
   font-weight: 400;
   color: white;
   letter-spacing: -0.5px;
@@ -309,11 +323,11 @@ p { margin: 0; }
 .intro-headline {
   text-align: center;
   font-family: var(--font-serif);
-  font-size: 100px;
+  font-size: var(--fs-hero-headline);
   font-weight: 300;
   line-height: 1.2;
   letter-spacing: 0.5px;
-  white-space: nowrap;
+  white-space: normal;
   background: linear-gradient(90deg, #1A1614 0%, #14452F 60%, #C9A84C 100%);
   background-clip: text;
   -webkit-background-clip: text;
@@ -357,7 +371,7 @@ p { margin: 0; }
 .intro-quote-left {
   flex: 1;
   font-family: var(--font-serif);
-  font-size: 61px;
+  font-size: var(--fs-display-61);
   font-weight: 400;
   line-height: 1.3;
   letter-spacing: -2px;
@@ -369,9 +383,9 @@ p { margin: 0; }
 }
 
 .intro-quote-right {
-  flex: 0 0 631px;
+  flex: 0 0 45%;
   font-family: var(--font-sans);
-  font-size: 20px;
+  font-size: var(--fs-heading-subtitle);
   font-weight: 400;
   line-height: 32px;
   color: var(--color-warm-gray);
@@ -430,10 +444,12 @@ p { margin: 0; }
   display: block;
 }
 
-.lawn-gradient {
-  position: absolute;
+.lawn-bg::after {
+  content: '';
+  background-blend-mode: color-dodge;
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0.3) 22.6%, rgba(102, 102, 102, 0.3) 95.36%), url(images/noise.webp);
   inset: 0;
-  background: linear-gradient(0deg, rgba(0, 0, 0, 0.30) 22.6%, rgba(102, 102, 102, 0.30) 95.36%);
+  position: absolute;
 }
 
 .lawn-content {
@@ -454,7 +470,7 @@ p { margin: 0; }
 
 .lawn-name {
   font-family: var(--font-serif);
-  font-size: 80px;
+  font-size: var(--fs-lawn-name);
   font-weight: 600;
   line-height: 1.2;
   letter-spacing: -2.5px;
@@ -463,7 +479,7 @@ p { margin: 0; }
 
 .lawn-capacity {
   font-family: var(--font-sans);
-  font-size: 39px;
+  font-size: var(--fs-lawn-capacity);
   font-weight: 400;
   line-height: 1.5;
   letter-spacing: -0.5px;
@@ -515,13 +531,13 @@ p { margin: 0; }
 }
 
 .watermark-wedding {
-  font-size: 200px;
+  font-size: var(--fs-watermark-wedding);
   opacity: 0.08;
   color: var(--color-gold-light);
 }
 
 .watermark-celebrations {
-  font-size: 150px;
+  font-size: var(--fs-watermark-celebrate);
   opacity: 0.08;
   color: var(--color-green-light);
 }
@@ -540,7 +556,7 @@ p { margin: 0; }
 
 .moments-center-text h2 {
   font-family: var(--font-serif);
-  font-size: 76px;
+  font-size: var(--fs-moments-h2);
   font-weight: 300;
   line-height: 1.2;
   letter-spacing: -2.5px;
@@ -662,7 +678,7 @@ p { margin: 0; }
   top: 50%;
   transform: translate(-50%, -45px);
   font-family: var(--font-serif);
-  font-size: 76px;
+  font-size: var(--fs-moments-h2);
   font-weight: 300;
   line-height: 1.2;
   letter-spacing: -2.5px;
@@ -746,13 +762,13 @@ p { margin: 0; }
   align-items: flex-end;
   justify-content: flex-start;
   padding-bottom: 16px;
-  gap: 300px;
+  gap: clamp(40px, 20.833vw, 300px);
   overflow: visible;
 }
 
 .services-tab {
   font-family: var(--font-serif);
-  font-size: 61px;
+  font-size: var(--fs-display-61);
   font-weight: 400;
   line-height: 1.3;
   letter-spacing: -2px;
@@ -834,7 +850,7 @@ p { margin: 0; }
 
 .gallery-title-block h2 {
   font-family: var(--font-serif);
-  font-size: 61px;
+  font-size: var(--fs-display-61);
   font-weight: 400;
   line-height: 1.3;
   letter-spacing: -2px;
@@ -850,7 +866,7 @@ p { margin: 0; }
 
 .gallery-desc {
   font-family: var(--font-sans);
-  font-size: 20px;
+  font-size: var(--fs-heading-subtitle);
   font-weight: 400;
   line-height: 32px;
   color: var(--color-warm-gray);
@@ -923,7 +939,7 @@ p { margin: 0; }
 
 .find-us-map {
   position: relative;
-  width: 1176px;
+  width: 70%;
   height: 100vh;
   flex-shrink: 0;
   overflow: hidden;
@@ -954,7 +970,7 @@ p { margin: 0; }
 
 .find-us-title h2 {
   font-family: var(--font-serif);
-  font-size: 61px;
+  font-size: var(--fs-display-61);
   font-weight: 400;
   line-height: 1.3;
   letter-spacing: -2px;
@@ -988,7 +1004,7 @@ p { margin: 0; }
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 20px;
+  font-size: var(--fs-heading-subtitle);
   flex-shrink: 0;
 }
 
@@ -1041,7 +1057,7 @@ p { margin: 0; }
 
 .reviews-title {
   font-family: var(--font-serif);
-  font-size: 61px;
+  font-size: var(--fs-display-61);
   font-weight: 300;
   line-height: 1.2;
   letter-spacing: -1px;
@@ -1091,7 +1107,7 @@ p { margin: 0; }
 .review-card .review-quote {
   font-family: var(--font-serif);
   font-style: italic;
-  font-size: 18px;
+  font-size: var(--fs-body-18);
   font-weight: 300;
   line-height: 1.6;
   color: var(--color-text-primary);
@@ -1145,13 +1161,13 @@ p { margin: 0; }
 .review-card.is-active .review-qmark {
   display: block;
   font-family: var(--font-serif);
-  font-size: 36px;
+  font-size: var(--fs-review-qmark);
   line-height: 0.8;
   color: rgba(255, 255, 255, 0.2);
 }
 
 .review-card.is-active .review-quote {
-  font-size: 18px;
+  font-size: var(--fs-body-18);
   font-weight: 400;
   line-height: 1.6;
   color: var(--color-text-on-dark);
@@ -1255,7 +1271,7 @@ p { margin: 0; }
 
 .faq-heading {
   font-family: var(--font-serif);
-  font-size: 44px;
+  font-size: var(--fs-faq-heading);
   font-weight: 400;
   line-height: 1.22;
   color: var(--color-green-dark);
@@ -1328,7 +1344,7 @@ p { margin: 0; }
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  font-size: 18px;
+  font-size: var(--fs-body-18);
   color: var(--color-green-dark);
   transition: transform 0.3s ease;
   line-height: 1;
@@ -1410,7 +1426,7 @@ p { margin: 0; }
   font-family: var(--font-sans);
   font-size: 13px;
   font-weight: 400;
-  color: rgba(168, 159, 144, 0.85);
+  color: var(--color-text-on-dark);
   line-height: 20px;
   text-decoration: none;
 }
@@ -1433,7 +1449,7 @@ p { margin: 0; }
 .footer-tagline {
   font-family: var(--font-serif);
   font-style: italic;
-  font-size: 20px;
+  font-size: var(--fs-heading-subtitle);
   color: var(--color-gold-primary);
   letter-spacing: 0.5px;
   text-align: center;

@@ -16,7 +16,9 @@
       "Bash(git -C /c/Users/ivanm/Documents/Samarambh remote -v)",
       "Bash(git -C /c/Users/ivanm/Documents/Samarambh log --oneline -5)",
       "Bash(npx vite:*)",
-      "Bash(npm install:*)"
+      "Bash(npm install:*)",
+      "Bash(npm run:*)",
+      "Bash(curl -s http://localhost:5173 -o /dev/null -w \"%{http_code}\")"
     ]
   }
 }
