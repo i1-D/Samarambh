@@ -150,7 +150,7 @@ document.addEventListener('DOMContentLoaded', () => {
       ease: 'none',
       duration: 1,
     }, 0)
-    .to('.intro-video-overlay', { opacity: 0, ease: 'none', duration: 0.1 }, 0)
+    .to('.intro-logo', { opacity: 0, ease: 'none', duration: 0.1 }, 0)
     .to('.intro-social-proof', { opacity: 0, ease: 'none', duration: 0.25 }, 0)
     .to('.intro-top',    { opacity: 1, ease: 'none', duration: 0.4 }, 0.45)
     .to('.intro-bottom', { opacity: 1, ease: 'none', duration: 0.4 }, 0.5)
