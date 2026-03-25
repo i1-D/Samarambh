@@ -698,24 +698,24 @@ p { margin: 0; }
 
 /* Wedding photos — 2 left, 1 right */
 .wedding-photo-1 {
-  width: 25vw;
-  height: 18.75vw;
-  left: 5vw;
-  top: 8vh;
+  width: 20.83vw;
+  height: 15.63vw;
+  left: 12vw;
+  top: 18vh;
 }
 
 .wedding-photo-2 {
-  width: 25vw;
-  height: 18.75vw;
-  left: 11vw;
-  top: 52vh;
+  width: 20.83vw;
+  height: 15.63vw;
+  left: 15vw;
+  top: 60vh;
 }
 
 .wedding-photo-3 {
-  width: 25vw;
-  height: 18.75vw;
-  left: 65vw;
-  top: 28vh;
+  width: 20.83vw;
+  height: 15.63vw;
+  left: 70vw;
+  top: 53vh;
 }
 
 /* Celebrations photos */
