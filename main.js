@@ -351,17 +351,6 @@ document.addEventListener('DOMContentLoaded', () => {
   // ─── 8. (Intro headline/video handled by introVideoTl above) ──
 
 
-  // ─── 9. Gallery — pause on focus/interaction ─────────
-  // The gallery auto-scrolls via CSS animation.
-  // We pause it when the user interacts (hover handled in CSS).
-  // Additionally pause when tab is not visible.
-  const galleryTrack = document.querySelector('.gallery-track');
-  if (galleryTrack) {
-    document.addEventListener('visibilitychange', () => {
-      galleryTrack.style.animationPlayState =
-        document.hidden ? 'paused' : 'running';
-    });
-  }
 
 
   // ─── 10. Lawn section title reveal ───────────────────
