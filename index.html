@@ -149,48 +149,108 @@
 
 
   <!-- ═══════════════════════════════════════════════════
-       LAWN 1 — The Grand Lawn
+       VENUES SHOWCASE (Pinned Scroll)
        ═══════════════════════════════════════════════════ -->
-  <section class="lawn-section" id="venues">
-    <div class="lawn-bg">
-      <img src="images/lawn1.jpg" alt="The Grand Lawn">
-    </div>
-    <div class="lawn-content">
-      <div class="lawn-title-row">
-        <h2 class="lawn-name">The Grand Lawn</h2>
-        <p class="lawn-capacity">for 800 to 2,000 guests</p>
-      </div>
-    </div>
-  </section>
+  <section class="venues-section" id="venues">
+    <div class="venues-sticky">
 
-  <!-- ═══════════════════════════════════════════════════
-       LAWN 2 — The Banquet Hall
-       ═══════════════════════════════════════════════════ -->
-  <section class="lawn-section">
-    <div class="lawn-bg">
-      <img src="images/lawn2.jpg" alt="The Banquet Hall">
-    </div>
-    <div class="lawn-content">
-      <div class="lawn-title-row">
-        <h2 class="lawn-name">The Banquet Hall</h2>
-        <p class="lawn-capacity">for 100 to 500 guests</p>
+      <!-- Left progress line -->
+      <div class="venues-progress-line">
+        <div class="venues-progress-fill"></div>
       </div>
-    </div>
-  </section>
 
-  <!-- ═══════════════════════════════════════════════════
-       LAWN 3 — The Royal Lawn
-       ═══════════════════════════════════════════════════ -->
-  <section class="lawn-section">
-    <div class="lawn-bg">
-      <img src="images/lawn3.jpg" alt="The Royal Lawn">
-    </div>
-    <div class="lawn-content">
-      <div class="lawn-title-row">
-        <h2 class="lawn-name">The Royal Lawn</h2>
-        <p class="lawn-capacity">for 300 to 800 guests</p>
-      </div>
-    </div>
+      <!-- Main content -->
+      <div class="venues-main-container">
+
+        <!-- Left info panel — slides cross-fade -->
+        <div class="venues-info-panel">
+
+          <!-- Slide 01 — The Grand Lawn -->
+          <div class="venue-slide is-active">
+            <div class="venue-slide-header">
+              <h2 class="venue-slide-title">01. The Grand Lawn</h2>
+              <p class="venue-slide-desc">
+                Our flagship open-air expanse, bordered by manicured gardens
+                and framed by evening skies. Built for celebrations that
+                demand grandeur without compromise.
+              </p>
+            </div>
+            <div class="venue-slide-secondary-img">
+              <img src="images/lawn1_sm.jpg" alt="The Grand Lawn — decorated setup">
+            </div>
+            <div class="venue-slide-info">
+              <p class="venue-slide-stats">800 to 2,000 GUESTS &nbsp;|&nbsp; ₹900 PER PLATE</p>
+              <ul class="venue-slide-features">
+                <li>Open Air pavilion</li>
+                <li>360 degree stage setup</li>
+                <li>Night sky lighting rig</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Slide 02 — The Banquet Hall -->
+          <div class="venue-slide">
+            <div class="venue-slide-header">
+              <h2 class="venue-slide-title">02. The Banquet Hall</h2>
+              <p class="venue-slide-desc">
+                An air-conditioned indoor hall with soaring ceilings
+                and customizable layouts. Ideal for intimate receptions,
+                sangeet nights, and corporate gatherings.
+              </p>
+            </div>
+            <div class="venue-slide-secondary-img">
+              <img src="images/lawn2_sm.jpg" alt="The Banquet Hall — interior">
+            </div>
+            <div class="venue-slide-info">
+              <p class="venue-slide-stats">100 to 500 GUESTS &nbsp;|&nbsp; ₹1,200 PER PLATE</p>
+              <ul class="venue-slide-features">
+                <li>Climate-controlled interiors</li>
+                <li>Modular stage &amp; seating</li>
+                <li>Integrated AV system</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Slide 03 — The Royal Lawn -->
+          <div class="venue-slide">
+            <div class="venue-slide-header">
+              <h2 class="venue-slide-title">03. The Royal Lawn</h2>
+              <p class="venue-slide-desc">
+                A refined mid-size lawn wrapped in lush greenery,
+                perfect for daytime ceremonies and evening receptions
+                that call for warmth and elegance.
+              </p>
+            </div>
+            <div class="venue-slide-secondary-img">
+              <img src="images/lawn3_sm.jpg" alt="The Royal Lawn — evening setup">
+            </div>
+            <div class="venue-slide-info">
+              <p class="venue-slide-stats">300 to 800 GUESTS &nbsp;|&nbsp; ₹1,000 PER PLATE</p>
+              <ul class="venue-slide-features">
+                <li>Garden-enclosed setting</li>
+                <li>Bridal suite access</li>
+                <li>Dedicated valet zone</li>
+              </ul>
+            </div>
+          </div>
+
+        </div><!-- /venues-info-panel -->
+
+        <!-- Right main image panel — images cross-fade -->
+        <div class="venues-main-img-panel">
+          <div class="venue-main-img is-active">
+            <img src="images/lawn1_lg.jpg" alt="The Grand Lawn at Samarambh">
+          </div>
+          <div class="venue-main-img">
+            <img src="images/lawn2_lg.jpg" alt="The Banquet Hall at Samarambh">
+          </div>
+          <div class="venue-main-img">
+            <img src="images/lawn3_lg.jpg" alt="The Royal Lawn at Samarambh">
+          </div>
+        </div>
+
+      </div><!-- /venues-main-container -->
+    </div><!-- /venues-sticky -->
   </section>
 
 

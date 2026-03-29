@@ -158,23 +158,145 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
-  // ─── 4. Lawn Sections — Stacked Panel Effect ────────
-  // tenutacentoporte.it rooms/suites reference:
-  // each lawn panel pins at the top; the next slides up
-  // from below and takes over, creating a stacking reveal.
-  const lawns = gsap.utils.toArray('.lawn-section');
+  // ─── 4. Venues Showcase — Pinned Scroll + Parallax ──────
+  // TideScape "Service - Room" reference:
+  // • Section entrance: info panel slides up, main image unzooms from 1.1→1
+  // • Pinned for 2× extra viewport height (3 venue steps)
+  // • Each venue switch: outgoing fades+lifts, incoming unzooms+staggers in
+  // • Left progress line fills 0→100% across the full scroll
 
-  lawns.forEach((lawn) => {
-    // Pin each section
-    ScrollTrigger.create({
-      trigger: lawn,
-      start: 'top top',
-      pin: true,
-      pinSpacing: false,
-      end: () => `+=${lawn.offsetHeight}`,
+  const venuesSection  = document.querySelector('.venues-section');
+  const venueSlides    = document.querySelectorAll('.venue-slide');
+  const venueMainImgs  = document.querySelectorAll('.venue-main-img');
+  const progressFill   = document.querySelector('.venues-progress-fill');
+  const totalVenues    = venueSlides.length; // 3
+  let currentVenueIdx  = 0;
+
+  // Text elements to stagger on each venue switch
+  const venueTextSelectors = '.venue-slide-title, .venue-slide-desc, .venue-slide-secondary-img, .venue-slide-stats, .venue-slide-features';
+
+  function switchVenue(idx) {
+    if (idx === currentVenueIdx) return;
+
+    const outSlide = venueSlides[currentVenueIdx];
+    const outImg   = venueMainImgs[currentVenueIdx];
+    const inSlide  = venueSlides[idx];
+    const inImg    = venueMainImgs[idx];
+
+    // ── Outgoing ───────────────────────────────────────
+    outSlide.classList.remove('is-active');
+    gsap.to(outSlide, {
+      opacity: 0, y: -18,
+      duration: 0.35, ease: 'power2.in',
+      overwrite: true,
+      onComplete: () => gsap.set(outSlide, { y: 0 }),
+    });
+    gsap.to(outImg, {
+      opacity: 0, scale: 1.04,
+      duration: 0.4, ease: 'power2.in',
+      overwrite: true,
+      onComplete: () => {
+        outImg.classList.remove('is-active');
+        gsap.set(outImg, { scale: 1 });
+      },
     });
 
-  });
+    // ── Incoming ───────────────────────────────────────
+    inSlide.classList.add('is-active');
+    gsap.fromTo(inSlide,
+      { opacity: 0, y: 28 },
+      { opacity: 1, y: 0, duration: 0.55, ease: 'power3.out', overwrite: true, delay: 0.12 }
+    );
+
+    // Staggered text reveal
+    gsap.fromTo(inSlide.querySelectorAll(venueTextSelectors),
+      { opacity: 0, y: 18 },
+      { opacity: 1, y: 0, duration: 0.5, stagger: 0.07, ease: 'power3.out', overwrite: true, delay: 0.18 }
+    );
+
+    // Main image unzoom from slightly scaled
+    inImg.classList.add('is-active');
+    gsap.fromTo(inImg,
+      { opacity: 0, scale: 1.06 },
+      { opacity: 1, scale: 1, duration: 0.75, ease: 'power3.out', overwrite: true, delay: 0.08 }
+    );
+
+    currentVenueIdx = idx;
+  }
+
+  if (venuesSection) {
+    // ── 4a. Entrance parallax (before pin kicks in) ───
+    // Info panel: slides up from below as section scrolls into viewport
+    gsap.fromTo('.venues-info-panel',
+      { y: 60, opacity: 0 },
+      {
+        y: 0, opacity: 1,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: venuesSection,
+          start: 'top 85%',
+          end: 'top top',
+          scrub: 1,
+        },
+      }
+    );
+
+    // Progress line: fades in during entrance
+    gsap.fromTo('.venues-progress-line',
+      { opacity: 0 },
+      {
+        opacity: 1,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: venuesSection,
+          start: 'top 85%',
+          end: 'top 40%',
+          scrub: 1,
+        },
+      }
+    );
+
+    // Main image panel: unzoom from scale 1.1 as section enters (the TideScape parallax feel)
+    gsap.fromTo('.venues-main-img-panel',
+      { scale: 1.1, y: 40 },
+      {
+        scale: 1, y: 0,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: venuesSection,
+          start: 'top 85%',
+          end: 'top top',
+          scrub: 1.5,
+        },
+      }
+    );
+
+    // ── 4b. Initialize first slide visible ───────────
+    venueSlides[0].classList.add('is-active');
+    venueMainImgs[0].classList.add('is-active');
+    gsap.set(venueSlides[0], { opacity: 1, y: 0 });
+    gsap.set(venueMainImgs[0], { opacity: 1, scale: 1 });
+
+    // ── 4c. Pin + scroll-driven venue switching ───────
+    ScrollTrigger.create({
+      trigger: venuesSection,
+      start: 'top top',
+      end: () => `+=${window.innerHeight * 2}`,
+      pin: '.venues-sticky',
+      pinSpacing: true,
+      onUpdate: (self) => {
+        // Drive gold progress bar
+        progressFill.style.height = `${self.progress * 100}%`;
+
+        // Step-switch at each third
+        const idx = Math.min(
+          Math.floor(self.progress * totalVenues),
+          totalVenues - 1
+        );
+        switchVenue(idx);
+      },
+    });
+  }
 
 
   // ─── 5. Moments Sections — Pinned Timeline ───────────
@@ -354,27 +476,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
-  // ─── 10. Lawn section title reveal ───────────────────
-  document.querySelectorAll('.lawn-section').forEach(lawn => {
-    gsap.from(lawn.querySelectorAll('.lawn-name, .lawn-capacity'), {
-      y: 30,
-      opacity: 0,
-      duration: 1,
-      stagger: 0.15,
-      ease: 'power3.out',
-      scrollTrigger: {
-        trigger: lawn,
-        start: 'top 60%',
-      }
-    });
-  });
-
-
   // ─── Nav dark/light mode by section ─────────────────
   const nav = document.querySelector('.hero-nav');
-  const lawnsAll = gsap.utils.toArray('.lawn-section');
 
-  // Dark: intro video collapses (~100vh into the 150vh pin = ~2/3 collapsed)
+  // Dark text: intro video collapses → entering cream bg
   ScrollTrigger.create({
     trigger: '.intro-title-block',
     start: 'top top',
@@ -383,28 +488,9 @@ document.addEventListener('DOMContentLoaded', () => {
     onEnterBack:  () => nav.classList.remove('nav--dark'),
   });
 
-  // Light: lawn 1
-  ScrollTrigger.create({
-    trigger: lawnsAll[0],
-    start: 'top top',
-    onEnter:     () => nav.classList.remove('nav--dark'),
-    onLeaveBack: () => nav.classList.add('nav--dark'),
-  });
-
-  // Light: lawn 2
-  ScrollTrigger.create({
-    trigger: lawnsAll[1],
-    start: 'top top',
-    onEnter: () => nav.classList.remove('nav--dark'),
-  });
-
-  // Dark: moments (lawn 3 was light, moments needs dark)
-  ScrollTrigger.create({
-    trigger: '.moments-wrapper',
-    start: 'top top',
-    onEnter:     () => nav.classList.add('nav--dark'),
-    onLeaveBack: () => nav.classList.remove('nav--dark'),
-  });
+  // Venues section has cream bg → nav--dark stays active (inherited from above).
+  // Moments wrapper also has cream bg → nav--dark stays.
+  // No triggers needed until services section.
 
   // Light: services section
   ScrollTrigger.create({
