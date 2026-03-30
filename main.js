@@ -158,12 +158,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
-  // ─── 4. Venues Showcase — Pinned Scroll + Parallax ──────
+  // ─── 4. Venues Showcase — Pinned Scroll + Slide-from-Top ──
   // TideScape "Service - Room" reference:
-  // • Section entrance: info panel slides up, main image unzooms from 1.1→1
-  // • Pinned for 2× extra viewport height (3 venue steps)
-  // • Each venue switch: outgoing fades+lifts, incoming unzooms+staggers in
-  // • Left progress line fills 0→100% across the full scroll
+  // • Section entrance: first image slides DOWN from above (y:-100%→0), scrubbed
+  // • Pinned for 2× extra viewport height (3 venue steps total)
+  // • Venue switch forward: incoming image slides from top, outgoing fades
+  // • Venue switch backward: incoming image slides from bottom, outgoing fades
+  // • Left progress line fills top→bottom across the full scroll
 
   const venuesSection  = document.querySelector('.venues-section');
   const venueSlides    = document.querySelectorAll('.venue-slide');
@@ -172,39 +173,40 @@ document.addEventListener('DOMContentLoaded', () => {
   const totalVenues    = venueSlides.length; // 3
   let currentVenueIdx  = 0;
 
-  // Text elements to stagger on each venue switch
   const venueTextSelectors = '.venue-slide-title, .venue-slide-desc, .venue-slide-secondary-img, .venue-slide-stats, .venue-slide-features';
 
   function switchVenue(idx) {
     if (idx === currentVenueIdx) return;
+
+    const direction = idx > currentVenueIdx ? -1 : 1; // -1=forward(from top), 1=backward(from bottom)
+    const fromY     = direction < 0 ? '-100%' : '100%';
 
     const outSlide = venueSlides[currentVenueIdx];
     const outImg   = venueMainImgs[currentVenueIdx];
     const inSlide  = venueSlides[idx];
     const inImg    = venueMainImgs[idx];
 
-    // ── Outgoing ───────────────────────────────────────
+    // ── Outgoing slide (left panel) ────────────────────
     outSlide.classList.remove('is-active');
     gsap.to(outSlide, {
-      opacity: 0, y: -18,
-      duration: 0.35, ease: 'power2.in',
-      overwrite: true,
+      opacity: 0, y: direction < 0 ? -20 : 20,
+      duration: 0.35, ease: 'power2.in', overwrite: true,
       onComplete: () => gsap.set(outSlide, { y: 0 }),
     });
+
+    // ── Outgoing image — fade out; incoming slides over it
     gsap.to(outImg, {
-      opacity: 0, scale: 1.04,
-      duration: 0.4, ease: 'power2.in',
-      overwrite: true,
+      opacity: 0, duration: 0.45, ease: 'power2.in', overwrite: true,
       onComplete: () => {
         outImg.classList.remove('is-active');
-        gsap.set(outImg, { scale: 1 });
+        gsap.set(outImg, { y: 0 }); // reset y so backward scroll reuses it correctly
       },
     });
 
-    // ── Incoming ───────────────────────────────────────
+    // ── Incoming slide (left panel) ────────────────────
     inSlide.classList.add('is-active');
     gsap.fromTo(inSlide,
-      { opacity: 0, y: 28 },
+      { opacity: 0, y: direction < 0 ? 28 : -28 },
       { opacity: 1, y: 0, duration: 0.55, ease: 'power3.out', overwrite: true, delay: 0.12 }
     );
 
@@ -214,24 +216,30 @@ document.addEventListener('DOMContentLoaded', () => {
       { opacity: 1, y: 0, duration: 0.5, stagger: 0.07, ease: 'power3.out', overwrite: true, delay: 0.18 }
     );
 
-    // Main image unzoom from slightly scaled
+    // ── Incoming image — slides from top (forward) or bottom (backward)
     inImg.classList.add('is-active');
+    gsap.set(inImg, { zIndex: 1 }); // float above outgoing during slide
     gsap.fromTo(inImg,
-      { opacity: 0, scale: 1.06 },
-      { opacity: 1, scale: 1, duration: 0.75, ease: 'power3.out', overwrite: true, delay: 0.08 }
+      { y: fromY, opacity: 1 },
+      {
+        y: '0%', opacity: 1,
+        duration: 0.9, ease: 'power3.out', overwrite: true,
+        onComplete: () => {
+          gsap.set(inImg,  { zIndex: 0 });
+          gsap.set(outImg, { y: 0 }); // safety reset
+        },
+      }
     );
 
     currentVenueIdx = idx;
   }
 
   if (venuesSection) {
-    // ── 4a. Entrance parallax (before pin kicks in) ───
-    // Info panel: slides up from below as section scrolls into viewport
+    // ── 4a. Entrance: info panel slides up ─────────────
     gsap.fromTo('.venues-info-panel',
       { y: 60, opacity: 0 },
       {
-        y: 0, opacity: 1,
-        ease: 'none',
+        y: 0, opacity: 1, ease: 'none',
         scrollTrigger: {
           trigger: venuesSection,
           start: 'top 85%',
@@ -241,12 +249,11 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     );
 
-    // Progress line: fades in during entrance
+    // ── 4b. Entrance: progress line fades in ───────────
     gsap.fromTo('.venues-progress-line',
       { opacity: 0 },
       {
-        opacity: 1,
-        ease: 'none',
+        opacity: 1, ease: 'none',
         scrollTrigger: {
           trigger: venuesSection,
           start: 'top 85%',
@@ -256,28 +263,27 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     );
 
-    // Main image panel: unzoom from scale 1.1 as section enters (the TideScape parallax feel)
-    gsap.fromTo('.venues-main-img-panel',
-      { scale: 1.1, y: 40 },
-      {
-        scale: 1, y: 0,
-        ease: 'none',
-        scrollTrigger: {
-          trigger: venuesSection,
-          start: 'top 85%',
-          end: 'top top',
-          scrub: 1.5,
-        },
-      }
-    );
+    // ── 4c. Entrance: first image slides from top ──────
+    // Starts above the overflow:hidden container, scrubs down to y:0 as
+    // the section scrolls into view — the TideScape "slide from top" feel.
+    gsap.set(venueMainImgs[0], { y: '-100%', opacity: 1 });
+    gsap.to(venueMainImgs[0], {
+      y: '0%', ease: 'none',
+      scrollTrigger: {
+        trigger: venuesSection,
+        start: 'top 90%',
+        end: 'top top',
+        scrub: 1,
+      },
+    });
 
-    // ── 4b. Initialize first slide visible ───────────
+    // ── 4d. Initialise first slide visible ─────────────
     venueSlides[0].classList.add('is-active');
     venueMainImgs[0].classList.add('is-active');
     gsap.set(venueSlides[0], { opacity: 1, y: 0 });
-    gsap.set(venueMainImgs[0], { opacity: 1, scale: 1 });
+    // venueMainImgs[0] y is owned by the entrance scrub above — do not override
 
-    // ── 4c. Pin + scroll-driven venue switching ───────
+    // ── 4e. Pin + progress bar + venue switching ───────
     ScrollTrigger.create({
       trigger: venuesSection,
       start: 'top top',
@@ -285,10 +291,8 @@ document.addEventListener('DOMContentLoaded', () => {
       pin: '.venues-sticky',
       pinSpacing: true,
       onUpdate: (self) => {
-        // Drive gold progress bar
         progressFill.style.height = `${self.progress * 100}%`;
 
-        // Step-switch at each third
         const idx = Math.min(
           Math.floor(self.progress * totalVenues),
           totalVenues - 1
