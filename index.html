@@ -327,60 +327,66 @@
 
 
   <!-- ═══════════════════════════════════════════════════
-       SERVICES SECTION (scroll-tab)
+       SERVICES SECTION (stacked sticky cards)
        ═══════════════════════════════════════════════════ -->
-  <section class="services-section" id="services">
+  <section class="svc-section" id="services">
 
-    <!-- Stacked background images — only active layer is visible -->
-    <div class="services-bg">
-      <div class="services-bg-slide is-active">
-        <img src="images/Services1.jpg" alt="">
-      </div>
-      <div class="services-bg-slide">
-        <img src="images/Services2.jpg" alt="">
-      </div>
-      <div class="services-bg-slide">
-        <img src="images/Services3.jpg" alt="">
-      </div>
-      <div class="services-overlay"></div>
+    <!-- Heading — normal flow, scrolls away -->
+    <div class="svc-heading">
+      <h2 class="svc-title">Every Detail,<br><em>Thoughtfully Arranged</em></h2>
     </div>
 
-    <!-- Main content -->
-    <div class="services-content">
+    <!-- Sticky cards wrap -->
+    <div class="svc-cards-wrap">
 
-      <!-- Eyebrow + Tabs -->
-      <div class="services-header">
-        <div class="eyebrow-badge">
-          <span>What's Included</span>
+      <!-- Card 1 — Décor, Florals & Lighting -->
+      <article class="svc-card">
+        <div class="svc-card-inner">
+          <h3 class="svc-card-title">Décor, Florals &amp; Lighting</h3>
+          <div class="svc-card-img">
+            <img src="images/Services1.jpg" alt="Décor, Florals &amp; Lighting" loading="lazy">
+          </div>
+          <div class="svc-card-text">
+            <p>Thematic décor crafted by our in-house design team. From floral mandaps to modern minimalist setups.</p>
+            <p>State-of-the-art sound systems, intelligent lighting rigs, LED walls, and professional technicians on standby.</p>
+          </div>
         </div>
-        <div class="services-tabs">
-          <button class="services-tab is-active" data-tab="0">Décor, Florals &amp; Lighting</button>
-          <button class="services-tab" data-tab="1">In-house Catering</button>
-          <button class="services-tab" data-tab="2">Accommodation &amp; Parking</button>
-        </div>
-      </div>
+      </article>
 
-      <!-- Description card — bottom right, swaps per tab -->
-      <div class="services-desc">
-        <div class="services-desc-panel is-active" data-tab="0">
-          <ul>
-            <li>Thematic décor crafted by our in-house design team. From floral mandaps to modern minimalist setups.</li>
-            <li>State-of-the-art sound systems, intelligent lighting rigs, LED walls, and professional technicians on standby.</li>
-          </ul>
+      <!-- Card 2 — In-House Catering -->
+      <article class="svc-card">
+        <div class="svc-card-inner">
+          <h3 class="svc-card-title">In-House Catering</h3>
+          <div class="svc-card-img">
+            <img src="images/Services2.jpg" alt="In-House Catering" loading="lazy">
+          </div>
+          <div class="svc-card-text">
+            <p>Chefs crafting both vegetarian and non-vegetarian menus. Live counters, buffet spreads, and plated service — all managed in-house.</p>
+            <ul>
+              <li>Veg &amp; Non-veg menus</li>
+              <li>Live cooking stations</li>
+              <li>Fusion &amp; Traditional cuisines</li>
+              <li>Custom menu planning</li>
+            </ul>
+          </div>
         </div>
-        <div class="services-desc-panel" data-tab="1">
-          <ul>
-            <li>Chefs crafting both vegetarian and non-vegetarian menus. Live counters, buffet spreads, and plated service — all managed in-house.</li>
-            <li>Veg &amp; Non-veg menus · Live cooking stations · Fusion &amp; Traditional cuisines · Custom menu planning</li>
-          </ul>
+      </article>
+
+      <!-- Card 3 — Parking & Accommodation -->
+      <article class="svc-card">
+        <div class="svc-card-inner">
+          <h3 class="svc-card-title">Parking &amp; Accommodation</h3>
+          <div class="svc-card-img">
+            <img src="images/Services3.jpg" alt="Parking &amp; Accommodation" loading="lazy">
+          </div>
+          <div class="svc-card-text">
+            <ul>
+              <li>Covered parking for 400+ vehicles with professional valet service available on request.</li>
+              <li>Partner hotel tie-ups for outstation guests, with preferential rates and complimentary shuttle service.</li>
+            </ul>
+          </div>
         </div>
-        <div class="services-desc-panel" data-tab="2">
-          <ul>
-            <li>Covered parking for 400+ vehicles with professional valet service available on request.</li>
-            <li>Partner hotel tie-ups for outstation guests, with preferential rates and complimentary shuttle service.</li>
-          </ul>
-        </div>
-      </div>
+      </article>
 
     </div>
   </section>

@@ -392,43 +392,23 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 2.8);
 
 
-  // ─── 6. Services — Scroll-Driven Tab Switching ───────
-  const servicesBgs    = gsap.utils.toArray('.services-bg-slide');
-  const servicesTabs   = document.querySelectorAll('.services-tab');
-  const servicesPanels = document.querySelectorAll('.services-desc-panel');
-  let activeServiceTab = 0;
-
-  function activateServicesTab(index) {
-    if (index === activeServiceTab) return;
-
-    servicesBgs[activeServiceTab].classList.remove('is-active');
-    servicesBgs[index].classList.add('is-active');
-
-    servicesTabs[activeServiceTab].classList.remove('is-active');
-    servicesTabs[index].classList.add('is-active');
-
-    servicesPanels[activeServiceTab].classList.remove('is-active');
-    servicesPanels[index].classList.add('is-active');
-
-    // Slide the tab row left so the active tab lands at the leftmost position
-    gsap.to('.services-tabs', {
-      x: -servicesTabs[index].offsetLeft,
-      duration: 0.7,
-      ease: 'power3.inOut',
-    });
-
-    activeServiceTab = index;
-  }
-
-  ScrollTrigger.create({
-    trigger: '.services-section',
-    start: 'top top',
-    end: '+=300vh',
-    pin: true,
-    onUpdate: (self) => {
-      const tab = Math.min(2, Math.floor(self.progress * 3));
-      activateServicesTab(tab);
-    }
+  // ─── 6. Services — Stacked Card Entrance ────────────
+  gsap.utils.toArray('.svc-card').forEach((card, i) => {
+    if (i === 0) return;
+    gsap.fromTo(card,
+      { y: '100vh' },
+      {
+        y: '0vh',
+        ease: 'none',
+        scrollTrigger: {
+          trigger: card,
+          start: 'top bottom',
+          end: 'top top',
+          scrub: true,
+          invalidateOnRefresh: true,
+        },
+      }
+    );
   });
 
 
