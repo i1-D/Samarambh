@@ -514,31 +514,25 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
-  // ─── Reviews Carousel ────────────────────────────────
-  const reviewsTrack = document.querySelector('.reviews-track');
+  // ─── Reviews — pin section, scrub cards upward ────────
+  const rvSection = document.querySelector('.rv-section');
+  if (rvSection) {
+    const rvTrack = rvSection.querySelector('.rv-track');
 
-  if (reviewsTrack) {
-    // Duplicate cards for seamless infinite loop
-    [...reviewsTrack.children].forEach(card => {
-      reviewsTrack.appendChild(card.cloneNode(true));
+    const rvTl = gsap.timeline({ paused: true });
+    rvTl.to(rvTrack, {
+      y: () => -(rvTrack.scrollHeight - rvSection.offsetHeight),
+      ease: 'none',
     });
 
-    // Per-card hover: activate card & pause scroll
-    reviewsTrack.querySelectorAll('.review-card').forEach(card => {
-      card.addEventListener('mouseenter', () => {
-        reviewsTrack.style.animationPlayState = 'paused';
-        reviewsTrack.querySelectorAll('.review-card').forEach(c => c.classList.remove('is-active'));
-        card.classList.add('is-active');
-      });
-      card.addEventListener('mouseleave', () => {
-        card.classList.remove('is-active');
-        reviewsTrack.style.animationPlayState = 'running';
-      });
-    });
-
-    // Pause when tab is hidden
-    document.addEventListener('visibilitychange', () => {
-      reviewsTrack.style.animationPlayState = document.hidden ? 'paused' : 'running';
+    ScrollTrigger.create({
+      trigger: rvSection,
+      start: 'top top',
+      end: () => `+=${rvTrack.scrollHeight - rvSection.offsetHeight}`,
+      pin: true,
+      scrub: 1,
+      animation: rvTl,
+      invalidateOnRefresh: true,
     });
   }
 
