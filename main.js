@@ -392,24 +392,28 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 2.8);
 
 
-  // ─── 6. Services — Stacked Card Entrance ────────────
-  gsap.utils.toArray('.svc-card').forEach((card, i) => {
-    if (i === 0) return;
-    gsap.fromTo(card,
-      { y: '100vh' },
-      {
-        y: '0vh',
-        ease: 'none',
+  // ─── 6. Services — Scroll-Triggered Card Reveal ──────
+  const svcCards = gsap.utils.toArray('.svc-card');
+  if (svcCards.length) {
+    gsap.set(svcCards[0], { zIndex: 3 });
+    gsap.set(svcCards[1], { opacity: 0, y: -480, zIndex: 2 });
+    gsap.set(svcCards[2], { opacity: 0, y: -480, zIndex: 1 });
+
+    svcCards.slice(1).forEach(card => {
+      gsap.to(card, {
+        opacity: 1,
+        y: 0,
+        ease: 'power2.out',
         scrollTrigger: {
           trigger: card,
-          start: 'top bottom',
-          end: 'top top',
-          scrub: true,
+          start: 'top 20%',
+          end: 'top 100%',
+          scrub: 2,
           invalidateOnRefresh: true,
         },
-      }
-    );
-  });
+      });
+    });
+  }
 
 
   // ─── 7. Text Reveal with GSAP ScrollTrigger ──────────
