@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Samarambh — Frequently Asked Questions</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --green-deep:   #14452F;
+    --green-forest: #1B5E3A;
+    --green-mid:    #2A7A50;
+    --gold:         #C9A84C;
+    --gold-light:   #E2C97E;
+    --gold-pale:    #F5EDDA;
+    --cream:        #FAF6EE;
+    --cream-warm:   #F3ECD8;
+    --ink:          #1A1A1A;
+    --ink-soft:     #3D3228;
+    --muted:        #7A6E5F;
+    --border:       rgba(201,168,76,0.25);
+    --border-soft:  rgba(201,168,76,0.12);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--cream);
+    color: var(--ink);
+    font-family: 'Outfit', sans-serif;
+    font-weight: 300;
+    min-height: 100vh;
+  }
+
+  /* ── SECTION WRAPPER ── */
+  .faq-section {
+    padding: 80px 24px 100px;
+    max-width: 860px;
+    margin: 0 auto;
+  }
+
+  /* ── HEADER ── */
+  .faq-header {
+    text-align: center;
+    margin-bottom: 64px;
+  }
+
+  .faq-eyebrow {
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.68rem;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+  }
+  .faq-eyebrow::before,
+  .faq-eyebrow::after {
+    content: '';
+    width: 32px;
+    height: 1px;
+    background: var(--gold);
+    opacity: 0.6;
+  }
+
+  .faq-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.2rem, 5vw, 3.4rem);
+    font-weight: 400;
+    color: var(--green-deep);
+    line-height: 1.12;
+    margin-bottom: 20px;
+  }
+  .faq-title em {
+    font-style: italic;
+    color: var(--green-forest);
+  }
+
+  .faq-subtitle {
+    font-size: 0.95rem;
+    color: var(--muted);
+    line-height: 1.7;
+    max-width: 520px;
+    margin: 0 auto;
+  }
+
+  /* ── ORNAMENT ── */
+  .ornament {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin: 28px 0 0;
+  }
+  .ornament-line {
+    width: 48px;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--gold));
+  }
+  .ornament-line.right {
+    background: linear-gradient(to left, transparent, var(--gold));
+  }
+  .ornament-diamond {
+    width: 7px;
+    height: 7px;
+    background: var(--gold);
+    transform: rotate(45deg);
+  }
+  .ornament-dot {
+    width: 3px;
+    height: 3px;
+    background: var(--gold-light);
+    transform: rotate(45deg);
+  }
+
+  /* ── CATEGORIES ── */
+  .faq-categories {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+    margin-bottom: 40px;
+  }
+
+  .cat-pill {
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 7px 18px;
+    border-radius: 100px;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    cursor: pointer;
+    transition: all 0.22s ease;
+    background: transparent;
+  }
+  .cat-pill:hover,
+  .cat-pill.active {
+    background: var(--green-forest);
+    border-color: var(--green-forest);
+    color: #fff;
+  }
+
+  /* ── FAQ LIST ── */
+  .faq-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  /* ── ACCORDION ITEM ── */
+  .faq-item {
+    border-bottom: 1px solid var(--border-soft);
+    overflow: hidden;
+    transition: background 0.2s;
+  }
+  .faq-item:first-child {
+    border-top: 1px solid var(--border-soft);
+  }
+
+  .faq-item[data-hidden="true"] {
+    display: none;
+  }
+
+  /* question row */
+  .faq-question {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 20px;
+    padding: 26px 0;
+    cursor: pointer;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .faq-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem;
+    font-weight: 400;
+    color: var(--gold);
+    letter-spacing: 0.04em;
+    min-width: 28px;
+    opacity: 0.85;
+  }
+
+  .faq-q-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.05rem, 2.5vw, 1.22rem);
+    font-weight: 500;
+    color: var(--green-deep);
+    line-height: 1.35;
+    transition: color 0.2s;
+  }
+
+  .faq-item.open .faq-q-text {
+    color: var(--green-forest);
+  }
+
+  /* tag */
+  .faq-tag {
+    display: none;
+  }
+
+  /* icon */
+  .faq-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: all 0.28s ease;
+    color: var(--gold);
+  }
+  .faq-icon svg {
+    width: 14px;
+    height: 14px;
+    transition: transform 0.32s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  .faq-item.open .faq-icon {
+    background: var(--green-forest);
+    border-color: var(--green-forest);
+    color: #fff;
+  }
+  .faq-item.open .faq-icon svg {
+    transform: rotate(45deg);
+  }
+
+  /* answer panel */
+  .faq-answer {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.38s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .faq-item.open .faq-answer {
+    grid-template-rows: 1fr;
+  }
+  .faq-answer-inner {
+    overflow: hidden;
+  }
+  .faq-answer-content {
+    padding: 0 0 30px 48px;
+  }
+
+  .faq-answer-content p {
+    font-size: 0.92rem;
+    color: var(--ink-soft);
+    line-height: 1.8;
+    margin-bottom: 12px;
+  }
+  .faq-answer-content p:last-child { margin-bottom: 0; }
+
+  .faq-answer-content strong {
+    font-weight: 500;
+    color: var(--green-forest);
+  }
+
+  /* answer pills */
+  .answer-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 14px;
+  }
+  .answer-pill {
+    font-size: 0.74rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    padding: 5px 14px;
+    border-radius: 100px;
+    border: 1px solid;
+  }
+  .answer-pill.yes {
+    color: var(--green-forest);
+    border-color: rgba(27,94,58,0.3);
+    background: rgba(27,94,58,0.05);
+  }
+  .answer-pill.no {
+    color: #8B4513;
+    border-color: rgba(139,69,19,0.25);
+    background: rgba(139,69,19,0.04);
+  }
+  .answer-pill.info {
+    color: var(--muted);
+    border-color: var(--border);
+    background: transparent;
+  }
+
+  /* CTA note */
+  .faq-answer-cta {
+    margin-top: 16px;
+    padding: 14px 18px;
+    background: var(--cream-warm);
+    border-left: 2px solid var(--gold);
+    border-radius: 0 6px 6px 0;
+    font-size: 0.83rem;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+  .faq-answer-cta a {
+    color: var(--green-forest);
+    font-weight: 500;
+    text-decoration: none;
+  }
+  .faq-answer-cta a:hover { text-decoration: underline; }
+
+  /* ── BOTTOM CTA ── */
+  .faq-bottom-cta {
+    margin-top: 60px;
+    background: var(--green-deep);
+    border-radius: 12px;
+    padding: 42px 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .faq-bottom-cta::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60' viewBox='0 0 60 60'%3E%3Ccircle cx='30' cy='30' r='24' fill='none' stroke='%23C9A84C' stroke-width='0.4' opacity='0.15'/%3E%3Ccircle cx='30' cy='30' r='14' fill='none' stroke='%23C9A84C' stroke-width='0.3' opacity='0.1'/%3E%3C/svg%3E") center / 60px 60px;
+    pointer-events: none;
+  }
+
+  .faq-bottom-cta h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.7rem;
+    font-weight: 400;
+    color: #fff;
+    margin-bottom: 10px;
+    position: relative;
+  }
+  .faq-bottom-cta h3 em { font-style: italic; color: var(--gold-light); }
+  .faq-bottom-cta p {
+    font-size: 0.88rem;
+    color: rgba(255,255,255,0.6);
+    margin-bottom: 28px;
+    position: relative;
+  }
+
+  .cta-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: center;
+    position: relative;
+  }
+
+  .btn-primary {
+    background: var(--gold);
+    color: var(--green-deep);
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 14px 30px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.22s;
+  }
+  .btn-primary:hover {
+    background: var(--gold-light);
+    transform: translateY(-1px);
+  }
+
+  .btn-ghost {
+    background: transparent;
+    color: rgba(255,255,255,0.85);
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 14px 28px;
+    border: 1px solid rgba(255,255,255,0.25);
+    border-radius: 4px;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.22s;
+  }
+  .btn-ghost:hover {
+    border-color: rgba(255,255,255,0.55);
+    color: #fff;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 600px) {
+    .faq-section { padding: 56px 16px 72px; }
+    .faq-header { margin-bottom: 48px; }
+    .faq-answer-content { padding-left: 36px; }
+    .faq-bottom-cta { padding: 32px 24px; }
+    .faq-bottom-cta h3 { font-size: 1.4rem; }
+  }
+
+  /* ── ENTRY ANIMATION ── */
+  .faq-item {
+    animation: fadeSlideIn 0.4s ease both;
+  }
+  @keyframes fadeSlideIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .faq-item:nth-child(1)  { animation-delay: 0.05s }
+  .faq-item:nth-child(2)  { animation-delay: 0.10s }
+  .faq-item:nth-child(3)  { animation-delay: 0.15s }
+  .faq-item:nth-child(4)  { animation-delay: 0.18s }
+  .faq-item:nth-child(5)  { animation-delay: 0.21s }
+  .faq-item:nth-child(6)  { animation-delay: 0.24s }
+  .faq-item:nth-child(7)  { animation-delay: 0.27s }
+  .faq-item:nth-child(8)  { animation-delay: 0.30s }
+  .faq-item:nth-child(9)  { animation-delay: 0.33s }
+  .faq-item:nth-child(10) { animation-delay: 0.36s }
+</style>
+</head>
+<body>
+
+<section class="faq-section">
+
+  <!-- HEADER -->
+  <header class="faq-header">
+    <div class="faq-eyebrow">Have a Question?</div>
+    <h2 class="faq-title">Everything You Need <em>to Know</em></h2>
+    <p class="faq-subtitle">From capacity and catering to booking and beyond — the answers couples and families ask most.</p>
+    <div class="ornament">
+      <div class="ornament-line"></div>
+      <div class="ornament-dot"></div>
+      <div class="ornament-diamond"></div>
+      <div class="ornament-dot"></div>
+      <div class="ornament-line right"></div>
+    </div>
+  </header>
+
+  <!-- CATEGORY FILTER -->
+  <div class="faq-categories" role="group" aria-label="Filter by category">
+    <button class="cat-pill active" data-cat="all">All Questions</button>
+    <button class="cat-pill" data-cat="venue">Venue & Capacity</button>
+    <button class="cat-pill" data-cat="food">Food & Drinks</button>
+    <button class="cat-pill" data-cat="logistics">Logistics</button>
+    <button class="cat-pill" data-cat="booking">Booking</button>
+  </div>
+
+  <!-- FAQ ITEMS -->
+  <div class="faq-list" role="list">
+
+    <!-- 01 -->
+    <div class="faq-item" data-cat="venue" role="listitem">
+      <div class="faq-question" onclick="toggle(this)" aria-expanded="false">
+        <span class="faq-num">01</span>
+        <span class="faq-q-text">How many guests can Samarambh accommodate?</span>
+        <span class="faq-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        </span>
+      </div>
+      <div class="faq-answer" role="region">
+        <div class="faq-answer-inner">
+          <div class="faq-answer-content">
+            <p>Samarambh has <strong>four distinct spaces</strong>, each suited to a different scale of celebration — so whether you're hosting an intimate gathering or a grand shaadi, there's a venue for you.</p>
+            <div class="answer-pills">
+              <span class="answer-pill yes">Lawn 1 — 700 seated / 1,000 floating</span>
+              <span class="answer-pill yes">Lawn 2 — 1,500 seated / 2,000 floating</span>
+              <span class="answer-pill yes">Jalsa — 650 seated / 1,000 floating</span>
+              <span class="answer-pill yes">Banquet Hall — 300 seated / 500 floating (AC)</span>
+            </div>
+            <div class="faq-answer-cta">Not sure which space fits your guest list? <a href="tel:+919152547777">Call us</a> or <a href="#">send a WhatsApp</a> and we'll help you choose the right venue in minutes.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 02 -->
+    <div class="faq-item" data-cat="food" role="listitem">
+      <div class="faq-question" onclick="toggle(this)" aria-expanded="false">
+        <span class="faq-num">02</span>
+        <span class="faq-q-text">Is outside catering allowed? Can we bring our own caterer?</span>
+        <span class="faq-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        </span>
+      </div>
+      <div class="faq-answer" role="region">
+        <div class="faq-answer-inner">
+          <div class="faq-answer-content">
+            <p><strong>Outside catering is not permitted.</strong> All food must be arranged through Samarambh's in-house kitchen, which allows us to maintain consistent quality and hygiene across every event.</p>
+            <p>Our kitchen offers both <strong>Veg and Non-Veg menus</strong>, with each per-plate package covering starters, mains, and dessert. Menus can be customised based on your event type and preferences — speak to our team to discuss options.</p>
+            <div class="answer-pills">
+              <span class="answer-pill no">Outside caterers not permitted</span>
+              <span class="answer-pill yes">Veg menus available</span>
+              <span class="answer-pill yes">Non-Veg menus available</span>
+              <span class="answer-pill info">Per-plate pricing varies by event & date</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 03 -->
+    <div class="faq-item" data-cat="food" role="listitem">
+      <div class="faq-question" onclick="toggle(this)" aria-expanded="false">
+        <span class="faq-num">03</span>
+        <span class="faq-q-text">Is outside alcohol permitted? Do you have a bar?</span>
+        <span class="faq-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        </span>
+      </div>
+      <div class="faq-answer" role="region">
+        <div class="faq-answer-inner">
+          <div class="faq-answer-content">
+            <p>Yes — <strong>outside licensed alcohol is welcome</strong> at Samarambh. The venue does not stock or supply alcohol directly, but you are free to bring your own, provided it is legally licensed.</p>
+            <p>If you need assistance, Samarambh can arrange a <strong>liquor licence</strong> on your behalf for a charge of <strong>₹20,000</strong>. This covers the necessary permits so your celebration goes smoothly without any compliance concerns.</p>
+            <div class="answer-pills">
+              <span class="answer-pill no">Alcohol not stocked at venue</span>
+              <span class="answer-pill yes">Licensed outside alcohol permitted</span>
+              <span class="answer-pill info">Liquor licence arranged by venue — ₹20,000</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 04 -->
+    <div class="faq-item" data-cat="venue" role="listitem">
+      <div class="faq-question" onclick="toggle(this)" aria-expanded="false">
+        <span class="faq-num">04</span>
+        <span class="faq-q-text">What are the venue timings? Are late-night events allowed?</span>
+        <span class="faq-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        </span>
+      </div>
+      <div class="faq-answer" role="region">
+        <div class="faq-answer-inner">
+          <div class="faq-answer-content">
+            <p>Samarambh operates on <strong>two daily slots</strong>, allowing you to book either a daytime or an evening celebration:</p>
+            <div class="answer-pills">
+              <span class="answer-pill info">Lunch slot — 9:00 AM to 3:00 PM</span>
+              <span class="answer-pill info">Dinner slot — 6:00 PM to 12:00 AM (midnight)</span>
+            </div>
+            <p style="margin-top:14px">The dinner slot runs until midnight, which accommodates most evening wedding receptions and sangeet programmes comfortably. Any extensions beyond the standard slot are subject to venue terms and conditions — speak with our team at the time of booking.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 05 -->
+    <div class="faq-item" data-cat="logistics" role="listitem">
+      <div class="faq-question" onclick="toggle(this)" aria-expanded="false">
+        <span class="faq-num">05</span>
+        <span class="faq-q-text">Is a DJ or live music allowed? What AV is available?</span>
+        <span class="faq-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        </span>
+      </div>
+      <div class="faq-answer" role="region">
+        <div class="faq-answer-inner">
+          <div class="faq-answer-content">
+            <p>Yes, music and entertainment are very much a part of the Samarambh experience. The venue provides a <strong>basic sound system and stage</strong> as part of the setup, along with <strong>full power backup</strong> so the celebration never misses a beat.</p>
+            <p>DJ packages start from <strong>₹8,000</strong> and can be arranged through the venue. Projectors and microphones are also available at additional charges. For Homa or fire rituals, <strong>Havan/Homa is permitted</strong> on the premises.</p>
+            <div class="answer-pills">
+              <span class="answer-pill yes">Stage & sound system included</span>
+              <span class="answer-pill yes">Full power backup</span>
+              <span class="answer-pill yes">Homa / fire pooja permitted</span>
+              <span class="answer-pill info">DJ from ₹8,000</span>
+              <span class="answer-pill info">Projector & mic — additional charges</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 06 -->
+    <div class="faq-item" data-cat="logistics" role="listitem">
+      <div class="faq-question" onclick="toggle(this)" aria-expanded="false">
+        <span class="faq-num">06</span>
+        <span class="faq-q-text">Is parking available? How do guests get to the venue?</span>
+        <span class="faq-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        </span>
+      </div>
+      <div class="faq-answer" role="region">
+        <div class="faq-answer-inner">
+          <div class="faq-answer-content">
+            <p>Samarambh offers <strong>dedicated on-site parking for up to 75 vehicles</strong>, with a professional valet service available on event days. The venue sits directly on <strong>Ghodbunder Road</strong>, one of Thane's main arterial roads, making it easy to find and accessible from all directions.</p>
+            <div class="answer-pills">
+              <span class="answer-pill yes">Parking for 75 vehicles</span>
+              <span class="answer-pill yes">Valet parking available</span>
+              <span class="answer-pill info">On Ghodbunder Road, Thane West</span>
+              <span class="answer-pill info">Thane Bus Stop & Metro nearby</span>
+              <span class="answer-pill info">~56 km from Mumbai Airport</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 07 -->
+    <div class="faq-item" data-cat="logistics" role="listitem">
+      <div class="faq-question" onclick="toggle(this)" aria-expanded="false">
+        <span class="faq-num">07</span>
+        <span class="faq-q-text">Do you have guest rooms or accommodation on-site?</span>
+        <span class="faq-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        </span>
+      </div>
+      <div class="faq-answer" role="region">
+        <div class="faq-answer-inner">
+          <div class="faq-answer-content">
+            <p>Yes. Samarambh has <strong>13 guest rooms</strong> on the premises — a meaningful convenience for out-of-town family and the bridal or groom's party who need to be nearby before or after the event.</p>
+            <p>Having accommodation within the venue removes the stress of coordinating separate hotels for close family, and makes early morning events (like Haldi or Mehendi) far more manageable. Please check availability with our team when enquiring about your event date.</p>
+            <div class="answer-pills">
+              <span class="answer-pill yes">13 guest rooms on-site</span>
+              <span class="answer-pill info">Availability based on event date</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 08 -->
+    <div class="faq-item" data-cat="logistics" role="listitem">
+      <div class="faq-question" onclick="toggle(this)" aria-expanded="false">
+        <span class="faq-num">08</span>
+        <span class="faq-q-text">Can I use my own decorator? Is décor included?</span>
+        <span class="faq-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        </span>
+      </div>
+      <div class="faq-answer" role="region">
+        <div class="faq-answer-inner">
+          <div class="faq-answer-content">
+            <p>You have full flexibility with décor. Samarambh has an <strong>in-house décor team</strong> experienced in thematic setups, floral mandaps, and contemporary arrangements — ideal if you'd like a curated, hassle-free experience.</p>
+            <p>If you have a preferred decorator or a very specific vision, <strong>outside decorators are also permitted</strong> with prior arrangement. Banquet hall clients may also receive a <strong>complimentary gift</strong> depending on the event type and date — ask our team for details.</p>
+            <div class="answer-pills">
+              <span class="answer-pill yes">In-house décor team available</span>
+              <span class="answer-pill yes">Outside decorators permitted</span>
+              <span class="answer-pill info">Complimentary gift for banquet clients (event-dependent)</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 09 -->
+    <div class="faq-item" data-cat="venue" role="listitem">
+      <div class="faq-question" onclick="toggle(this)" aria-expanded="false">
+        <span class="faq-num">09</span>
+        <span class="faq-q-text">What types of events does Samarambh host — only weddings?</span>
+        <span class="faq-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        </span>
+      </div>
+      <div class="faq-answer" role="region">
+        <div class="faq-answer-inner">
+          <div class="faq-answer-content">
+            <p>While weddings are at the heart of what we do, Samarambh has over a decade of experience hosting the full range of life's milestones. Every event receives the same attentive service, regardless of size or occasion.</p>
+            <div class="answer-pills">
+              <span class="answer-pill yes">Weddings & Receptions</span>
+              <span class="answer-pill yes">Engagement & Sangeet</span>
+              <span class="answer-pill yes">Mehendi & Haldi</span>
+              <span class="answer-pill yes">Birthday Parties</span>
+              <span class="answer-pill yes">Baby Showers & Anniversaries</span>
+              <span class="answer-pill yes">Corporate Events & Conferences</span>
+              <span class="answer-pill yes">Social Gatherings</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 10 -->
+    <div class="faq-item" data-cat="booking" role="listitem">
+      <div class="faq-question" onclick="toggle(this)" aria-expanded="false">
+        <span class="faq-num">10</span>
+        <span class="faq-q-text">How do I book? What is the advance payment and cancellation policy?</span>
+        <span class="faq-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        </span>
+      </div>
+      <div class="faq-answer" role="region">
+        <div class="faq-answer-inner">
+          <div class="faq-answer-content">
+            <p>Booking Samarambh is straightforward. Begin by reaching out via phone, WhatsApp, or the inquiry form to confirm your event date and venue availability. Once details are agreed, a <strong>50% advance secures your booking</strong>. The remaining balance is due <strong>15 days before the event date</strong>.</p>
+            <p>Please note that bookings are <strong>non-cancellable and non-refundable</strong>, so we recommend confirming all details carefully before payment. Standard GST is applicable on the total booking amount.</p>
+            <div class="answer-pills">
+              <span class="answer-pill info">50% advance confirms booking</span>
+              <span class="answer-pill info">Balance due 15 days before event</span>
+              <span class="answer-pill no">Non-cancellable & non-refundable</span>
+              <span class="answer-pill info">Standard GST applicable</span>
+            </div>
+            <div class="faq-answer-cta">Ready to check availability? <a href="tel:+919152547777">Call +91 91525 47777</a>, <a href="tel:+918454027777">+91 84540 27777</a>, or <a href="#">WhatsApp us</a> — we'll respond within 2 hours.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /faq-list -->
+
+  <!-- BOTTOM CTA -->
+  <div class="faq-bottom-cta">
+    <h3>Still Have a <em>Question?</em></h3>
+    <p>Our team is happy to answer anything — from venue specs to menu options — before you visit.</p>
+    <div class="cta-buttons">
+      <a href="tel:+919152547777" class="btn-primary">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 014.07 12a19.79 19.79 0 01-3.07-8.67A2 2 0 013 1.18h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L7.09 8.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+        Call Us Now
+      </a>
+      <a href="#" class="btn-ghost">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        WhatsApp Us
+      </a>
+    </div>
+  </div>
+
+</section>
+
+<script>
+  // ── ACCORDION TOGGLE ──
+  function toggle(questionEl) {
+    const item = questionEl.parentElement;
+    const isOpen = item.classList.contains('open');
+
+    // Close all
+    document.querySelectorAll('.faq-item.open').forEach(el => {
+      el.classList.remove('open');
+      el.querySelector('.faq-question').setAttribute('aria-expanded', 'false');
+    });
+
+    // Open clicked (if it was closed)
+    if (!isOpen) {
+      item.classList.add('open');
+      questionEl.setAttribute('aria-expanded', 'true');
+    }
+  }
+
+  // ── CATEGORY FILTER ──
+  document.querySelectorAll('.cat-pill').forEach(pill => {
+    pill.addEventListener('click', () => {
+      document.querySelectorAll('.cat-pill').forEach(p => p.classList.remove('active'));
+      pill.classList.add('active');
+
+      const cat = pill.dataset.cat;
+      document.querySelectorAll('.faq-item').forEach(item => {
+        const match = cat === 'all' || item.dataset.cat === cat;
+        item.dataset.hidden = match ? 'false' : 'true';
+        if (!match) item.classList.remove('open');
+      });
+
+      // re-number visible items
+      let n = 1;
+      document.querySelectorAll('.faq-item:not([data-hidden="true"])').forEach(item => {
+        item.querySelector('.faq-num').textContent = String(n).padStart(2, '0');
+        n++;
+      });
+    });
+  });
+</script>
+</body>
+</html>

@@ -616,4 +616,26 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // ─── FAQ — pin section, scrub track upward ───────────
+  const faqSection = document.querySelector('.faq-section');
+  if (faqSection) {
+    const faqTrack = faqSection.querySelector('.faq-track');
+
+    const faqTl = gsap.timeline({ paused: true });
+    faqTl.to(faqTrack, {
+      y: () => -(faqTrack.scrollHeight - faqSection.offsetHeight),
+      ease: 'none',
+    });
+
+    ScrollTrigger.create({
+      trigger: faqSection,
+      start: 'top top',
+      end: () => `+=${faqTrack.scrollHeight - faqSection.offsetHeight}`,
+      pin: true,
+      scrub: 1,
+      animation: faqTl,
+      invalidateOnRefresh: true,
+    });
+  }
+
 });
