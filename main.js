@@ -232,6 +232,7 @@ document.addEventListener('DOMContentLoaded', () => {
     );
 
     currentVenueIdx = idx;
+    if (window._venueSliderReset) window._venueSliderReset(idx);
   }
 
   if (venuesSection) {
@@ -303,7 +304,102 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
 
-  // ─── 5. Moments Sections — Pinned Timeline ───────────
+  // ─── 5. Per-venue image sliders ──────────────────────
+  // Pagination bars are siblings of .venue-main-img (not children) so they
+  // sit at z-index:20 above all GSAP-animated layers and always receive clicks.
+  const SLIDE_DURATION = 5000;
+  const sliderPanel = document.querySelector('.venues-main-img-panel');
+
+  if (sliderPanel) {
+    const venueImgEls   = [...sliderPanel.querySelectorAll('.venue-main-img')];
+    const paginationEls = [...sliderPanel.querySelectorAll('.venue-slider-pagination')];
+    const sliderStates  = [];
+
+    venueImgEls.forEach((venueImg, venueIdx) => {
+      const slides = venueImg.querySelectorAll('.venue-slider-slide');
+      const dots   = paginationEls[venueIdx]
+                       ? paginationEls[venueIdx].querySelectorAll('.venue-slider-dot')
+                       : [];
+      if (!slides.length) return;
+
+      const state = { current: 0, timer: null };
+
+      function activateDot(dot) {
+        [...dots].forEach(d => d.classList.remove('is-active'));
+        dot.classList.remove('is-active');
+        void dot.offsetWidth; // reflow — restarts CSS fill animation
+        dot.classList.add('is-active');
+      }
+
+      function goTo(idx) {
+        slides[state.current].classList.remove('is-active');
+        state.current = (idx + slides.length) % slides.length;
+        slides[state.current].classList.add('is-active');
+        if (dots[state.current]) activateDot(dots[state.current]);
+      }
+
+      function startTimer() {
+        clearInterval(state.timer);
+        state.timer = setInterval(() => goTo(state.current + 1), SLIDE_DURATION);
+      }
+
+      function stopTimer() {
+        clearInterval(state.timer);
+        state.timer = null;
+      }
+
+      function reset() {
+        stopTimer();
+        goTo(0);
+        startTimer();
+      }
+
+      state.goTo       = goTo;
+      state.startTimer = startTimer;
+      state.stopTimer  = stopTimer;
+      state.reset      = reset;
+      sliderStates[venueIdx] = state;
+
+      // Only venue 0 starts immediately — others triggered by switchVenue
+      if (venueIdx === 0) {
+        if (dots[0]) activateDot(dots[0]);
+        startTimer();
+      }
+    });
+
+    // Called by switchVenue() on every venue change
+    window._venueSliderReset = (idx) => {
+      sliderStates.forEach((s, i) => { if (i !== idx) s.stopTimer(); });
+      if (sliderStates[idx]) sliderStates[idx].reset();
+      paginationEls.forEach((p, i) => p.classList.toggle('is-visible', i === idx));
+    };
+
+    // Delegated click on panel — pagination bars are direct children so
+    // events bubble up without passing through any GSAP-managed element
+    sliderPanel.addEventListener('click', (e) => {
+      const pagination = e.target.closest('.venue-slider-pagination');
+      if (!pagination) return;
+      const venueIdx = parseInt(pagination.dataset.venue, 10);
+      const state    = sliderStates[venueIdx];
+      if (!state) return;
+
+      const btn = e.target.closest('.venue-slider-btn');
+      const dot = e.target.closest('.venue-slider-dot');
+
+      if (btn) {
+        const delta = btn.classList.contains('venue-slider-btn--prev') ? -1 : 1;
+        state.goTo(state.current + delta);
+        state.startTimer();
+      } else if (dot) {
+        const dotEls = [...pagination.querySelectorAll('.venue-slider-dot')];
+        const idx    = dotEls.indexOf(dot);
+        if (idx !== -1) { state.goTo(idx); state.startTimer(); }
+      }
+    });
+  }
+
+
+  // ─── 6. Moments Sections — Pinned Timeline ───────────
   // aupalevodka.com home_sections reference:
   // the moments wrapper is pinned for 3× viewport height.
   // A GSAP timeline drives cross-fades between the three

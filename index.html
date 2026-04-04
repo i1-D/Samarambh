@@ -9,7 +9,7 @@
   <!-- Preconnect for fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500;1,600&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Infant:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500;1,600&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,1,0" />
   <link rel="stylesheet" href="styles.css">
   <script type="module" src="components.js"></script>
@@ -161,7 +161,7 @@
               </p>
             </div>
             <div class="venue-slide-secondary-img">
-              <img src="images/venue/lawn1_sm.jpg" alt="The Grand Lawn — decorated setup">
+              <img src="images/lawn_1/sm.jpg" alt="The Grand Lawn — decorated setup">
             </div>
             <div class="venue-slide-info">
               <p class="venue-slide-stats">800 to 2,000 GUESTS &nbsp;|&nbsp; ₹900 PER PLATE</p>
@@ -184,7 +184,7 @@
               </p>
             </div>
             <div class="venue-slide-secondary-img">
-              <img src="images/venue/lawn2_sm.jpg" alt="The Banquet Hall — interior">
+              <img src="images/hall_1/sm.jpg" alt="The Banquet Hall — interior">
             </div>
             <div class="venue-slide-info">
               <p class="venue-slide-stats">100 to 500 GUESTS &nbsp;|&nbsp; ₹1,200 PER PLATE</p>
@@ -207,7 +207,7 @@
               </p>
             </div>
             <div class="venue-slide-secondary-img">
-              <img src="images/venue/lawn3_sm.jpg" alt="The Royal Lawn — evening setup">
+              <img src="images/lawn_2/sm.jpg" alt="The Royal Lawn — evening setup">
             </div>
             <div class="venue-slide-info">
               <p class="venue-slide-stats">300 to 800 GUESTS &nbsp;|&nbsp; ₹1,000 PER PLATE</p>
@@ -221,17 +221,139 @@
 
         </div><!-- /venues-info-panel -->
 
-        <!-- Right main image panel — images cross-fade -->
+        <!-- Right main image panel — images cross-fade; each venue has an internal slider -->
         <div class="venues-main-img-panel">
+
+          <!-- Venue 1 — The Grand Lawn (image layers only) -->
           <div class="venue-main-img is-active">
-            <img src="images/venue/lawn1_lg.jpg" alt="The Grand Lawn at Samarambh">
+            <div class="venue-slider">
+              <div class="venue-slider-slide is-active">
+                <img src="images/lawn_1/1.jpg" alt="The Grand Lawn at Samarambh">
+              </div>
+              <div class="venue-slider-slide">
+                <img src="images/lawn_1/2.jpg" alt="The Grand Lawn at Samarambh">
+              </div>
+              <div class="venue-slider-slide">
+                <img src="images/lawn_1/3.jpg" alt="The Grand Lawn at Samarambh">
+              </div>
+              <div class="venue-slider-slide">
+                <img src="images/lawn_1/4.jpg" alt="The Grand Lawn at Samarambh">
+              </div>
+              <div class="venue-slider-slide">
+                <img src="images/lawn_1/5.jpg" alt="The Grand Lawn at Samarambh">
+              </div>
+            </div>
           </div>
+
+          <!-- Venue 2 — The Banquet Hall (image layers only) -->
           <div class="venue-main-img">
-            <img src="images/venue/lawn2_lg.jpg" alt="The Banquet Hall at Samarambh">
+            <div class="venue-slider">
+              <div class="venue-slider-slide is-active">
+                <img src="images/hall_1/1.jpg" alt="The Banquet Hall at Samarambh">
+              </div>
+              <div class="venue-slider-slide">
+                <img src="images/hall_1/2.jpg" alt="The Banquet Hall at Samarambh">
+              </div>
+              <div class="venue-slider-slide">
+                <img src="images/hall_1/3.jpg" alt="The Banquet Hall at Samarambh">
+              </div>
+              <div class="venue-slider-slide">
+                <img src="images/hall_1/4.jpg" alt="The Banquet Hall at Samarambh">
+              </div>
+              <div class="venue-slider-slide">
+                <img src="images/hall_1/5.jpg" alt="The Banquet Hall at Samarambh">
+              </div>
+            </div>
           </div>
+
+          <!-- Venue 3 — The Royal Lawn (image layers only) -->
           <div class="venue-main-img">
-            <img src="images/venue/lawn3_lg.jpg" alt="The Royal Lawn at Samarambh">
+            <div class="venue-slider">
+              <div class="venue-slider-slide is-active">
+                <img src="images/lawn_2/1.jpg" alt="The Royal Lawn at Samarambh">
+              </div>
+              <div class="venue-slider-slide">
+                <img src="images/lawn_2/2.jpg" alt="The Royal Lawn at Samarambh">
+              </div>
+              <div class="venue-slider-slide">
+                <img src="images/lawn_2/3.jpg" alt="The Royal Lawn at Samarambh">
+              </div>
+              <div class="venue-slider-slide">
+                <img src="images/lawn_2/4.jpg" alt="The Royal Lawn at Samarambh">
+              </div>
+              <div class="venue-slider-slide">
+                <img src="images/lawn_2/5.jpg" alt="The Royal Lawn at Samarambh">
+              </div>
+            </div>
           </div>
+
+          <!-- Pagination bars — siblings of image layers, above GSAP-managed elements -->
+          <div class="venue-slider-pagination is-visible" data-venue="0">
+            <div class="venue-slider-dots">
+              <span class="venue-slider-dot is-active"></span>
+              <span class="venue-slider-dot"></span>
+              <span class="venue-slider-dot"></span>
+              <span class="venue-slider-dot"></span>
+              <span class="venue-slider-dot"></span>
+            </div>
+            <div class="venue-slider-buttons">
+              <button class="venue-slider-btn venue-slider-btn--prev" aria-label="Previous image">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M15 18L9 12L15 6" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+              <button class="venue-slider-btn venue-slider-btn--next" aria-label="Next image">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M9 18L15 12L9 6" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <div class="venue-slider-pagination" data-venue="1">
+            <div class="venue-slider-dots">
+              <span class="venue-slider-dot is-active"></span>
+              <span class="venue-slider-dot"></span>
+              <span class="venue-slider-dot"></span>
+              <span class="venue-slider-dot"></span>
+              <span class="venue-slider-dot"></span>
+            </div>
+            <div class="venue-slider-buttons">
+              <button class="venue-slider-btn venue-slider-btn--prev" aria-label="Previous image">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M15 18L9 12L15 6" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+              <button class="venue-slider-btn venue-slider-btn--next" aria-label="Next image">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M9 18L15 12L9 6" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <div class="venue-slider-pagination" data-venue="2">
+            <div class="venue-slider-dots">
+              <span class="venue-slider-dot is-active"></span>
+              <span class="venue-slider-dot"></span>
+              <span class="venue-slider-dot"></span>
+              <span class="venue-slider-dot"></span>
+              <span class="venue-slider-dot"></span>
+            </div>
+            <div class="venue-slider-buttons">
+              <button class="venue-slider-btn venue-slider-btn--prev" aria-label="Previous image">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M15 18L9 12L15 6" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+              <button class="venue-slider-btn venue-slider-btn--next" aria-label="Next image">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M9 18L15 12L9 6" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+
         </div>
 
       </div><!-- /venues-main-container -->

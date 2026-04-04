@@ -5,7 +5,7 @@
 /* ─── Design Tokens ───────────────────────────────────── */
 :root {
   /* Colors */
-  --color-bg:           #faf8f0;
+  --color-bg:           #FBF3E4;
   --color-gold-primary: #c9a84c;
   --color-gold-light:   #d4b96a;
   --color-gold-cream:   #f5edcf;
@@ -35,7 +35,7 @@
   --sp-11: 8.333vw;
 
   /* Typography */
-  --font-serif: 'Cormorant Garamond', serif;
+  --font-serif: 'Cormorant Infant', serif;
   --font-sans:  'Outfit', sans-serif;
 
   /* Fluid Typography Scale */
@@ -670,6 +670,7 @@ p { margin: 0; }
   opacity: 0;
   z-index: 0; /* GSAP promotes incoming to z-index: 1 during slide */
   will-change: transform, opacity;
+  pointer-events: none; /* pagination lives outside, so no clicks needed here */
 }
 
 .venue-main-img img {
@@ -678,6 +679,119 @@ p { margin: 0; }
   object-fit: cover;
   display: block;
   will-change: transform;
+}
+
+/* ── Per-venue image slider ───────────────────────── */
+.venue-slider {
+  position: absolute;
+  inset: 0;
+}
+
+.venue-slider-slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.venue-slider-slide.is-active {
+  opacity: 1;
+}
+
+.venue-slider-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Pagination bar — sibling of .venue-main-img, above all GSAP layers */
+.venue-slider-pagination {
+  position: absolute;
+  bottom: 24px;
+  left: 48px;
+  right: 24px;
+  display: none;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 20;
+  pointer-events: auto;
+}
+
+.venue-slider-pagination.is-visible {
+  display: flex;
+}
+
+.venue-slider-dots {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.venue-slider-dot {
+  position: relative;
+  width: 32px;
+  height: 6px;
+  border-radius: 120px;
+  background: rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  cursor: pointer;
+  flex-shrink: 0;
+  overflow: hidden;
+  pointer-events: auto;
+}
+
+/* Fill bar — grows left→right on active dot */
+.venue-slider-dot::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: #ffffff;
+  border-radius: 120px;
+  width: 0%;
+}
+
+.venue-slider-dot.is-active::after {
+  animation: dotFill 5s linear forwards;
+}
+
+@keyframes dotFill {
+  from { width: 0%; }
+  to   { width: 100%; }
+}
+
+.venue-slider-buttons {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
+.venue-slider-btn {
+  width: 48px;
+  height: 48px;
+  border-radius: 120px;
+  background: rgba(0, 0, 0, 0.22);
+  backdrop-filter: blur(6.25px);
+  -webkit-backdrop-filter: blur(6.25px);
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: background 0.2s ease;
+  pointer-events: auto;
+}
+
+.venue-slider-btn:hover {
+  background: rgba(0, 0, 0, 0.38);
+}
+
+.venue-slider-btn svg {
+  width: 24px;
+  height: 24px;
+  display: block;
 }
 
 /* ── Mobile ───────────────────────────────────────── */
