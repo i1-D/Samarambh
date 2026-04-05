@@ -48,87 +48,50 @@
   <div id="site-nav"></div>
 
   <!-- ═══════════════════════════════════════════════════
-       INTRO SECTION
+       HERO SECTION
        ═══════════════════════════════════════════════════ -->
-  <section class="intro-section" id="intro">
-    <div class="intro-texture">
-      <img src="images/cover.jpg" alt="">
+  <section class="hero-section" id="hero">
+    <!-- Background video -->
+    <div class="hero-video-bg">
+      <video autoplay muted loop playsinline>
+        <source src="images/hero-video.mp4" type="video/mp4">
+      </video>
     </div>
 
-    <!-- Headline + video stacked -->
-    <div class="intro-title-block">
-      <div class="intro-headline intro-top">
-        <p>Where Every <em>Celebration</em></p>
-      </div>
-
-      <div class="intro-video-wrap">
-        <div class="intro-logo">
-          <img src="images/logo.png" alt="">
-        </div>
-
-        <div class="intro-video-container">
-          <video autoplay muted loop playsinline poster="images/1632226452_DJI_0860%201.jpg">
-            <source src="images/hero-video.mp4" type="video/mp4">
-          </video>
-        </div>
-      </div>
-
-      <div class="intro-headline intro-bottom">
+    <!-- Scrollable content track -->
+    <div class="hero-track">
+      <!-- 1. Headline -->
+      <div class="hero-headline">
+        <p>Where Every Celebration</p>
         <p>Finds its <em>Stage</em></p>
       </div>
 
-      <!-- Social proof bar — visible when video is fullscreen, hidden when video shrinks -->
-      <div class="intro-social-proof">
-        <div class="intro-social-item">
-          <span class="intro-social-number">✦&nbsp; 2,000</span>
-          <span class="intro-social-label">Guest Capacity</span>
+      <!-- 2. Divider -->
+      <div class="hero-divider"></div>
+
+      <!-- 3. Stats -->
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <span class="hero-stat-number">2,000</span>
+          <span class="hero-stat-label">Guests capacity</span>
         </div>
-        <div class="intro-social-divider"></div>
-        <div class="intro-social-item">
-          <span class="intro-social-number">✦&nbsp; 500+</span>
-          <span class="intro-social-label">Events Hosted</span>
+        <div class="hero-stat">
+          <span class="hero-stat-number">500+</span>
+          <span class="hero-stat-label">Events hosted</span>
         </div>
-        <div class="intro-social-divider"></div>
-        <div class="intro-social-item">
-          <span class="intro-social-number">✦&nbsp; 3</span>
-          <span class="intro-social-label">Distinct Venues</span>
-        </div>
-        <div class="intro-social-divider"></div>
-        <div class="intro-social-item">
-          <span class="intro-social-number">✦&nbsp; 4.9★</span>
-          <span class="intro-social-label">Customer Rating</span>
+        <div class="hero-stat">
+          <span class="hero-stat-number">4.9<span class="hero-stat-star">★</span></span>
+          <span class="hero-stat-label">Average rating</span>
         </div>
       </div>
-    </div>
 
-    <!-- Quote row -->
-    <div class="intro-quote-row">
-      <div class="intro-quote-left reveal-text">
+      <!-- 4. Tagline -->
+      <div class="hero-tagline">
         Three Spaces, <em>Infinite Possibilities</em>
       </div>
-      <p class="intro-quote-right reveal-fade-delay">
-        From intimate gatherings to grand celebrations — each space is designed to transform your vision into an unforgettable experience.
-      </p>
-      <div class="scroll-btn" aria-label="Scroll down">
-        <svg class="scroll-btn-ring" viewBox="0 0 140 140"
-             xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <defs>
-            <path id="scrollTextPath"
-              d="M 70,70 m -58,0 a 58,58 0 1,1 116,0 a 58,58 0 1,1 -116,0"/>
-          </defs>
-          <text font-family="Outfit, sans-serif" font-size="11"
-                font-weight="600" letter-spacing="3" fill="#c9a84c">
-            <textPath href="#scrollTextPath" startOffset="0%">
-              SCROLL DOWN · SCROLL DOWN · SCROLL ·
-            </textPath>
-          </text>
-          <line x1="70" y1="54" x2="70" y2="86"
-                stroke="#c9a84c" stroke-width="1.5" stroke-linecap="round"/>
-          <polyline points="62,78 70,86 78,78"
-                    fill="none" stroke="#c9a84c" stroke-width="1.5"
-                    stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </div>
+
+      <!-- 5. Divider -->
+      <div class="hero-divider"></div>
     </div>
   </section>
 

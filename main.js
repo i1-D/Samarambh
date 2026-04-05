@@ -54,7 +54,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // Exit: left slides left, right slides right — after ≥3s AND video loaded
-  const heroVideo = document.querySelector('.hero-video');
+  const heroVideo = document.querySelector('.hero-video-bg video');
   let videoReady = heroVideo ? heroVideo.readyState >= 4 : true;
   let timerDone  = false;
 
@@ -66,7 +66,14 @@ document.addEventListener('DOMContentLoaded', () => {
       onComplete() {
         document.getElementById('loader').style.display = 'none';
         lenis.start();
-        ScrollTrigger.refresh();
+        document.fonts.ready.then(() => {
+          ScrollTrigger.refresh();
+          requestAnimationFrame(() => {
+            const nav = getNav();
+            nav?.classList.remove('hero-nav--hidden');
+            nav?.classList.remove('nav--dark');
+          });
+        });
       },
     });
   }
@@ -98,63 +105,82 @@ document.addEventListener('DOMContentLoaded', () => {
   gsap.ticker.add((time) => lenis.raf(time * 1000));
   gsap.ticker.lagSmoothing(0);
 
-  // Smooth-scroll nav anchor links via Lenis
-  document.querySelectorAll('.hero-nav a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', (e) => {
-      e.preventDefault();
-      const target = document.querySelector(anchor.getAttribute('href'));
-      if (target) lenis.scrollTo(target, { offset: 0 });
-    });
+  // ─── Nav lazy getter — nav is injected async by components.js ───
+  // querySelector at DOMContentLoaded returns null; look it up on first use.
+  let _navEl = null;
+  const getNav = () => _navEl || (_navEl = document.querySelector('.hero-nav'));
+
+  // Smooth-scroll nav anchor links via Lenis (delegated — nav may not exist yet)
+  document.addEventListener('click', (e) => {
+    const anchor = e.target.closest('.hero-nav a[href^="#"]');
+    if (!anchor) return;
+    e.preventDefault();
+    const target = document.querySelector(anchor.getAttribute('href'));
+    if (target) lenis.scrollTo(target, { offset: 0 });
   });
 
 
-  // ─── 3. Intro Video Shrink (tenutacentoporte.it style) ──────
-  // Video starts fullscreen: GSAP pins .intro-title-block (100vh)
-  // so its position:absolute child covers the full viewport.
-  // Scrubs from full-viewport → 350×197px centered over 150vh of scroll.
-  // Headlines fade in above/below as video shrinks.
-
-  // Center axis is fixed via left:50% + xPercent:-50 from the start.
-  // Only width/height/top/yPercent animate — horizontal center never shifts.
-  gsap.set('.intro-video-wrap', {
-    position: 'absolute',
-    top: 0,
-    left: '50%',
-    xPercent: -50,
-    width: '100vw',
-    height: '100%',
-    borderRadius: 0,
-  });
-
-  gsap.set(['.intro-top', '.intro-bottom'], { opacity: 0 });
-  gsap.set('.nav-logo', { opacity: 0 });
-
-  const introVideoTl = gsap.timeline({
-    scrollTrigger: {
-      trigger: '.intro-title-block',
-      start: 'top top',
-      end: '+=150vh',
-      pin: true,
-      scrub: 1.5,
-      anticipatePin: 1,
-    }
-  });
-
-  introVideoTl
-    .to('.intro-video-wrap', {
-      width: 500,
-      height: 300,
-      top: '50%',
-      yPercent: -50,
-      borderRadius: 12,
+  // ─── 3. Hero section — pin + scrub track upward ──────
+  const heroSection = document.querySelector('.hero-section');
+  let heroST;
+  if (heroSection) {
+    const heroTrack = heroSection.querySelector('.hero-track');
+    const heroTl = gsap.timeline({ paused: true });
+    heroTl.to(heroTrack, {
+      y: () => -(heroTrack.scrollHeight - heroSection.offsetHeight),
       ease: 'none',
-      duration: 1,
-    }, 0)
-    .to('.intro-logo', { opacity: 0, ease: 'none', duration: 0.1 }, 0)
-    .to('.intro-social-proof', { opacity: 0, ease: 'none', duration: 0.25 }, 0)
-    .to('.intro-top',    { opacity: 1, ease: 'none', duration: 0.4 }, 0.45)
-    .to('.intro-bottom', { opacity: 1, ease: 'none', duration: 0.4 }, 0.5)
-    .to('.nav-logo',     { opacity: 1, ease: 'none', duration: 0.3 }, 0.8);
+    });
+
+    heroST = ScrollTrigger.create({
+      trigger: heroSection,
+      start: 'top top',
+      end: () => `+=${heroTrack.scrollHeight - heroSection.offsetHeight}`,
+      pin: true,
+      scrub: 1,
+      animation: heroTl,
+      invalidateOnRefresh: true,
+      onUpdate: (self) => {
+        const nav = getNav();
+        if (!nav) return;
+        if (self.progress > 0) {
+          nav.classList.add('hero-nav--hidden');
+        } else {
+          nav.classList.remove('hero-nav--hidden');
+          nav.classList.remove('nav--dark');
+        }
+      },
+      onLeave: () => getNav()?.classList.remove('hero-nav--hidden'),
+      onLeaveBack: () => getNav()?.classList.remove('hero-nav--hidden'),
+    });
+  }
+
+  // ─── Nav hide on scroll down, show on scroll up ───
+  let lastScroll = 0;
+  lenis.on('scroll', ({ scroll }) => {
+    const nav = getNav();
+    if (!nav) return;
+
+    if (scroll < 10) {
+      // Always show at page top in light mode — even during refresh seek events
+      nav.classList.remove('hero-nav--hidden');
+      nav.classList.remove('nav--dark');
+      lastScroll = scroll;
+      return;
+    }
+
+    if (heroST && heroST.isActive) {
+      // Hero zone: onUpdate handles hide/show
+      lastScroll = scroll;
+      return;
+    }
+
+    if (scroll > lastScroll) {
+      nav.classList.add('hero-nav--hidden');
+    } else if (scroll < lastScroll) {
+      nav.classList.remove('hero-nav--hidden');
+    }
+    lastScroll = scroll;
+  });
 
 
 
@@ -555,21 +581,14 @@ document.addEventListener('DOMContentLoaded', () => {
   // Static element — no rotation animation per Figma spec.
 
 
-  // ─── 8. (Intro headline/video handled by introVideoTl above) ──
-
-
-
-
   // ─── Nav dark/light mode by section ─────────────────
-  const nav = document.querySelector('.hero-nav');
 
-  // Dark text: intro video collapses → entering cream bg
+  // Dark text: hero unpins → entering cream bg venues section
   ScrollTrigger.create({
-    trigger: '.intro-title-block',
+    trigger: '.venues-section',
     start: 'top top',
-    end: '+=100vh',
-    onLeave:      () => nav.classList.add('nav--dark'),
-    onEnterBack:  () => nav.classList.remove('nav--dark'),
+    onEnter:      () => getNav()?.classList.add('nav--dark'),
+    onEnterBack:  () => getNav()?.classList.remove('nav--dark'),
   });
 
   // Venues section has cream bg → nav--dark stays active (inherited from above).
@@ -580,16 +599,16 @@ document.addEventListener('DOMContentLoaded', () => {
   ScrollTrigger.create({
     trigger: '.services-section',
     start: 'top top',
-    onEnter:     () => nav.classList.remove('nav--dark'),
-    onLeaveBack: () => nav.classList.add('nav--dark'),
+    onEnter:     () => getNav()?.classList.remove('nav--dark'),
+    onLeaveBack: () => getNav()?.classList.add('nav--dark'),
   });
 
   // Dark: gallery and beyond (find-us, reviews, faq, footer)
   ScrollTrigger.create({
     trigger: '.gallery-section',
     start: 'top top',
-    onEnter:     () => nav.classList.add('nav--dark'),
-    onLeaveBack: () => nav.classList.remove('nav--dark'),
+    onEnter:     () => getNav()?.classList.add('nav--dark'),
+    onLeaveBack: () => getNav()?.classList.remove('nav--dark'),
   });
 
 
