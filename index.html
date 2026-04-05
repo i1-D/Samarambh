@@ -325,90 +325,99 @@
 
 
   <!-- ═══════════════════════════════════════════════════
-       MOMENTS SECTIONS (Pinned Scroll)
+       MOMENTS SECTION (4-Part: Wedding + Marquees + Celebrations)
        ═══════════════════════════════════════════════════ -->
-  <div class="moments-wrapper" id="events">
+  <div class="moments-section" id="events">
 
-    <!-- ── Wedding Panel ───────────────────────────────── -->
-    <div class="moments-panel wedding-section">
-      <!-- Watermark words -->
-      <p class="moments-watermark watermark-wedding" style="left:calc(1278px - 50%);top:38px;transform:translateX(-50%)">Sangeet</p>
-      <p class="moments-watermark watermark-wedding" style="left:calc(455.5px + 30%);top:252px;transform:translateX(-50%)">Mehndi</p>
-      <p class="moments-watermark watermark-wedding" style="left:calc(1399.5px - 50%);top:702px;transform:translateX(-50%)">Reception</p>
-
-      <!-- Center text -->
-      <div class="moments-center-text">
-        <h2>
-          <span class="text-line"><span class="text-line-inner">Every Wedding</span></span>
-          <em class="gold-line"><span class="text-line"><span class="text-line-inner">Perfectly Curated</span></span></em>
-        </h2>
+    <!-- ── 1. Wedding — pinned gallery-style scroll ──────── -->
+    <div class="moments-scroll-section">
+      <div class="moments-title-overlay">
+        <h2>Every Wedding<br><em>Perfectly Curated</em></h2>
       </div>
-
-      <!-- Tilted photos (animated in by GSAP) -->
-      <div class="moments-photo wedding-photo-1 wedding-photo">
-        <img src="images/wedding1.jpg" alt="Wedding moment">
-      </div>
-      <div class="moments-photo wedding-photo-2 wedding-photo">
-        <img src="images/wedding2.jpg" alt="Wedding moment">
-      </div>
-      <div class="moments-photo wedding-photo-3 wedding-photo">
-        <img src="images/wedding3.jpg" alt="Wedding moment">
+      <div class="gp-pin-grid">
+        <!-- Row 1: portrait | landscape | empty | portrait -->
+        <div class="gp-pin-row">
+          <div class="gp-pin-cell gp-pin-cell--portrait"><div class="gp-img-wrap"><img src="images/wedding/wedding1.jpg" alt="Wedding"></div></div>
+          <div class="gp-pin-cell gp-pin-cell--landscape"><div class="gp-img-wrap"><img src="images/wedding/wedding2.jpg" alt="Wedding"></div></div>
+          <div class="gp-pin-cell gp-pin-cell--landscape gp-pin-cell--empty"></div>
+          <div class="gp-pin-cell gp-pin-cell--portrait"><div class="gp-img-wrap"><img src="images/wedding/wedding3.jpg" alt="Wedding"></div></div>
+        </div>
+        <!-- Row 2: landscape | portrait | landscape | portrait -->
+        <div class="gp-pin-row">
+          <div class="gp-pin-cell gp-pin-cell--landscape"><div class="gp-img-wrap"><img src="images/wedding/wedding2.jpg" alt="Wedding"></div></div>
+          <div class="gp-pin-cell gp-pin-cell--portrait"><div class="gp-img-wrap"><img src="images/wedding/wedding3.jpg" alt="Wedding"></div></div>
+          <div class="gp-pin-cell gp-pin-cell--landscape"><div class="gp-img-wrap"><img src="images/wedding/wedding1.jpg" alt="Wedding"></div></div>
+          <div class="gp-pin-cell gp-pin-cell--portrait"><div class="gp-img-wrap"><img src="images/wedding/wedding2.jpg" alt="Wedding"></div></div>
+        </div>
+        <!-- Row 3: landscape | empty | portrait | landscape -->
+        <div class="gp-pin-row">
+          <div class="gp-pin-cell gp-pin-cell--landscape"><div class="gp-img-wrap"><img src="images/wedding/wedding3.jpg" alt="Wedding"></div></div>
+          <div class="gp-pin-cell gp-pin-cell--portrait gp-pin-cell--empty"></div>
+          <div class="gp-pin-cell gp-pin-cell--portrait"><div class="gp-img-wrap"><img src="images/wedding/wedding1.jpg" alt="Wedding"></div></div>
+          <div class="gp-pin-cell gp-pin-cell--landscape"><div class="gp-img-wrap"><img src="images/wedding/wedding2.jpg" alt="Wedding"></div></div>
+        </div>
       </div>
     </div>
 
-    <!-- ── Celebrations Panel ──────────────────────────── -->
-    <div class="moments-panel celebrations-section">
-      <!-- Watermark words -->
-      <p class="moments-watermark watermark-celebrations" style="left:calc(477.5px - 20%);top:75px;transform:translateX(-50%)">Birthdays</p>
-      <p class="moments-watermark watermark-celebrations" style="left:calc(1420px - 50%);top:313px;transform:translateX(-50%)">Anniversary</p>
-      <p class="moments-watermark watermark-celebrations" style="left:calc(619px - 0%);top:672px;transform:translateX(-50%)">Engagement</p>
-
-      <!-- Center text -->
-      <div class="moments-center-text">
-        <h2>
-          <span class="text-line"><span class="text-line-inner">Every Celebration</span></span>
-          <em class="green-line"><span class="text-line"><span class="text-line-inner">A Moment to Remember</span></span></em>
-        </h2>
-      </div>
-
-      <!-- Tilted photos -->
-      <div class="moments-photo celebrations-photo-1 celebrations-photo">
-        <img src="images/celebration1.jpg" alt="Celebration">
-      </div>
-      <div class="moments-photo celebrations-photo-2 celebrations-photo">
-        <img src="images/celebration2.jpg" alt="Celebration">
-      </div>
-      <div class="moments-photo celebrations-photo-3 celebrations-photo">
-        <img src="images/celebration3.jpg" alt="Celebration">
+    <!-- ── 2. Wedding Marquee — left to right ────────────── -->
+    <div class="moments-marquee">
+      <div class="marquee-track marquee-ltr">
+        <span class="marquee-item">Sangeet</span><span class="marquee-sep">✦</span>
+        <span class="marquee-item">Haldi</span><span class="marquee-sep">✦</span>
+        <span class="marquee-item">Varmala</span><span class="marquee-sep">✦</span>
+        <span class="marquee-item">Reception</span><span class="marquee-sep">✦</span>
+        <span class="marquee-item">Sangeet</span><span class="marquee-sep">✦</span>
+        <span class="marquee-item">Haldi</span><span class="marquee-sep">✦</span>
+        <span class="marquee-item">Varmala</span><span class="marquee-sep">✦</span>
+        <span class="marquee-item">Reception</span><span class="marquee-sep">✦</span>
       </div>
     </div>
 
-    <!-- ── All Moments Panel ───────────────────────────── -->
-    <div class="moments-panel all-moments-section">
-      <p class="all-moments-title">All Moments</p>
-
-      <!-- Scattered photo cards -->
-      <div class="moments-card moments-card-1">
-        <img src="images/moment1.jpg" alt="Moment">
-      </div>
-      <div class="moments-card moments-card-2">
-        <img src="images/moment2.jpg" alt="Moment">
-      </div>
-      <div class="moments-card moments-card-3">
-        <img src="images/moment3.jpg" alt="Moment">
-      </div>
-      <div class="moments-card moments-card-4">
-        <img src="images/moment4.jpg" alt="Moment">
-      </div>
-      <div class="moments-card moments-card-5">
-        <img src="images/moment5.jpg" alt="Moment">
-      </div>
-      <div class="moments-card moments-card-6">
-        <img src="images/moment6.jpg" alt="Moment">
+    <!-- ── 3. Celebrations Marquee — right to left ────────── -->
+    <div class="moments-marquee">
+      <div class="marquee-track marquee-rtl">
+        <span class="marquee-item">Birthdays</span><span class="marquee-sep">✦</span>
+        <span class="marquee-item">Engagement</span><span class="marquee-sep">✦</span>
+        <span class="marquee-item">Anniversary</span><span class="marquee-sep">✦</span>
+        <span class="marquee-item">Corporate Events</span><span class="marquee-sep">✦</span>
+        <span class="marquee-item">Birthdays</span><span class="marquee-sep">✦</span>
+        <span class="marquee-item">Engagement</span><span class="marquee-sep">✦</span>
+        <span class="marquee-item">Anniversary</span><span class="marquee-sep">✦</span>
+        <span class="marquee-item">Corporate Events</span><span class="marquee-sep">✦</span>
       </div>
     </div>
 
-  </div><!-- /.moments-wrapper -->
+    <!-- ── 4. Celebrations — pinned gallery-style scroll ──── -->
+    <div class="moments-scroll-section">
+      <div class="moments-title-overlay">
+        <h2>Every Celebration<br><em>A Moment to Remember</em></h2>
+      </div>
+      <div class="gp-pin-grid">
+        <!-- Row 1: landscape | empty | landscape | portrait -->
+        <div class="gp-pin-row">
+          <div class="gp-pin-cell gp-pin-cell--landscape"><div class="gp-img-wrap"><img src="images/moment/moment1.jpg" alt="Celebration"></div></div>
+          <div class="gp-pin-cell gp-pin-cell--portrait gp-pin-cell--empty"></div>
+          <div class="gp-pin-cell gp-pin-cell--landscape"><div class="gp-img-wrap"><img src="images/moment/moment2.jpg" alt="Celebration"></div></div>
+          <div class="gp-pin-cell gp-pin-cell--portrait"><div class="gp-img-wrap"><img src="images/moment/moment3.jpg" alt="Celebration"></div></div>
+        </div>
+        <!-- Row 2: portrait | landscape | portrait | landscape -->
+        <div class="gp-pin-row">
+          <div class="gp-pin-cell gp-pin-cell--portrait"><div class="gp-img-wrap"><img src="images/moment/moment4.jpg" alt="Celebration"></div></div>
+          <div class="gp-pin-cell gp-pin-cell--landscape"><div class="gp-img-wrap"><img src="images/moment/moment5.jpg" alt="Celebration"></div></div>
+          <div class="gp-pin-cell gp-pin-cell--portrait"><div class="gp-img-wrap"><img src="images/moment/moment6.jpg" alt="Celebration"></div></div>
+          <div class="gp-pin-cell gp-pin-cell--landscape"><div class="gp-img-wrap"><img src="images/moment/moment1.jpg" alt="Celebration"></div></div>
+        </div>
+        <!-- Row 3: portrait | landscape | empty | portrait -->
+        <div class="gp-pin-row">
+          <div class="gp-pin-cell gp-pin-cell--portrait"><div class="gp-img-wrap"><img src="images/moment/moment2.jpg" alt="Celebration"></div></div>
+          <div class="gp-pin-cell gp-pin-cell--landscape"><div class="gp-img-wrap"><img src="images/moment/moment3.jpg" alt="Celebration"></div></div>
+          <div class="gp-pin-cell gp-pin-cell--landscape gp-pin-cell--empty"></div>
+          <div class="gp-pin-cell gp-pin-cell--portrait"><div class="gp-img-wrap"><img src="images/moment/moment4.jpg" alt="Celebration"></div></div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /.moments-section -->
 
 
   <!-- ═══════════════════════════════════════════════════

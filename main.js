@@ -425,93 +425,29 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
 
-  // ─── 6. Moments Sections — Pinned Timeline ───────────
-  // aupalevodka.com home_sections reference:
-  // the moments wrapper is pinned for 3× viewport height.
-  // A GSAP timeline drives cross-fades between the three
-  // panels (Wedding → Celebrations → All Moments) and
-  // animates the floating photo cards based on progress.
+  // ─── 6. Moments Sections — Gallery-Style Pinned Scroll ──
+  // Same pattern as gallery.js: section pins to viewport,
+  // image grid scrubs upward, centered title stays fixed.
+  document.querySelectorAll('.moments-scroll-section').forEach(section => {
+    const grid = section.querySelector('.gp-pin-grid');
+    if (!grid) return;
 
-  // Initial states — hide celebrations & all-moments
-  gsap.set('.celebrations-section', { opacity: 0 });
-  gsap.set('.all-moments-section',  { opacity: 0 });
-  gsap.set('.wedding-section',      { opacity: 1 });
+    const tl = gsap.timeline({ paused: true });
+    tl.to(grid, {
+      y: () => -(grid.scrollHeight - window.innerHeight),
+      ease: 'none',
+    });
 
-  // Photo cards start off-screen (shifted down, invisible)
-  gsap.set('.wedding-photo',       { y: 100, opacity: 0 });
-  gsap.set('.celebrations-photo',  { y: 100, opacity: 0 });
-  gsap.set('.moments-card',        { y: 80,  opacity: 0 });
-
-  // Watermark text starts at rest
-  gsap.set('.moments-watermark', { x: 0 });
-
-  // Text lines start hidden below
-  gsap.set('.wedding-section .text-line-inner',      { y: '101%' });
-  gsap.set('.celebrations-section .text-line-inner', { y: '101%' });
-
-  const momentsTl = gsap.timeline({
-    scrollTrigger: {
-      trigger: '.moments-wrapper',
+    ScrollTrigger.create({
+      trigger: section,
       start: 'top top',
-      end: () => `+=${3 * window.innerHeight}`,
-      scrub: 1.5,
+      end: () => `+=${grid.scrollHeight - window.innerHeight}`,
       pin: true,
-    }
+      scrub: 1,
+      animation: tl,
+      invalidateOnRefresh: true,
+    });
   });
-
-  momentsTl
-    // Phase 1: Wedding photos animate into position
-    .to('.wedding-photo', {
-      y: 0, opacity: 1,
-      duration: 0.8, stagger: 0.3,
-      ease: 'power2.out',
-    }, 0)
-    // Watermark parallax drift in wedding section
-    .to('.wedding-section .moments-watermark:nth-child(1)', { x: '-8vw', duration: 2 }, 0)
-    .to('.wedding-section .moments-watermark:nth-child(2)', { x: '8vw',  duration: 2 }, 0)
-    .to('.wedding-section .moments-watermark:nth-child(3)', { x: '-5vw', duration: 2 }, 0)
-
-    // Phase 2: Fade out Wedding, fade in Celebrations
-    .to('.wedding-section',      { opacity: 0, duration: 0.5 }, 1.6)
-    .to('.celebrations-section', { opacity: 1, duration: 0.5 }, 1.6)
-    .to('.celebrations-photo', {
-      y: 0, opacity: 1,
-      duration: 0.8, stagger: 0.2,
-      ease: 'power2.out',
-    }, 1.8)
-    // Watermark drift in celebrations
-    .to('.celebrations-section .moments-watermark:nth-child(1)', { x: '-8vw', duration: 2 }, 1.6)
-    .to('.celebrations-section .moments-watermark:nth-child(2)', { x: '8vw',  duration: 2 }, 1.6)
-    .to('.celebrations-section .moments-watermark:nth-child(3)', { x: '-5vw', duration: 2 }, 1.6)
-
-    // Phase 3: Fade out Celebrations, fade in All Moments
-    .to('.celebrations-section', { opacity: 0, duration: 0.5 }, 3.2)
-    .to('.all-moments-section',  { opacity: 1, duration: 0.5 }, 3.2)
-    .to('.moments-card', {
-      y: 0, opacity: 1,
-      duration: 0.8, stagger: 0.12,
-      ease: 'power2.out',
-    }, 3.4)
-
-    // Wedding text enters (phase 1)
-    .to('.wedding-section .text-line-inner', {
-      y: '0%', duration: 0.5, stagger: 0.12, ease: 'power3.out',
-    }, 0.2)
-
-    // Wedding text exits upward (before fade-out at 1.6)
-    .to('.wedding-section .text-line-inner', {
-      y: '-101%', duration: 0.4, stagger: 0.08, ease: 'power2.in',
-    }, 1.1)
-
-    // Celebrations text enters (phase 2, alongside section fade-in)
-    .to('.celebrations-section .text-line-inner', {
-      y: '0%', duration: 0.5, stagger: 0.12, ease: 'power3.out',
-    }, 1.8)
-
-    // Celebrations text exits upward (before fade-out at 3.2)
-    .to('.celebrations-section .text-line-inner', {
-      y: '-101%', duration: 0.4, stagger: 0.08, ease: 'power2.in',
-    }, 2.8);
 
 
   // ─── 6. Services — Scroll-Triggered Card Reveal ──────
