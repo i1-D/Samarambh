@@ -450,6 +450,117 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
 
+  // ─── Experience Section — 4 discrete reveal stops ────
+  const expSection = document.querySelector('.experience-section');
+  if (expSection) {
+    const line1  = expSection.querySelector('.exp-line--1');
+    const line2  = expSection.querySelector('.exp-line--2');
+    const cvTop  = expSection.querySelector('.exp-cover--top');
+    const cvBot  = expSection.querySelector('.exp-cover--bottom');
+    const cvLeft = expSection.querySelector('.exp-cover--left');
+    const cvRt   = expSection.querySelector('.exp-cover--right');
+
+    const STATES = [
+      { h: 50,   w: 50   },  // 0: fully covered, text in place
+      { h: 45,   w: 45   },  // 1: small crack — text nudges slightly
+      { h: 37.5, w: 37.5 },  // 2: ~25% visible
+      { h: 12.5, w: 12.5 },  // 3: ~75% visible
+      { h: 0,    w: 0    },  // 4: 100% revealed
+    ];
+    const TOTAL = 4;
+    let stopIdx    = 0;
+    let isAnimating = false;
+    let expActive   = false;
+    let expST;
+
+    function goTo(idx) {
+      if (isAnimating || idx === stopIdx) return;
+      const prev = stopIdx;
+      stopIdx = idx;
+      isAnimating = true;
+
+      const s = STATES[idx];
+      const tl = gsap.timeline({
+        defaults: { duration: 0.85, ease: 'power3.inOut' },
+        onComplete: () => { isAnimating = false; },
+      });
+
+      tl.to([cvTop, cvBot], { height: `${s.h}%` }, 0)
+        .to([cvLeft, cvRt],  { width:  `${s.w}%` }, 0);
+
+      // Stop 0→1: slight nudge — panels "push" text a little
+      if (prev === 0 && idx === 1) {
+        tl.to(line1, { y: -40, ease: 'power2.out', duration: 0.5 }, 0)
+          .to(line2, { y:  40, ease: 'power2.out', duration: 0.5 }, 0);
+      }
+      // Stop 1→2: complete fade out from nudged position
+      if (prev === 1 && idx === 2) {
+        tl.to([line1, line2], { opacity: 0, ease: 'power2.in', duration: 0.45 }, 0);
+      }
+      // Back 2→1: restore nudged position (visible, shifted)
+      if (prev >= 2 && idx === 1) {
+        tl.to([line1, line2], { opacity: 1, ease: 'power2.out', duration: 0.4 }, 0);
+      }
+      // Back to 0: text fully returns to origin
+      if (prev > 0 && idx === 0) {
+        tl.to(line1, { y: 0, opacity: 1, ease: 'power3.out', duration: 0.55 }, 0)
+          .to(line2, { y: 0, opacity: 1, ease: 'power3.out', duration: 0.55 }, 0);
+      }
+    }
+
+    expST = ScrollTrigger.create({
+      trigger: expSection,
+      start: 'top top',
+      end: () => `+=${window.innerHeight * (TOTAL + 1)}`,  // 5×vh: 4 stops + release space
+      pin: true,
+      pinSpacing: true,
+      invalidateOnRefresh: true,
+      onEnter:     () => { expActive = true;  },
+      onLeave:     () => { expActive = false; },
+      onEnterBack: () => { expActive = true;  },
+      onLeaveBack: () => { expActive = false; goTo(0); },
+    });
+
+    // One wheel gesture = one step, magnitude ignored.
+    // Avoids GSAP snap vs Lenis scroll-position conflicts.
+    let wheelCooldown = false;
+
+    window.addEventListener('wheel', (e) => {
+      if (!expActive) return;
+
+      const dir  = e.deltaY > 0 ? 1 : -1;
+      const next = stopIdx + dir;
+
+      // Backward past start — let Lenis naturally scroll above the section
+      if (next < 0) return;
+
+      // Forward past stop 4 — controlled single-scroll exit to prevent momentum overshoot
+      if (next > TOTAL) {
+        e.preventDefault();
+        if (!wheelCooldown) {
+          lenis.scrollTo(expST.end + 10, { duration: 0.4 });
+          wheelCooldown = true;
+          setTimeout(() => { wheelCooldown = false; }, 500);
+        }
+        return;
+      }
+
+      e.preventDefault();
+      if (isAnimating || wheelCooldown) return;
+
+      goTo(next);
+
+      // Sync underlying scroll to this stop's proportional position.
+      // Section is pinned so this causes no visible scroll movement.
+      const syncPos = expST.start + (next / (TOTAL + 1)) * (expST.end - expST.start);
+      lenis.scrollTo(syncPos, { immediate: true });
+
+      wheelCooldown = true;
+      setTimeout(() => { wheelCooldown = false; }, 950);
+    }, { passive: false });
+  }
+
+
   // ─── 6. Services — Scroll-Triggered Card Reveal ──────
   const svcCards = gsap.utils.toArray('.svc-card');
   if (svcCards.length) {
@@ -529,7 +640,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Venues section has cream bg → nav--dark stays active (inherited from above).
   // Moments wrapper also has cream bg → nav--dark stays.
-  // No triggers needed until services section.
+  // Experience section also has cream bg initially — keep nav dark.
+  ScrollTrigger.create({
+    trigger: '.experience-section',
+    start: 'top top',
+    onEnter:     () => getNav()?.classList.add('nav--dark'),
+    onEnterBack: () => getNav()?.classList.add('nav--dark'),
+  });
 
   // Light: services section
   ScrollTrigger.create({
@@ -592,5 +709,8 @@ document.addEventListener('DOMContentLoaded', () => {
       invalidateOnRefresh: true,
     });
   }
+
+  // Safety refresh — all pin spacers now in DOM; force recalculation of all trigger positions
+  ScrollTrigger.refresh();
 
 });
