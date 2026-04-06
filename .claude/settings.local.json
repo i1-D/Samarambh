@@ -23,7 +23,9 @@
       "WebFetch(domain:www.figma.com)",
       "Bash(ls -la /Users/ivandsouza/Documents/Samarambh/*.js)",
       "mcp__claude_ai_Figma__get_screenshot",
-      "mcp__plugin_figma_figma__get_design_context"
+      "mcp__plugin_figma_figma__get_design_context",
+      "WebFetch(domain:tidescape.framer.ai)",
+      "mcp__plugin_figma_figma__generate_figma_design"
     ]
   }
 }

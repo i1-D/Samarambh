@@ -1524,6 +1524,116 @@ p { margin: 0; }
 
 
 /* ═══════════════════════════════════════════════════════
+   SOCIAL SECTION
+   ═══════════════════════════════════════════════════════ */
+
+.social-section {
+  background: var(--color-bg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-8);
+  padding: var(--sp-10) 0;
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+}
+
+.social-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 0 var(--sp-11);
+}
+
+.social-title {
+  font-family: var(--font-serif);
+  font-size: var(--fs-section_heading);
+  font-weight: 500;
+  line-height: 1.3;
+  letter-spacing: -2px;
+  background: var(--color-text-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.social-title em {
+  font-style: italic;
+}
+
+.social-subtitle {
+  font-family: var(--font-sans);
+  color: var(--color-warm-gray);
+  text-align: right;
+  font-size: clamp(15px, 1.25vw, 20px);
+  font-weight: 400;
+  line-height: 1.6;
+}
+
+.social-slider-wrap {
+  width: 100%;
+}
+
+.social-track {
+  display: flex;
+  gap: 32px;
+  will-change: transform;
+  transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  cursor: grab;
+  user-select: none;
+}
+
+.social-track:active {
+  cursor: grabbing;
+}
+
+.social-card {
+  flex-shrink: 0;
+  width: 21.875vw;
+  height: 35.417vw;
+  border-radius: 20px;
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+  opacity: 0.8;
+  transition: opacity 0.4s ease, transform 0.4s ease;
+  box-shadow:
+    0px 4px 4px rgba(0, 0, 0, 0.25),
+    0px 20px 13px rgba(56, 56, 56, 0.05),
+    0px 38.5px 25.5px rgba(56, 56, 56, 0.06),
+    0px 64.8px 46.9px rgba(56, 56, 56, 0.08),
+    0px 100px 80px rgba(56, 56, 56, 0.10);
+}
+
+.social-card.is-active {
+  opacity: 1;
+}
+
+.social-card video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.social-tag {
+  position: absolute;
+  top: 30px;
+  left: 32px;
+  background: var(--color-bg);
+  border: 1px solid var(--color-gold-primary);
+  border-radius: 10px;
+  padding: 4px 8px;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 24px;
+  color: var(--color-gold-primary);
+  white-space: nowrap;
+}
+
+
+/* ═══════════════════════════════════════════════════════
    FOOTER
    ═══════════════════════════════════════════════════════ */
 
