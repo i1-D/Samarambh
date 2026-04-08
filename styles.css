@@ -1590,34 +1590,50 @@ p { margin: 0; }
 
 .social-grid {
   display: flex;
-  gap: 24px;
-  padding: 0 var(--sp-11);
+  gap: 16px;
   align-items: flex-start;
   overflow: hidden;
+  position: relative;
+}
+
+.social-gradient {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 96px;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.social-gradient--top {
+  top: 0;
+  background: linear-gradient(to bottom, var(--color-bg) 0%, transparent 100%);
+}
+
+.social-gradient--bottom {
+  bottom: 0;
+  background: linear-gradient(to top, var(--color-bg) 0%, transparent 100%);
 }
 
 .social-col {
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 16px;
   will-change: transform;
 }
 
-.social-col:nth-child(odd) {
-  padding-top: 96px;
-}
 
 .social-col:nth-child(even) {
-  margin-top: -130px;
+  margin-top: -180px;
 }
 
 .social-card {
   position: relative;
-  border-radius: 32px;
+  border-radius: 12px;
   overflow: hidden;
   cursor: pointer;
-  aspect-ratio: 355 / 540;
+  aspect-ratio: 3 / 4;
 }
 
 .social-card-img-wrap {
