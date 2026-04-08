@@ -110,6 +110,9 @@ document.addEventListener('DOMContentLoaded', () => {
   let _navEl = null;
   const getNav = () => _navEl || (_navEl = document.querySelector('.hero-nav'));
 
+  let _navLogoEl = null;
+  const getNavLogo = () => _navLogoEl || (_navLogoEl = document.querySelector('.nav-logo'));
+
   // Smooth-scroll nav anchor links via Lenis (delegated — nav may not exist yet)
   document.addEventListener('click', (e) => {
     const anchor = e.target.closest('.hero-nav a[href^="#"]');
@@ -147,10 +150,17 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
           nav.classList.remove('hero-nav--hidden');
           nav.classList.remove('nav--dark');
+          getNavLogo()?.classList.add('nav-logo--hidden');
         }
       },
-      onLeave: () => getNav()?.classList.remove('hero-nav--hidden'),
-      onLeaveBack: () => getNav()?.classList.remove('hero-nav--hidden'),
+      onLeave: () => {
+        getNav()?.classList.remove('hero-nav--hidden');
+        getNavLogo()?.classList.remove('nav-logo--hidden');
+      },
+      onLeaveBack: () => {
+        getNav()?.classList.remove('hero-nav--hidden');
+        getNavLogo()?.classList.add('nav-logo--hidden');
+      },
     });
   }
 
@@ -164,6 +174,7 @@ document.addEventListener('DOMContentLoaded', () => {
       // Always show at page top in light mode — even during refresh seek events
       nav.classList.remove('hero-nav--hidden');
       nav.classList.remove('nav--dark');
+      getNavLogo()?.classList.add('nav-logo--hidden');
       lastScroll = scroll;
       return;
     }
