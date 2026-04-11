@@ -599,17 +599,22 @@ p { margin: 0; }
 .venue-slider {
   position: absolute;
   inset: 0;
+  overflow: hidden;
 }
 
 .venue-slider-slide {
   position: absolute;
   inset: 0;
-  opacity: 0;
-  transition: opacity 0.5s ease;
+  transform: translateX(100%);
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .venue-slider-slide.is-active {
-  opacity: 1;
+  transform: translateX(0);
+}
+
+.venue-slider-slide.is-prev {
+  transform: translateX(-100%);
 }
 
 .venue-slider-slide img {
@@ -627,7 +632,7 @@ p { margin: 0; }
   right: 24px;
   display: none;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
   z-index: 20;
   pointer-events: auto;
 }
@@ -675,38 +680,6 @@ p { margin: 0; }
   to   { width: 100%; }
 }
 
-.venue-slider-buttons {
-  display: flex;
-  gap: 16px;
-  align-items: center;
-}
-
-.venue-slider-btn {
-  width: 48px;
-  height: 48px;
-  border-radius: 120px;
-  background: rgba(0, 0, 0, 0.22);
-  backdrop-filter: blur(6.25px);
-  -webkit-backdrop-filter: blur(6.25px);
-  border: none;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  transition: background 0.2s ease;
-  pointer-events: auto;
-}
-
-.venue-slider-btn:hover {
-  background: rgba(0, 0, 0, 0.38);
-}
-
-.venue-slider-btn svg {
-  width: 24px;
-  height: 24px;
-  display: block;
-}
 
 /* ── Mobile ───────────────────────────────────────── */
 @media (max-width: 768px) {

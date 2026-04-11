@@ -196,7 +196,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
   // ─── 4. Venues Showcase — Pinned Scroll + Slide-from-Top ──
-  // TideScape "Service - Room" reference:
   // • Section entrance: first image slides DOWN from above (y:-100%→0), scrubbed
   // • Pinned for 2× extra viewport height (3 venue steps total)
   // • Venue switch forward: incoming image slides from top, outgoing fades
@@ -303,7 +302,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // ── 4c. Entrance: first image slides from top ──────
     // Starts above the overflow:hidden container, scrubs down to y:0 as
-    // the section scrolls into view — the TideScape "slide from top" feel.
     gsap.set(venueMainImgs[0], { y: '-100%', opacity: 1 });
     gsap.to(venueMainImgs[0], {
       y: '0%', ease: 'none',
@@ -325,7 +323,7 @@ document.addEventListener('DOMContentLoaded', () => {
     ScrollTrigger.create({
       trigger: venuesSection,
       start: 'top top',
-      end: () => `+=${window.innerHeight * 2}`,
+      end: () => `+=${window.innerHeight * (totalVenues - 1)}`,
       pin: '.venues-sticky',
       pinSpacing: true,
       onUpdate: (self) => {
@@ -344,7 +342,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // ─── 5. Per-venue image sliders ──────────────────────
   // Pagination bars are siblings of .venue-main-img (not children) so they
   // sit at z-index:20 above all GSAP-animated layers and always receive clicks.
-  const SLIDE_DURATION = 5000;
+  const SLIDE_DURATION = 3000;
   const sliderPanel = document.querySelector('.venues-main-img-panel');
 
   if (sliderPanel) {
@@ -369,8 +367,17 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       function goTo(idx) {
-        slides[state.current].classList.remove('is-active');
+        const outSlide = slides[state.current];
+        outSlide.classList.remove('is-active');
+        outSlide.classList.add('is-prev');
+        setTimeout(() => {
+          outSlide.style.transition = 'none';
+          outSlide.classList.remove('is-prev');
+          requestAnimationFrame(() => { outSlide.style.transition = ''; });
+        }, 650);
+
         state.current = (idx + slides.length) % slides.length;
+        slides[state.current].classList.remove('is-prev');
         slides[state.current].classList.add('is-active');
         if (dots[state.current]) activateDot(dots[state.current]);
       }
@@ -420,14 +427,9 @@ document.addEventListener('DOMContentLoaded', () => {
       const state    = sliderStates[venueIdx];
       if (!state) return;
 
-      const btn = e.target.closest('.venue-slider-btn');
       const dot = e.target.closest('.venue-slider-dot');
 
-      if (btn) {
-        const delta = btn.classList.contains('venue-slider-btn--prev') ? -1 : 1;
-        state.goTo(state.current + delta);
-        state.startTimer();
-      } else if (dot) {
+      if (dot) {
         const dotEls = [...pagination.querySelectorAll('.venue-slider-dot')];
         const idx    = dotEls.indexOf(dot);
         if (idx !== -1) { state.goTo(idx); state.startTimer(); }
