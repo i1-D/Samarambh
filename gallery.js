@@ -21,184 +21,151 @@ gsap.from('.gp-hero__title, .gp-hero__desc, .gp-hero__badge', {
   delay: 0.3,
 });
 
-// ─── Pinned venue sections ──────────────────────────────
-// Each section pins to the viewport; the image grid scrubs upward
-// revealing all 4 rows while the title stays centered.
-document.querySelectorAll('.gp-pin-section').forEach(section => {
-  const grid = section.querySelector('.gp-pin-grid');
+// ─── Venue accordion ────────────────────────────────────
+(function initAccordion() {
+  const rows = document.querySelectorAll('.vl-row');
+  let activeRow = null;
 
-  const tl = gsap.timeline({ paused: true });
-  tl.to(grid, {
-    y: () => -(grid.scrollHeight - window.innerHeight),
-    ease: 'none',
-  });
+  rows.forEach(row => {
+    const header = row.querySelector('.vl-row__header');
+    const body   = row.querySelector('.vl-row__body');
 
-  ScrollTrigger.create({
-    trigger: section,
-    start: 'top top',
-    end: () => `+=${grid.scrollHeight - window.innerHeight}`,
-    pin: true,
-    scrub: 1,
-    animation: tl,
-    invalidateOnRefresh: true,
-  });
-});
+    // Set initial state — collapsed
+    gsap.set(body, { height: 0, overflow: 'hidden' });
 
-// ─── Social section — autoplay one video at a time (infinite loop + drag) ───
-(function initSocial() {
-  const track = document.querySelector('.social-track');
-  if (!track) return;
+    header.addEventListener('click', () => {
+      const isOpen = row.dataset.open === 'true';
 
-  const realCards = Array.from(track.querySelectorAll('.social-card'));
-  const realCount = realCards.length; // 8
+      // Close the currently open row first (accordion: one at a time)
+      if (activeRow && activeRow !== row) {
+        closeRow(activeRow);
+      }
 
-  // Prepend clones — fills left side so card 0 can be centered
-  const preFrag = document.createDocumentFragment();
-  realCards.forEach(card => {
-    const clone = card.cloneNode(true);
-    clone.setAttribute('data-clone', 'pre');
-    preFrag.appendChild(clone);
-  });
-  track.insertBefore(preFrag, track.firstChild);
-
-  // Append clones — fills right side for seamless forward loop
-  realCards.forEach(card => {
-    const clone = card.cloneNode(true);
-    clone.setAttribute('data-clone', 'post');
-    track.appendChild(clone);
-  });
-
-  // Layout: [pre 0-7] [real 8-15] [post 16-23]
-  const allCards = Array.from(track.querySelectorAll('.social-card'));
-  const allVideos = allCards.map(c => c.querySelector('video'));
-  const totalCount = allCards.length; // 24
-  let activeIndex = realCount; // start at real card 0 (domIndex 8)
-
-  function getCardWidth() {
-    return allCards[0].offsetWidth;
-  }
-
-  function getStepWidth() {
-    if (allCards.length < 2) return allCards[0].offsetWidth + 32;
-    return allCards[1].offsetLeft - allCards[0].offsetLeft;
-  }
-
-  function getOffset(index) {
-    const wrapW = track.parentElement.offsetWidth;
-    const cardW = getCardWidth();
-    const step = getStepWidth();
-    return (wrapW / 2) - (cardW / 2) - index * step;
-  }
-
-  function getCurrentTranslateX() {
-    return new DOMMatrix(getComputedStyle(track).transform).m41;
-  }
-
-  // playAt — activate and play a card with NO sliding
-  function playAt(domIndex) {
-    activeIndex = domIndex;
-    allCards.forEach((c, i) => c.classList.toggle('is-active', i === activeIndex));
-    allVideos.forEach((v, i) => {
-      if (i === activeIndex) {
-        v.currentTime = 0;
-        v.play().catch(() => {});
+      if (isOpen) {
+        closeRow(row);
+        activeRow = null;
       } else {
-        v.pause();
-        v.currentTime = 0;
+        openRow(row);
+        activeRow = row;
       }
     });
-  }
+  });
 
-  // goTo — slide to center a card then play it (auto-advance + drag snap only)
-  function goTo(rawIndex) {
-    let domIndex = ((rawIndex % totalCount) + totalCount) % totalCount;
+  function openRow(row) {
+    const body = row.querySelector('.vl-row__body');
+    row.dataset.open = 'true';
+    row.querySelector('.vl-row__header').setAttribute('aria-expanded', 'true');
+    body.hidden = false;
+    body.classList.add('is-open');
 
-    // Post-clones exhausted → snap to real set equivalent
-    if (activeIndex >= realCount * 2 && domIndex < realCount) {
-      track.style.transition = 'none';
-      domIndex = domIndex + realCount;
-      track.style.transform = `translateX(${getOffset(domIndex)}px)`;
-      requestAnimationFrame(() => { track.style.transition = ''; });
-    }
-    // Pre-clones exhausted (dragged left past card 0) → snap to real set equivalent
-    else if (activeIndex < realCount && domIndex >= realCount * 2) {
-      track.style.transition = 'none';
-      domIndex = domIndex - realCount;
-      track.style.transform = `translateX(${getOffset(domIndex)}px)`;
-      requestAnimationFrame(() => { track.style.transition = ''; });
-    }
-
-    playAt(domIndex);
-    track.style.transform = `translateX(${getOffset(activeIndex)}px)`;
-  }
-
-  // ── Drag ────────────────────────────────────────────
-  let dragStartX = 0;
-  let dragStartOffset = 0;
-  let isDragging = false;
-  let didDrag = false;
-
-  function onDragStart(clientX) {
-    isDragging = true;
-    didDrag = false;
-    dragStartX = clientX;
-    dragStartOffset = getCurrentTranslateX();
-    track.style.transition = 'none';
-  }
-
-  function onDragMove(clientX) {
-    if (!isDragging) return;
-    const delta = clientX - dragStartX;
-    if (Math.abs(delta) > 5) didDrag = true;
-    track.style.transform = `translateX(${dragStartOffset + delta}px)`;
-  }
-
-  function onDragEnd() {
-    if (!isDragging) return;
-    isDragging = false;
-    track.style.transition = '';
-    const wrapW = track.parentElement.offsetWidth;
-    const cardW = getCardWidth();
-    const step = getStepWidth();
-    const currentOffset = getCurrentTranslateX();
-    const nearestIndex = Math.round(((wrapW / 2) - (cardW / 2) - currentOffset) / step);
-    goTo(Math.max(0, Math.min(totalCount - 1, nearestIndex)));
-  }
-
-  track.addEventListener('mousedown', e => onDragStart(e.clientX));
-  document.addEventListener('mousemove', e => { if (isDragging) onDragMove(e.clientX); });
-  document.addEventListener('mouseup', () => onDragEnd());
-
-  track.addEventListener('touchstart', e => onDragStart(e.touches[0].clientX), { passive: true });
-  track.addEventListener('touchmove', e => {
-    if (!isDragging) return;
-    if (Math.abs(e.touches[0].clientX - dragStartX) > 10) e.preventDefault();
-    onDragMove(e.touches[0].clientX);
-  }, { passive: false });
-  track.addEventListener('touchend', () => onDragEnd());
-
-  // Click — play in place, no sliding
-  allCards.forEach((card, i) => {
-    card.addEventListener('click', () => {
-      if (didDrag) { didDrag = false; return; }
-      playAt(i);
+    gsap.to(body, {
+      height: 'auto',
+      duration: 0.6,
+      ease: 'power3.inOut',
+      onComplete: () => ScrollTrigger.refresh(),
     });
+  }
+
+  function closeRow(row) {
+    const body = row.querySelector('.vl-row__body');
+    row.dataset.open = 'false';
+    row.querySelector('.vl-row__header').setAttribute('aria-expanded', 'false');
+    body.classList.remove('is-open');
+
+    gsap.to(body, {
+      height: 0,
+      duration: 0.45,
+      ease: 'power3.inOut',
+      onComplete: () => {
+        body.hidden = true;
+        ScrollTrigger.refresh();
+      },
+    });
+  }
+})();
+
+// ─── Lightbox ───────────────────────────────────────────
+(function initLightbox() {
+  const lb        = document.getElementById('lb');
+  if (!lb) return;
+
+  const lbImg     = lb.querySelector('.lb__img');
+  const lbClose   = lb.querySelector('.lb__close');
+  const lbPrev    = lb.querySelector('.lb__nav--prev');
+  const lbNext    = lb.querySelector('.lb__nav--next');
+  const lbCounter = lb.querySelector('.lb__counter');
+
+  let currentImages = [];
+  let currentIndex  = 0;
+
+  function getVenueBodyImages(venueId) {
+    const row = document.querySelector(`.vl-row[data-venue="${venueId}"]`);
+    if (!row) return [];
+    return Array.from(row.querySelectorAll('.vl-row__body .vl-img-wrap img'))
+      .map(img => ({ src: img.src, alt: img.alt }));
+  }
+
+  function openLightbox(venueId, idx) {
+    currentImages = getVenueBodyImages(venueId);
+    if (!currentImages.length) return;
+    currentIndex = Math.max(0, Math.min(idx, currentImages.length - 1));
+    lb.hidden = false;
+    lenis.stop();
+    // Show without fade-out on first open
+    lbImg.src = currentImages[currentIndex].src;
+    lbImg.alt = currentImages[currentIndex].alt;
+    lbCounter.textContent = `${currentIndex + 1} / ${currentImages.length}`;
+  }
+
+  function closeLightbox() {
+    lb.hidden = true;
+    lenis.start();
+  }
+
+  function showImage(idx) {
+    lbImg.classList.add('is-fading');
+    setTimeout(() => {
+      lbImg.src = currentImages[idx].src;
+      lbImg.alt = currentImages[idx].alt;
+      lbImg.classList.remove('is-fading');
+      lbCounter.textContent = `${idx + 1} / ${currentImages.length}`;
+      currentIndex = idx;
+    }, 200);
+  }
+
+  function prev() {
+    showImage((currentIndex - 1 + currentImages.length) % currentImages.length);
+  }
+
+  function next() {
+    showImage((currentIndex + 1) % currentImages.length);
+  }
+
+  // Delegate image clicks from anywhere in the venue list
+  document.addEventListener('click', e => {
+    const wrap = e.target.closest('.vl-img-wrap');
+    if (!wrap) return;
+
+    const img = wrap.querySelector('img');
+    if (!img) return;
+
+    const row = wrap.closest('.vl-row');
+    if (!row) return;
+
+    const venueId = row.dataset.venue;
+    const idx = parseInt(img.dataset.idx ?? '0', 10);
+    openLightbox(venueId, idx);
   });
 
-  // Auto-advance on video end — slides to center next card
-  allVideos.forEach((v, i) => v.addEventListener('ended', () => goTo(i + 1)));
+  lbClose.addEventListener('click', closeLightbox);
+  lb.querySelector('.lb__backdrop').addEventListener('click', closeLightbox);
+  lbPrev.addEventListener('click', prev);
+  lbNext.addEventListener('click', next);
 
-  // Init — position at real card 0 (domIndex 8), no transition flash
-  track.style.transition = 'none';
-  track.style.transform = `translateX(${getOffset(realCount)}px)`;
-  requestAnimationFrame(() => {
-    track.style.transition = '';
-    goTo(realCount);
-  });
-
-  window.addEventListener('resize', () => {
-    track.style.transition = 'none';
-    track.style.transform = `translateX(${getOffset(activeIndex)}px)`;
-    requestAnimationFrame(() => { track.style.transition = ''; });
+  document.addEventListener('keydown', e => {
+    if (lb.hidden) return;
+    if (e.key === 'Escape')     closeLightbox();
+    if (e.key === 'ArrowLeft')  prev();
+    if (e.key === 'ArrowRight') next();
   });
 })();
