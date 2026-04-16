@@ -225,14 +225,14 @@ document.addEventListener('DOMContentLoaded', () => {
     // ── Outgoing slide (left panel) ────────────────────
     outSlide.classList.remove('is-active');
     gsap.to(outSlide, {
-      opacity: 0, y: direction < 0 ? -20 : 20,
-      duration: 0.35, ease: 'power2.in', overwrite: true,
+      opacity: 0, y: direction < 0 ? -12 : 12,
+      duration: 0.2, ease: 'power2.in', overwrite: true,
       onComplete: () => gsap.set(outSlide, { y: 0 }),
     });
 
     // ── Outgoing image — fade out; incoming slides over it
     gsap.to(outImg, {
-      opacity: 0, duration: 0.45, ease: 'power2.in', overwrite: true,
+      opacity: 0, duration: 0.25, ease: 'power2.in', overwrite: true,
       onComplete: () => {
         outImg.classList.remove('is-active');
         gsap.set(outImg, { y: 0 }); // reset y so backward scroll reuses it correctly
@@ -242,14 +242,14 @@ document.addEventListener('DOMContentLoaded', () => {
     // ── Incoming slide (left panel) ────────────────────
     inSlide.classList.add('is-active');
     gsap.fromTo(inSlide,
-      { opacity: 0, y: direction < 0 ? 28 : -28 },
-      { opacity: 1, y: 0, duration: 0.55, ease: 'power3.out', overwrite: true, delay: 0.12 }
+      { opacity: 0, y: direction < 0 ? 16 : -16 },
+      { opacity: 1, y: 0, duration: 0.35, ease: 'power3.out', overwrite: true, delay: 0.05 }
     );
 
     // Staggered text reveal
     gsap.fromTo(inSlide.querySelectorAll(venueTextSelectors),
-      { opacity: 0, y: 18 },
-      { opacity: 1, y: 0, duration: 0.5, stagger: 0.07, ease: 'power3.out', overwrite: true, delay: 0.18 }
+      { opacity: 0, y: 10 },
+      { opacity: 1, y: 0, duration: 0.3, stagger: 0.04, ease: 'power3.out', overwrite: true, delay: 0.08 }
     );
 
     // ── Incoming image — slides from top (forward) or bottom (backward)
@@ -259,7 +259,7 @@ document.addEventListener('DOMContentLoaded', () => {
       { y: fromY, opacity: 1 },
       {
         y: '0%', opacity: 1,
-        duration: 0.9, ease: 'power3.out', overwrite: true,
+        duration: 0.55, ease: 'power3.out', overwrite: true,
         onComplete: () => {
           gsap.set(inImg,  { zIndex: 0 });
           gsap.set(outImg, { y: 0 }); // safety reset
@@ -320,22 +320,64 @@ document.addEventListener('DOMContentLoaded', () => {
     // venueMainImgs[0] y is owned by the entrance scrub above — do not override
 
     // ── 4e. Pin + progress bar + venue switching ───────
-    ScrollTrigger.create({
+    let _lastVenueIdx = -1;
+    const venueST = ScrollTrigger.create({
       trigger: venuesSection,
       start: 'top top',
       end: () => `+=${window.innerHeight * (totalVenues - 1)}`,
       pin: '.venues-sticky',
       pinSpacing: true,
       onUpdate: (self) => {
-        progressFill.style.height = `${self.progress * 100}%`;
+        progressFill.style.transform = `scaleY(${self.progress})`;
 
         const idx = Math.min(
           Math.floor(self.progress * totalVenues),
           totalVenues - 1
         );
-        switchVenue(idx);
+        if (idx !== _lastVenueIdx) {
+          _lastVenueIdx = idx;
+          switchVenue(idx);
+        }
       },
     });
+
+    // ── 4f. One-scroll-per-venue via lenis.scrollTo ──────
+    // GSAP snap conflicts with Lenis — both try to own window.scrollY
+    // simultaneously, causing visible reverse scroll. Instead, intercept
+    // wheel events while pinned and drive scroll exclusively through Lenis.
+    let _venueWheelLocked = false;
+
+    window.addEventListener('wheel', (e) => {
+      if (!venueST) return;
+      const progress = venueST.progress;
+      // Not in the pinned zone
+      if (progress <= 0 && e.deltaY < 0) return;
+      if (progress >= 1 && e.deltaY > 0) return;
+      if (progress < 0 || progress > 1) return;
+
+      // Check scroll position is actually within the pinned range
+      const scrollY = window.scrollY;
+      if (scrollY < venueST.start - 20 || scrollY > venueST.end + 20) return;
+
+      const targetIdx = e.deltaY > 0
+        ? Math.min(currentVenueIdx + 1, totalVenues - 1)
+        : Math.max(currentVenueIdx - 1, 0);
+
+      if (targetIdx === currentVenueIdx) return;
+      if (_venueWheelLocked) { e.preventDefault(); return; }
+
+      e.preventDefault();
+      _venueWheelLocked = true;
+
+      const sectionTop = venuesSection.getBoundingClientRect().top + window.scrollY;
+      const targetScroll = sectionTop + (targetIdx / (totalVenues - 1)) * window.innerHeight * (totalVenues - 1);
+
+      lenis.scrollTo(targetScroll, {
+        duration: 0.7,
+        easing: (t) => t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t,
+        onComplete: () => { _venueWheelLocked = false; },
+      });
+    }, { passive: false });
   }
 
 
@@ -362,8 +404,7 @@ document.addEventListener('DOMContentLoaded', () => {
       function activateDot(dot) {
         [...dots].forEach(d => d.classList.remove('is-active'));
         dot.classList.remove('is-active');
-        void dot.offsetWidth; // reflow — restarts CSS fill animation
-        dot.classList.add('is-active');
+        requestAnimationFrame(() => dot.classList.add('is-active'));
       }
 
       function goTo(idx) {
