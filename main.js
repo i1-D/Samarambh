@@ -515,17 +515,73 @@ document.addEventListener('DOMContentLoaded', () => {
     const cvRt   = expSection.querySelector('.exp-cover--right');
 
     const STATES = [
-      { h: 50,   w: 50   },  // 0: fully covered, text in place
-      { h: 45,   w: 45   },  // 1: small crack — text nudges slightly
-      { h: 37.5, w: 37.5 },  // 2: ~25% visible
-      { h: 12.5, w: 12.5 },  // 3: ~75% visible
-      { h: 0,    w: 0    },  // 4: 100% revealed
+      { h: 50,    w: 50    },  // 0: fully covered, text in place
+      { h: 45, w: 45 },  // 1: 5% visible — text nudges slightly
+      { h: 25.00, w: 25.00 },  // 2: 25% visible
+      { h: 11.27, w: 11.27 },  // 3: 60% visible
+      { h: 0,     w: 0     },  // 4: 100% revealed
     ];
     const TOTAL = 4;
     let stopIdx    = 0;
     let isAnimating = false;
     let expActive   = false;
     let expST;
+
+    // Lerp state for cover panels — velocity-driven dynamic lerp
+    const LERP_MIN = 0.14;       // lerp factor at slowest scroll
+    const LERP_MAX = 0.32;       // lerp factor at fastest scroll
+    const SETTLE_THRESHOLD = 0.015;  // % — stop ticking when this close to target
+    let curH = 50, curW = 50;    // current interpolated values
+    let tgtH = 50, tgtW = 50;   // target values from STATES
+    let velocity = 0;            // accumulated scroll velocity, decays each frame
+    let lerpTicker = null;
+
+    // When set, text y/opacity is driven frame-by-frame in sync with cover lerp
+    let textSync = null;
+
+    function startLerp() {
+      if (lerpTicker) return;
+      lerpTicker = gsap.ticker.add(() => {
+        velocity *= 0.80; // decay each frame — natural momentum trail-off
+        const dynamicLerp = LERP_MIN + velocity * (LERP_MAX - LERP_MIN);
+        curH += (tgtH - curH) * dynamicLerp;
+        curW += (tgtW - curW) * dynamicLerp;
+
+        gsap.set([cvTop, cvBot], { height: `${curH}%` });
+        gsap.set([cvLeft, cvRt],  { width:  `${curW}%` });
+
+        // Drive text in lockstep with cover position
+        if (textSync) {
+          const range = textSync.startH - textSync.endH;
+          const progress = range === 0 ? 1 : Math.min(1, (textSync.startH - curH) / range);
+          const t = progress * progress * progress; // power3 curve — slow start, progressive
+          gsap.set(line1, {
+            y: textSync.y1start + (textSync.y1end - textSync.y1start) * t,
+            opacity: 1 - t,
+          });
+          gsap.set(line2, {
+            y: textSync.y2start + (textSync.y2end - textSync.y2start) * t,
+            opacity: 1 - t,
+          });
+          if (progress >= 1) {
+            gsap.set([line1, line2], { visibility: 'hidden' });
+            textSync = null;
+          }
+        }
+
+        const doneH = Math.abs(tgtH - curH) < SETTLE_THRESHOLD;
+        const doneW = Math.abs(tgtW - curW) < SETTLE_THRESHOLD;
+        if (doneH && doneW) {
+          // Snap to exact target and stop ticking
+          gsap.set([cvTop, cvBot], { height: `${tgtH}%` });
+          gsap.set([cvLeft, cvRt],  { width:  `${tgtW}%` });
+          curH = tgtH; curW = tgtW;
+          gsap.ticker.remove(lerpTicker);
+          lerpTicker = null;
+          isAnimating = false;
+        }
+      });
+    }
 
     function goTo(idx) {
       if (isAnimating || idx === stopIdx) return;
@@ -534,31 +590,38 @@ document.addEventListener('DOMContentLoaded', () => {
       isAnimating = true;
 
       const s = STATES[idx];
-      const tl = gsap.timeline({
-        defaults: { duration: 0.85, ease: 'power3.inOut' },
-        onComplete: () => { isAnimating = false; },
-      });
+      tgtH = s.h;
+      tgtW = s.w;
+      startLerp();
 
-      tl.to([cvTop, cvBot], { height: `${s.h}%` }, 0)
-        .to([cvLeft, cvRt],  { width:  `${s.w}%` }, 0);
-
-      // Stop 0→1: slight nudge — panels "push" text a little
+      // Text animations via GSAP (unchanged, discrete)
+      // Stop 0→1: slight nudge — progressive ease matches cover lerp ramp
       if (prev === 0 && idx === 1) {
-        tl.to(line1, { y: -40, ease: 'power2.out', duration: 0.5 }, 0)
-          .to(line2, { y:  40, ease: 'power2.out', duration: 0.5 }, 0);
+        gsap.to(line1, { y: -40, ease: 'power3.inOut', duration: 0.55 });
+        gsap.to(line2, { y:  40, ease: 'power3.inOut', duration: 0.55 });
       }
-      // Stop 1→2: complete fade out from nudged position
+      // Stop 1→2: drive text in sync with cover lerp
+      // endH is snapshotted so progress is unaffected by later tgtH changes (stops 3/4)
       if (prev === 1 && idx === 2) {
-        tl.to([line1, line2], { opacity: 0, ease: 'power2.in', duration: 0.45 }, 0);
+        textSync = { startH: curH, endH: tgtH, y1start: -40, y1end: -110, y2start: 40, y2end: 110 };
       }
-      // Back 2→1: restore nudged position (visible, shifted)
+      // Stop 3/4: guarantee text is hidden regardless of textSync state
+      if (idx >= 3) {
+        textSync = null;
+        gsap.set([line1, line2], { opacity: 0, visibility: 'hidden' });
+      }
+      // Back 2→1: cancel any active sync, slide back to nudged positions
       if (prev >= 2 && idx === 1) {
-        tl.to([line1, line2], { opacity: 1, ease: 'power2.out', duration: 0.4 }, 0);
+        textSync = null;
+        gsap.set([line1, line2], { visibility: 'visible' });
+        gsap.to(line1, { y: -40, opacity: 1, ease: 'expo.out', duration: 0.35 });
+        gsap.to(line2, { y:  40, opacity: 1, ease: 'expo.out', duration: 0.35 });
       }
-      // Back to 0: text fully returns to origin
+      // Back to 0: full reset — progressive ease back to origin
       if (prev > 0 && idx === 0) {
-        tl.to(line1, { y: 0, opacity: 1, ease: 'power3.out', duration: 0.55 }, 0)
-          .to(line2, { y: 0, opacity: 1, ease: 'power3.out', duration: 0.55 }, 0);
+        gsap.set([line1, line2], { visibility: 'visible' });
+        gsap.to(line1, { y: 0, opacity: 1, ease: 'power3.inOut', duration: 0.5 });
+        gsap.to(line2, { y: 0, opacity: 1, ease: 'power3.inOut', duration: 0.5 });
       }
     }
 
@@ -572,7 +635,16 @@ document.addEventListener('DOMContentLoaded', () => {
       onEnter:     () => { expActive = true;  },
       onLeave:     () => { expActive = false; },
       onEnterBack: () => { expActive = true;  },
-      onLeaveBack: () => { expActive = false; goTo(0); },
+      onLeaveBack: () => {
+        expActive = false;
+        // Hard-reset covers instantly when scrolling back above section
+        if (lerpTicker) { gsap.ticker.remove(lerpTicker); lerpTicker = null; }
+        curH = 50; curW = 50; tgtH = 50; tgtW = 50;
+        gsap.set([cvTop, cvBot], { height: '50%' });
+        gsap.set([cvLeft, cvRt],  { width:  '50%' });
+        gsap.set([line1, line2], { y: 0, opacity: 1, visibility: 'visible' });
+        stopIdx = 0; isAnimating = false;
+      },
     });
 
     // One wheel gesture = one step, magnitude ignored.
@@ -602,6 +674,7 @@ document.addEventListener('DOMContentLoaded', () => {
       e.preventDefault();
       if (isAnimating || wheelCooldown) return;
 
+      velocity = Math.min(1.0, velocity + Math.abs(e.deltaY) * 0.006);
       goTo(next);
 
       // Sync underlying scroll to this stop's proportional position.
@@ -610,7 +683,7 @@ document.addEventListener('DOMContentLoaded', () => {
       lenis.scrollTo(syncPos, { immediate: true });
 
       wheelCooldown = true;
-      setTimeout(() => { wheelCooldown = false; }, 950);
+      setTimeout(() => { wheelCooldown = false; }, 550);
     }, { passive: false });
   }
 
