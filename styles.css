@@ -2602,3 +2602,727 @@ p { margin: 0; }
 }
 
 
+/* ═══════════════════════════════════════════════════════
+   RESPONSIVE — HAMBURGER NAV (base styles, hidden at desktop)
+   ═══════════════════════════════════════════════════════ */
+
+.nav-hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 28px;
+  height: 18px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  pointer-events: all;
+  flex-shrink: 0;
+  z-index: 1001;
+}
+
+.nav-hamburger span {
+  display: block;
+  width: 100%;
+  height: 1.5px;
+  background: var(--color-text-on-dark);
+  transition: transform 0.35s var(--ease-out), opacity 0.25s ease;
+}
+
+.hero-nav.nav--dark .nav-hamburger span {
+  background: var(--color-text-primary);
+}
+
+.hero-nav.nav--open .nav-hamburger span:nth-child(1) {
+  transform: translateY(8.25px) rotate(45deg);
+}
+.hero-nav.nav--open .nav-hamburger span:nth-child(2) {
+  opacity: 0;
+  transform: scaleX(0);
+}
+.hero-nav.nav--open .nav-hamburger span:nth-child(3) {
+  transform: translateY(-8.25px) rotate(-45deg);
+}
+
+.nav-drawer {
+  position: fixed;
+  inset: 0;
+  background: var(--color-green-dark);
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: translateY(-100%);
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
+}
+
+.nav-drawer.is-open {
+  transform: translateY(0);
+  pointer-events: all;
+}
+
+.nav-drawer-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+}
+
+.nav-drawer-inner a {
+  font-family: var(--font-serif);
+  font-size: clamp(28px, 8vw, 48px);
+  font-weight: 300;
+  color: var(--color-text-on-dark);
+  letter-spacing: -0.5px;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.nav-drawer-inner a:hover {
+  color: var(--color-gold-primary);
+}
+
+
+/* ═══════════════════════════════════════════════════════
+   RESPONSIVE — 1920px (large desktop)
+   ═══════════════════════════════════════════════════════ */
+
+@media (min-width: 1920px) {
+  :root {
+    --sp-11: 10vw;
+    --sp-10: 8vw;
+  }
+
+  .gallery-grid {
+    height: clamp(500px, 45vw, 1050px);
+  }
+
+  .gp-pin-cell--portrait  { height: 480px; }
+  .gp-pin-cell--landscape { height: 300px; }
+}
+
+
+/* ═══════════════════════════════════════════════════════
+   RESPONSIVE — 1360px (large tablet / small desktop)
+   ═══════════════════════════════════════════════════════ */
+
+@media (max-width: 1360px) {
+  .svc-card-title {
+    width: 220px;
+  }
+
+  .svc-card-img {
+    width: 22vw;
+    height: 14vw;
+  }
+}
+
+
+/* ═══════════════════════════════════════════════════════
+   RESPONSIVE — 900px (tablet)
+   ═══════════════════════════════════════════════════════ */
+
+@media (max-width: 900px) {
+
+  /* — Spacing tokens — */
+  :root {
+    --sp-7:  16px;
+    --sp-8:  20px;
+    --sp-9:  32px;
+    --sp-10: 40px;
+    --sp-11: 24px;
+  }
+
+  /* — Navigation — */
+  .hero-nav {
+    padding: 20px var(--sp-11);
+  }
+
+  .hero-nav .nav-group {
+    gap: 20px;
+  }
+
+  .hero-nav a {
+    font-size: 14px;
+  }
+
+  /* — Hero — */
+  .hero-logo {
+    height: auto;
+    width: 18vw;
+    min-width: 80px;
+    margin: 35vh 0 20vh;
+  }
+
+  .hero-headline {
+    font-size: clamp(40px, 5vw, 72px);
+    letter-spacing: -1.5px;
+  }
+
+  .hero-tagline {
+    font-size: clamp(36px, 5vw, 72px);
+    letter-spacing: -1.5px;
+  }
+
+  .hero-stats {
+    flex-direction: row;
+    justify-content: center;
+    max-width: 100%;
+  }
+
+  .hero-stat-number {
+    font-size: clamp(48px, 6vw, 96px);
+  }
+
+  .hero-stat-label {
+    font-size: clamp(13px, 1.5vw, 20px);
+  }
+
+  .hero-divider {
+    height: 48px;
+  }
+
+  /* — Moments — */
+  .moments-scroll-section {
+    height: auto;
+    overflow: visible;
+  }
+
+  .moments-title-overlay {
+    position: relative;
+    top: auto;
+    left: auto;
+    transform: none;
+    text-align: center;
+    padding: var(--sp-9) var(--sp-11) var(--sp-7);
+    white-space: normal;
+  }
+
+  .gp-pin-grid {
+    gap: 40px;
+    padding: 24px max(4vw, 16px);
+  }
+
+  .gp-pin-cell--portrait  { height: 280px; }
+  .gp-pin-cell--landscape { height: 160px; }
+
+  /* — Services — */
+  .svc-card-inner {
+    flex-wrap: wrap;
+    gap: var(--sp-6);
+  }
+
+  .svc-card-title {
+    width: 100%;
+    font-size: clamp(1.4rem, 3.5vw, 2rem);
+  }
+
+  .svc-card-img {
+    width: 100%;
+    height: clamp(180px, 40vw, 280px);
+  }
+
+  .svc-card-text {
+    width: 100%;
+    font-size: 15px;
+  }
+
+  /* — Gallery index preview — */
+  .gallery-header {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .gallery-header__desc {
+    text-align: left;
+    max-width: 100%;
+    font-size: 14px;
+  }
+
+  .gallery-grid {
+    height: auto;
+    min-height: 0;
+    gap: 6px;
+  }
+
+  .gallery-col {
+    gap: 6px;
+  }
+
+  .gallery-row {
+    height: clamp(100px, 22vw, 200px);
+    gap: 6px;
+  }
+
+  /* — Reviews — */
+  .rv-section {
+    flex-direction: column;
+    height: auto;
+    overflow: visible;
+    padding: var(--sp-9) var(--sp-11);
+    gap: var(--sp-6);
+  }
+
+  .rv-left {
+    flex: none;
+    width: 100%;
+    padding: 0;
+  }
+
+  .rv-sub {
+    max-width: 100%;
+  }
+
+  .rv-right {
+    overflow: visible;
+    height: auto;
+    width: 100%;
+  }
+
+  .rv-track {
+    transform: none !important;
+    padding: 0;
+    gap: var(--sp-7);
+  }
+
+  .rv-card {
+    min-height: auto;
+  }
+
+  .rv-card__img {
+    aspect-ratio: 4 / 3;
+  }
+
+  /* — Amenities — */
+  .amenities-stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .amenities-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* — Footer — */
+  .footer-inner {
+    padding: 5vh var(--sp-11);
+  }
+
+  .footer-heading {
+    white-space: normal;
+    font-size: clamp(36px, 7vh, 72px);
+  }
+
+  .footer-info {
+    flex-wrap: wrap;
+    gap: 20px 32px;
+    padding: 3vh var(--sp-11);
+  }
+
+  .footer-bottom {
+    padding: 16px var(--sp-11);
+  }
+
+  .footer-signature {
+    padding: 0 40px;
+  }
+
+  /* — Gallery page hero — */
+  .gp-hero {
+    padding: 120px max(4vw, 1.5rem) 60px;
+  }
+
+  /* — Gallery page venue list — */
+  .vl-section {
+    padding: 0 max(4vw, 20px) var(--sp-9);
+  }
+
+  .vl-row__meta {
+    min-width: 200px;
+  }
+
+  .vl-row__body {
+    padding-left: calc(36px + clamp(16px, 2.5vw, 40px) + 200px + clamp(16px, 2.5vw, 40px));
+  }
+
+  .vl-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* — Experience section (gallery page) — */
+  .exp-sticky {
+    height: auto;
+    min-height: 100vh;
+  }
+
+  .exp-cover {
+    display: none;
+  }
+
+  .exp-text {
+    position: relative;
+    inset: auto;
+    padding: var(--sp-9) var(--sp-11);
+    pointer-events: auto;
+  }
+
+  .exp-line {
+    white-space: normal;
+    font-size: clamp(28px, 6vw, 52px);
+  }
+}
+
+
+/* ═══════════════════════════════════════════════════════
+   RESPONSIVE — 600px (mobile)
+   ═══════════════════════════════════════════════════════ */
+
+@media (max-width: 600px) {
+
+  /* — Spacing tokens — */
+  :root {
+    --sp-7:  12px;
+    --sp-8:  16px;
+    --sp-9:  24px;
+    --sp-10: 32px;
+    --sp-11: 20px;
+  }
+
+  /* — Navigation — */
+  .hero-nav .nav-group {
+    display: none;
+  }
+
+  .nav-logo {
+    position: static;
+    transform: none;
+  }
+
+  .nav-logo img {
+    width: 64px;
+  }
+
+  .nav-hamburger {
+    display: flex;
+  }
+
+  /* — Hero — */
+  .hero-logo {
+    width: 55vw;
+    max-width: 200px;
+    margin: 28vh 0 14vh;
+  }
+
+  .hero-headline {
+    font-size: clamp(32px, 8vw, 52px);
+    letter-spacing: -1px;
+  }
+
+  .hero-tagline {
+    font-size: clamp(28px, 7.5vw, 48px);
+    letter-spacing: -1px;
+  }
+
+  .hero-stats {
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: 12px;
+  }
+
+  .hero-stat {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .hero-stat-number {
+    font-size: clamp(36px, 9vw, 60px);
+  }
+
+  .hero-stat-label {
+    font-size: 11px;
+    text-align: center;
+  }
+
+  /* — Venues — */
+  .venues-sticky {
+    padding: 24px 20px;
+    gap: 16px;
+  }
+
+  .venues-main-img-panel {
+    height: 240px;
+  }
+
+  .venue-slide-secondary-img {
+    height: 160px;
+  }
+
+  .venue-slide-title {
+    font-size: clamp(22px, 6vw, 32px);
+  }
+
+  /* — Moments — */
+  .gp-pin-grid {
+    gap: 24px;
+    padding: 16px;
+  }
+
+  .gp-pin-row {
+    gap: 8px;
+  }
+
+  .gp-pin-cell--portrait  { height: 200px; }
+  .gp-pin-cell--landscape { height: 120px; }
+
+  /* — Services — */
+  .svc-card-inner {
+    padding: var(--sp-6) var(--sp-11);
+  }
+
+  .svc-card-img {
+    height: clamp(160px, 50vw, 240px);
+  }
+
+  /* — Gallery index preview — */
+  .gallery-grid {
+    flex-direction: column;
+  }
+
+  .gallery-col:nth-child(2) {
+    display: none;
+  }
+
+  .gallery-img--large {
+    aspect-ratio: 4 / 3;
+  }
+
+  .gallery-row {
+    height: clamp(120px, 45vw, 200px);
+  }
+
+  .gallery-view-btn {
+    width: 110px;
+    height: 110px;
+  }
+
+  /* — Reviews — */
+  .rv-section {
+    padding: var(--sp-7) var(--sp-11);
+    gap: var(--sp-5);
+  }
+
+  .rv-card__quote {
+    font-size: clamp(0.95rem, 3.5vw, 1.4rem);
+    padding: 24px 16px;
+  }
+
+  .rv-card__meta {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  /* — FAQ — */
+  .faq-subtext {
+    max-width: 100%;
+    font-size: 14px;
+  }
+
+  .faq-question {
+    font-size: clamp(16px, 4.5vw, 22px);
+    padding: 14px 0;
+  }
+
+  .faq-icon {
+    width: 32px;
+    height: 32px;
+    font-size: 32px;
+  }
+
+  .faq-answer {
+    font-size: 15px;
+  }
+
+  /* — Amenities — */
+  .amenities-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .amenity-stat {
+    padding: 20px 16px;
+  }
+
+  /* — Footer — */
+  .site-footer {
+    height: auto;
+    min-height: auto;
+  }
+
+  .footer-heading {
+    font-size: clamp(32px, 8vw, 60px);
+    letter-spacing: -1.5px;
+  }
+
+  .footer-info {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 24px var(--sp-11);
+  }
+
+  .footer-bottom {
+    flex-direction: column;
+    gap: 4px;
+    text-align: center;
+  }
+
+  /* — Loader — */
+  .loader-content {
+    gap: 28px;
+  }
+
+  /* — Gallery page hero — */
+  .gp-hero {
+    padding: 100px 16px 40px;
+  }
+
+  .gp-hero__title {
+    font-size: clamp(2.2rem, 9vw, 3.5rem);
+  }
+
+  /* — Gallery page venue list — */
+  .vl-row__header {
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .vl-row__meta {
+    min-width: 0;
+    width: 100%;
+  }
+
+  .vl-row__body {
+    padding-left: 0;
+  }
+
+  .vl-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+  }
+}
+
+
+/* ═══════════════════════════════════════════════════════
+   RESPONSIVE — 480px (small mobile)
+   ═══════════════════════════════════════════════════════ */
+
+@media (max-width: 480px) {
+
+  /* — Spacing tokens — */
+  :root {
+    --sp-7:  12px;
+    --sp-8:  14px;
+    --sp-9:  20px;
+    --sp-10: 24px;
+    --sp-11: 16px;
+  }
+
+  /* — Hero — */
+  .hero-logo {
+    width: 60vw;
+    margin: 25vh 0 12vh;
+  }
+
+  .hero-headline {
+    font-size: clamp(28px, 8.5vw, 44px);
+  }
+
+  .hero-tagline {
+    font-size: clamp(24px, 7.5vw, 40px);
+  }
+
+  .hero-stat-number {
+    font-size: clamp(32px, 9.5vw, 54px);
+  }
+
+  /* — Venues — */
+  .venues-main-img-panel {
+    height: 200px;
+  }
+
+  .venue-slide-secondary-img {
+    display: none;
+  }
+
+  /* — Moments — */
+  .gp-pin-cell--portrait  { height: 160px; }
+  .gp-pin-cell--landscape { height: 100px; }
+
+  /* — Services — */
+  .svc-card-inner {
+    padding: 20px 16px;
+  }
+
+  .svc-card-img {
+    height: 52vw;
+  }
+
+  /* — Gallery index preview — */
+  .gallery-row {
+    height: clamp(100px, 48vw, 180px);
+  }
+
+  /* — Reviews — */
+  .rv-card__img {
+    aspect-ratio: 1 / 1;
+  }
+
+  /* — FAQ — */
+  .faq-question {
+    font-size: clamp(15px, 4.5vw, 20px);
+  }
+
+  .faq-icon {
+    width: 28px;
+    height: 28px;
+    font-size: 28px;
+  }
+
+  /* — Amenities — */
+  .amenities-stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .amenity-card {
+    padding: 20px;
+  }
+
+  /* — Footer — */
+  .footer-heading {
+    font-size: clamp(28px, 8vw, 48px);
+  }
+
+  .footer-cta {
+    height: 44px;
+    padding: 0 28px;
+    font-size: 12px;
+  }
+
+  /* — Gallery page venue list — */
+  .vl-row__title {
+    font-size: clamp(1.2rem, 5vw, 1.6rem);
+  }
+
+  .vl-row__toggle {
+    width: 28px;
+    height: 28px;
+    font-size: 16px;
+  }
+
+  .vl-grid {
+    gap: 6px;
+  }
+}
+
+

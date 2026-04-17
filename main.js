@@ -122,6 +122,48 @@ document.addEventListener('DOMContentLoaded', () => {
     if (target) lenis.scrollTo(target, { offset: 0 });
   });
 
+  // ─── Hamburger menu (mobile) — delegated, nav injected async ──
+  let _drawerEl = null;
+  const getDrawer = () => _drawerEl || (_drawerEl = document.querySelector('.nav-drawer'));
+
+  function openDrawer() {
+    const nav    = getNav();
+    const drawer = getDrawer();
+    if (!nav || !drawer) return;
+    nav.classList.add('nav--open');
+    drawer.classList.add('is-open');
+    nav.querySelector('.nav-hamburger')?.setAttribute('aria-expanded', 'true');
+    drawer.setAttribute('aria-hidden', 'false');
+    lenis.stop();
+  }
+
+  function closeDrawer() {
+    const nav    = getNav();
+    const drawer = getDrawer();
+    if (!nav || !drawer) return;
+    nav.classList.remove('nav--open');
+    drawer.classList.remove('is-open');
+    nav.querySelector('.nav-hamburger')?.setAttribute('aria-expanded', 'false');
+    drawer.setAttribute('aria-hidden', 'true');
+    lenis.start();
+  }
+
+  document.addEventListener('click', (e) => {
+    if (e.target.closest('.nav-hamburger')) {
+      const nav = getNav();
+      if (nav?.classList.contains('nav--open')) closeDrawer();
+      else openDrawer();
+      return;
+    }
+    if (e.target.closest('.nav-drawer a')) {
+      closeDrawer();
+    }
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeDrawer();
+  });
+
 
   // ─── 3. Hero section — pin + scrub track upward ──────
   const heroSection = document.querySelector('.hero-section');
@@ -482,31 +524,35 @@ document.addEventListener('DOMContentLoaded', () => {
   // ─── 6. Moments Sections — Gallery-Style Pinned Scroll ──
   // Same pattern as gallery.js: section pins to viewport,
   // image grid scrubs upward, centered title stays fixed.
-  document.querySelectorAll('.moments-scroll-section').forEach(section => {
-    const grid = section.querySelector('.gp-pin-grid');
-    if (!grid) return;
+  // On mobile (≤900px) pinning is skipped — CSS sets height:auto instead.
+  if (window.innerWidth > 900) {
+    document.querySelectorAll('.moments-scroll-section').forEach(section => {
+      const grid = section.querySelector('.gp-pin-grid');
+      if (!grid) return;
 
-    const tl = gsap.timeline({ paused: true });
-    tl.to(grid, {
-      y: () => -(grid.scrollHeight - window.innerHeight),
-      ease: 'none',
-    });
+      const tl = gsap.timeline({ paused: true });
+      tl.to(grid, {
+        y: () => -(grid.scrollHeight - window.innerHeight),
+        ease: 'none',
+      });
 
-    ScrollTrigger.create({
-      trigger: section,
-      start: 'top top',
-      end: () => `+=${grid.scrollHeight - window.innerHeight}`,
-      pin: true,
-      scrub: 1,
-      animation: tl,
-      invalidateOnRefresh: true,
+      ScrollTrigger.create({
+        trigger: section,
+        start: 'top top',
+        end: () => `+=${grid.scrollHeight - window.innerHeight}`,
+        pin: true,
+        scrub: 1,
+        animation: tl,
+        invalidateOnRefresh: true,
+      });
     });
-  });
+  }
 
 
   // ─── Experience Section — 4 discrete reveal stops ────
+  // On mobile (≤900px) cover panels are hidden via CSS; skip pinning entirely.
   const expSection = document.querySelector('.experience-section');
-  if (expSection) {
+  if (expSection && window.innerWidth > 900) {
     const line1  = expSection.querySelector('.exp-line--1');
     const line2  = expSection.querySelector('.exp-line--2');
     const cvTop  = expSection.querySelector('.exp-cover--top');
@@ -794,8 +840,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
   // ─── Reviews — pin section, scrub cards upward ────────
+  // On mobile (≤900px) CSS stacks to column with height:auto; skip pinning.
   const rvSection = document.querySelector('.rv-section');
-  if (rvSection) {
+  if (rvSection && window.innerWidth > 900) {
     const rvTrack = rvSection.querySelector('.rv-track');
 
     const rvTl = gsap.timeline({ paused: true });
@@ -816,8 +863,9 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // ─── FAQ — pin section, scrub track upward ───────────
+  // On mobile (≤900px) CSS stacks to column with height:auto; skip pinning.
   const faqSection = document.querySelector('.faq-section');
-  if (faqSection) {
+  if (faqSection && window.innerWidth > 900) {
     const faqTrack = faqSection.querySelector('.faq-track');
 
     const faqTl = gsap.timeline({ paused: true });
