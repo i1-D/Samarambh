@@ -25,7 +25,23 @@
       "mcp__claude_ai_Figma__get_screenshot",
       "mcp__plugin_figma_figma__get_design_context",
       "WebFetch(domain:tidescape.framer.ai)",
-      "mcp__plugin_figma_figma__generate_figma_design"
+      "mcp__plugin_figma_figma__generate_figma_design",
+      "Bash(python3 -)",
+      "Bash(ffmpeg -version)",
+      "Bash(brew install *)",
+      "Bash(ffmpeg -i images/hero-video.mp4 -vcodec libx264 -crf 28 -preset slow -acodec aac -b:a 128k -vf \"scale=1920:-2\" -movflags +faststart images/hero-video-opt.mp4 -y)",
+      "Bash(ffmpeg -i images/experience-video.mp4 -vcodec libx264 -crf 28 -preset slow -acodec aac -b:a 128k -vf \"scale=1920:-2\" -movflags +faststart images/experience-video-opt.mp4 -y)",
+      "Bash(ffprobe -v quiet -print_format json -show_streams images/experience-video.mp4)",
+      "Bash(python3 -c \"import sys,json; s=json.load\\(sys.stdin\\)['streams'][0]; print\\(s['width'],'x',s['height'], s.get\\('bit_rate','?'\\), 'bps'\\)\")",
+      "Bash(ffprobe -v quiet -print_format json -show_streams images/hero-video.mp4)",
+      "Bash(ffprobe -v quiet -print_format json -show_streams images/hero-video-opt.mp4)",
+      "Bash(ffmpeg -i images/hero-video.mp4 -vcodec libx264 -crf 26 -preset slow -an -movflags +faststart images/hero-video-opt.mp4 -y)",
+      "Bash(ffmpeg -i images/experience-video.mp4 -vcodec libx264 -crf 32 -preset slow -an -movflags +faststart images/experience-video-opt.mp4 -y)",
+      "Bash(ffmpeg -i images/experience-video.mp4 -vcodec libx264 -crf 35 -preset slow -an -movflags +faststart images/experience-video-opt.mp4 -y)",
+      "Bash(git add *)",
+      "Bash(gh auth *)",
+      "Bash(git commit -m ' *)",
+      "Bash(git push *)"
     ]
   }
 }
