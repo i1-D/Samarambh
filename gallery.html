@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500;1,600&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,1,0" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,300,1,0" />
   <link rel="stylesheet" href="styles.css">
   <script type="module" src="components.js"></script>
 </head>
@@ -45,34 +45,36 @@
     <!-- ── 01 — THE GRAND LAWN ─────────────────────────── -->
     <article class="vl-row" data-venue="01">
       <div class="vl-row__header" role="button" tabindex="0" aria-expanded="false" aria-controls="vl-body-01">
-        <span class="vl-row__toggle" aria-hidden="true">+</span>
+        <button class="vl-row__toggle" aria-hidden="true" tabindex="-1"><span class="material-symbols-outlined">add</span></button>
         <div class="vl-row__meta">
-          <span class="vl-row__num">01</span>
           <div class="vl-row__titles">
             <h2 class="vl-row__title">The Grand Lawn</h2>
             <p class="vl-row__subtitle">Open-air celebrations</p>
           </div>
         </div>
-        <div class="vl-row__first-row">
-          <div class="vl-grid__cell vl-grid__cell--portrait"><div class="vl-img-wrap"><img src="images/lawn_1/1.webp" alt="The Grand Lawn" loading="lazy" data-venue="01" data-idx="0"><div class="vl-img-overlay"><span class="material-symbols-outlined">open_in_full</span></div></div></div>
-          <div class="vl-grid__cell vl-grid__cell--portrait"><div class="vl-img-wrap"><img src="images/lawn_1/2.webp" alt="The Grand Lawn" loading="lazy" data-venue="01" data-idx="1"><div class="vl-img-overlay"><span class="material-symbols-outlined">open_in_full</span></div></div></div>
-          <div class="vl-grid__cell vl-grid__cell--portrait"><div class="vl-img-wrap"><img src="images/lawn_1/3.webp" alt="The Grand Lawn" loading="lazy" data-venue="01" data-idx="2"><div class="vl-img-overlay"><span class="material-symbols-outlined">open_in_full</span></div></div></div>
+        <div class="vl-img-row">
+          <div class="vl-img-card"><div class="vl-img-wrap"><img src="images/lawn_1/1.webp" alt="The Grand Lawn" loading="lazy" data-venue="01" data-idx="0"><button class="vl-img-hover-btn" tabindex="-1" aria-hidden="true"><span class="material-symbols-outlined">arrow_outward</span></button></div></div>
+          <div class="vl-img-card"><div class="vl-img-wrap"><img src="images/lawn_1/2.webp" alt="The Grand Lawn" loading="lazy" data-venue="01" data-idx="1"><button class="vl-img-hover-btn" tabindex="-1" aria-hidden="true"><span class="material-symbols-outlined">arrow_outward</span></button></div></div>
+          <div class="vl-img-card"><div class="vl-img-wrap"><img src="images/lawn_1/3.webp" alt="The Grand Lawn" loading="lazy" data-venue="01" data-idx="2"><button class="vl-img-hover-btn" tabindex="-1" aria-hidden="true"><span class="material-symbols-outlined">arrow_outward</span></button></div></div>
         </div>
       </div>
       <div class="vl-row__body" id="vl-body-01">
         <div class="vl-grid">
-          <!-- Row B: landscape · portrait · landscape -->
-          <div class="vl-grid__cell vl-grid__cell--landscape"><div class="vl-img-wrap"><img src="images/lawn_1/4.webp" alt="The Grand Lawn" loading="lazy" data-venue="01" data-idx="3"><div class="vl-img-overlay"><span class="material-symbols-outlined">open_in_full</span></div></div></div>
-          <div class="vl-grid__cell vl-grid__cell--portrait"><div class="vl-img-wrap"><img src="images/lawn_1/5.webp" alt="The Grand Lawn" loading="lazy" data-venue="01" data-idx="4"><div class="vl-img-overlay"><span class="material-symbols-outlined">open_in_full</span></div></div></div>
-          <div class="vl-grid__cell vl-grid__cell--landscape"><div class="vl-img-wrap"><img src="images/lawn_1/1.webp" alt="The Grand Lawn" loading="lazy" data-venue="01" data-idx="0"><div class="vl-img-overlay"><span class="material-symbols-outlined">open_in_full</span></div></div></div>
-          <!-- Row C: portrait · landscape · portrait -->
-          <div class="vl-grid__cell vl-grid__cell--portrait"><div class="vl-img-wrap"><img src="images/lawn_1/2.webp" alt="The Grand Lawn" loading="lazy" data-venue="01" data-idx="1"><div class="vl-img-overlay"><span class="material-symbols-outlined">open_in_full</span></div></div></div>
-          <div class="vl-grid__cell vl-grid__cell--landscape"><div class="vl-img-wrap"><img src="images/lawn_1/3.webp" alt="The Grand Lawn" loading="lazy" data-venue="01" data-idx="2"><div class="vl-img-overlay"><span class="material-symbols-outlined">open_in_full</span></div></div></div>
-          <div class="vl-grid__cell vl-grid__cell--portrait"><div class="vl-img-wrap"><img src="images/lawn_1/4.webp" alt="The Grand Lawn" loading="lazy" data-venue="01" data-idx="3"><div class="vl-img-overlay"><span class="material-symbols-outlined">open_in_full</span></div></div></div>
-          <!-- Row D: landscape · portrait · landscape -->
-          <div class="vl-grid__cell vl-grid__cell--landscape"><div class="vl-img-wrap"><img src="images/lawn_1/5.webp" alt="The Grand Lawn" loading="lazy" data-venue="01" data-idx="4"><div class="vl-img-overlay"><span class="material-symbols-outlined">open_in_full</span></div></div></div>
-          <div class="vl-grid__cell vl-grid__cell--portrait"><div class="vl-img-wrap"><img src="images/lawn_1/1.webp" alt="The Grand Lawn" loading="lazy" data-venue="01" data-idx="0"><div class="vl-img-overlay"><span class="material-symbols-outlined">open_in_full</span></div></div></div>
-          <div class="vl-grid__cell vl-grid__cell--landscape"><div class="vl-img-wrap"><img src="images/lawn_1/2.webp" alt="The Grand Lawn" loading="lazy" data-venue="01" data-idx="1"><div class="vl-img-overlay"><span class="material-symbols-outlined">open_in_full</span></div></div></div>
+          <div class="vl-img-row">
+            <div class="vl-img-card"><div class="vl-img-wrap"><img src="images/lawn_1/4.webp" alt="The Grand Lawn" loading="lazy" data-venue="01" data-idx="3"><button class="vl-img-hover-btn" tabindex="-1" aria-hidden="true"><span class="material-symbols-outlined">arrow_outward</span></button></div></div>
+            <div class="vl-img-card"><div class="vl-img-wrap"><img src="images/lawn_1/5.webp" alt="The Grand Lawn" loading="lazy" data-venue="01" data-idx="4"><button class="vl-img-hover-btn" tabindex="-1" aria-hidden="true"><span class="material-symbols-outlined">arrow_outward</span></button></div></div>
+            <div class="vl-img-card"><div class="vl-img-wrap"><img src="images/lawn_1/1.webp" alt="The Grand Lawn" loading="lazy" data-venue="01" data-idx="0"><button class="vl-img-hover-btn" tabindex="-1" aria-hidden="true"><span class="material-symbols-outlined">arrow_outward</span></button></div></div>
+          </div>
+          <div class="vl-img-row">
+            <div class="vl-img-card"><div class="vl-img-wrap"><img src="images/lawn_1/2.webp" alt="The Grand Lawn" loading="lazy" data-venue="01" data-idx="1"><button class="vl-img-hover-btn" tabindex="-1" aria-hidden="true"><span class="material-symbols-outlined">arrow_outward</span></button></div></div>
+            <div class="vl-img-card"><div class="vl-img-wrap"><img src="images/lawn_1/3.webp" alt="The Grand Lawn" loading="lazy" data-venue="01" data-idx="2"><button class="vl-img-hover-btn" tabindex="-1" aria-hidden="true"><span class="material-symbols-outlined">arrow_outward</span></button></div></div>
+            <div class="vl-img-card"><div class="vl-img-wrap"><img src="images/lawn_1/4.webp" alt="The Grand Lawn" loading="lazy" data-venue="01" data-idx="3"><button class="vl-img-hover-btn" tabindex="-1" aria-hidden="true"><span class="material-symbols-outlined">arrow_outward</span></button></div></div>
+          </div>
+          <div class="vl-img-row">
+            <div class="vl-img-card"><div class="vl-img-wrap"><img src="images/lawn_1/5.webp" alt="The Grand Lawn" loading="lazy" data-venue="01" data-idx="4"><button class="vl-img-hover-btn" tabindex="-1" aria-hidden="true"><span class="material-symbols-outlined">arrow_outward</span></button></div></div>
+            <div class="vl-img-card"><div class="vl-img-wrap"><img src="images/lawn_1/1.webp" alt="The Grand Lawn" loading="lazy" data-venue="01" data-idx="0"><button class="vl-img-hover-btn" tabindex="-1" aria-hidden="true"><span class="material-symbols-outlined">arrow_outward</span></button></div></div>
+            <div class="vl-img-card"><div class="vl-img-wrap"><img src="images/lawn_1/2.webp" alt="The Grand Lawn" loading="lazy" data-venue="01" data-idx="1"><button class="vl-img-hover-btn" tabindex="-1" aria-hidden="true"><span class="material-symbols-outlined">arrow_outward</span></button></div></div>
+          </div>
         </div>
       </div>
     </article>
@@ -80,34 +82,36 @@
     <!-- ── 02 — THE BANQUET HALL ───────────────────────── -->
     <article class="vl-row" data-venue="02">
       <div class="vl-row__header" role="button" tabindex="0" aria-expanded="false" aria-controls="vl-body-02">
-        <span class="vl-row__toggle" aria-hidden="true">+</span>
+        <button class="vl-row__toggle" aria-hidden="true" tabindex="-1"><span class="material-symbols-outlined">add</span></button>
         <div class="vl-row__meta">
-          <span class="vl-row__num">02</span>
           <div class="vl-row__titles">
-            <h2 class="vl-row__title">The Banquet Hall</h2>
-            <p class="vl-row__subtitle">Elegant indoor receptions</p>
+            <h2 class="vl-row__title">The Royal Lawn</h2>
+            <p class="vl-row__subtitle">Majestic outdoor events</p>
           </div>
         </div>
-        <div class="vl-row__first-row">
-          <div class="vl-grid__cell vl-grid__cell--portrait"><div class="vl-img-wrap"><img src="images/hall_1/1.webp" alt="The Banquet Hall" loading="lazy" data-venue="02" data-idx="0"><div class="vl-img-overlay"><span class="material-symbols-outlined">open_in_full</span></div></div></div>
-          <div class="vl-grid__cell vl-grid__cell--portrait"><div class="vl-img-wrap"><img src="images/hall_1/2.webp" alt="The Banquet Hall" loading="lazy" data-venue="02" data-idx="1"><div class="vl-img-overlay"><span class="material-symbols-outlined">open_in_full</span></div></div></div>
-          <div class="vl-grid__cell vl-grid__cell--portrait"><div class="vl-img-wrap"><img src="images/hall_1/3.webp" alt="The Banquet Hall" loading="lazy" data-venue="02" data-idx="2"><div class="vl-img-overlay"><span class="material-symbols-outlined">open_in_full</span></div></div></div>
+        <div class="vl-img-row">
+          <div class="vl-img-card"><div class="vl-img-wrap"><img src="images/hall_1/1.webp" alt="The Royal Lawn" loading="lazy" data-venue="02" data-idx="0"><button class="vl-img-hover-btn" tabindex="-1" aria-hidden="true"><span class="material-symbols-outlined">arrow_outward</span></button></div></div>
+          <div class="vl-img-card"><div class="vl-img-wrap"><img src="images/hall_1/2.webp" alt="The Royal Lawn" loading="lazy" data-venue="02" data-idx="1"><button class="vl-img-hover-btn" tabindex="-1" aria-hidden="true"><span class="material-symbols-outlined">arrow_outward</span></button></div></div>
+          <div class="vl-img-card"><div class="vl-img-wrap"><img src="images/hall_1/3.webp" alt="The Royal Lawn" loading="lazy" data-venue="02" data-idx="2"><button class="vl-img-hover-btn" tabindex="-1" aria-hidden="true"><span class="material-symbols-outlined">arrow_outward</span></button></div></div>
         </div>
       </div>
       <div class="vl-row__body" id="vl-body-02">
         <div class="vl-grid">
-          <!-- Row B: landscape · portrait · landscape -->
-          <div class="vl-grid__cell vl-grid__cell--landscape"><div class="vl-img-wrap"><img src="images/hall_1/4.webp" alt="The Banquet Hall" loading="lazy" data-venue="02" data-idx="3"><div class="vl-img-overlay"><span class="material-symbols-outlined">open_in_full</span></div></div></div>
-          <div class="vl-grid__cell vl-grid__cell--portrait"><div class="vl-img-wrap"><img src="images/hall_1/5.webp" alt="The Banquet Hall" loading="lazy" data-venue="02" data-idx="4"><div class="vl-img-overlay"><span class="material-symbols-outlined">open_in_full</span></div></div></div>
-          <div class="vl-grid__cell vl-grid__cell--landscape"><div class="vl-img-wrap"><img src="images/hall_1/1.webp" alt="The Banquet Hall" loading="lazy" data-venue="02" data-idx="0"><div class="vl-img-overlay"><span class="material-symbols-outlined">open_in_full</span></div></div></div>
-          <!-- Row C: portrait · landscape · portrait -->
-          <div class="vl-grid__cell vl-grid__cell--portrait"><div class="vl-img-wrap"><img src="images/hall_1/2.webp" alt="The Banquet Hall" loading="lazy" data-venue="02" data-idx="1"><div class="vl-img-overlay"><span class="material-symbols-outlined">open_in_full</span></div></div></div>
-          <div class="vl-grid__cell vl-grid__cell--landscape"><div class="vl-img-wrap"><img src="images/hall_1/3.webp" alt="The Banquet Hall" loading="lazy" data-venue="02" data-idx="2"><div class="vl-img-overlay"><span class="material-symbols-outlined">open_in_full</span></div></div></div>
-          <div class="vl-grid__cell vl-grid__cell--portrait"><div class="vl-img-wrap"><img src="images/hall_1/4.webp" alt="The Banquet Hall" loading="lazy" data-venue="02" data-idx="3"><div class="vl-img-overlay"><span class="material-symbols-outlined">open_in_full</span></div></div></div>
-          <!-- Row D: landscape · portrait · landscape -->
-          <div class="vl-grid__cell vl-grid__cell--landscape"><div class="vl-img-wrap"><img src="images/hall_1/5.webp" alt="The Banquet Hall" loading="lazy" data-venue="02" data-idx="4"><div class="vl-img-overlay"><span class="material-symbols-outlined">open_in_full</span></div></div></div>
-          <div class="vl-grid__cell vl-grid__cell--portrait"><div class="vl-img-wrap"><img src="images/hall_1/1.webp" alt="The Banquet Hall" loading="lazy" data-venue="02" data-idx="0"><div class="vl-img-overlay"><span class="material-symbols-outlined">open_in_full</span></div></div></div>
-          <div class="vl-grid__cell vl-grid__cell--landscape"><div class="vl-img-wrap"><img src="images/hall_1/2.webp" alt="The Banquet Hall" loading="lazy" data-venue="02" data-idx="1"><div class="vl-img-overlay"><span class="material-symbols-outlined">open_in_full</span></div></div></div>
+          <div class="vl-img-row">
+            <div class="vl-img-card"><div class="vl-img-wrap"><img src="images/hall_1/4.webp" alt="The Royal Lawn" loading="lazy" data-venue="02" data-idx="3"><button class="vl-img-hover-btn" tabindex="-1" aria-hidden="true"><span class="material-symbols-outlined">arrow_outward</span></button></div></div>
+            <div class="vl-img-card"><div class="vl-img-wrap"><img src="images/hall_1/5.webp" alt="The Royal Lawn" loading="lazy" data-venue="02" data-idx="4"><button class="vl-img-hover-btn" tabindex="-1" aria-hidden="true"><span class="material-symbols-outlined">arrow_outward</span></button></div></div>
+            <div class="vl-img-card"><div class="vl-img-wrap"><img src="images/hall_1/1.webp" alt="The Royal Lawn" loading="lazy" data-venue="02" data-idx="0"><button class="vl-img-hover-btn" tabindex="-1" aria-hidden="true"><span class="material-symbols-outlined">arrow_outward</span></button></div></div>
+          </div>
+          <div class="vl-img-row">
+            <div class="vl-img-card"><div class="vl-img-wrap"><img src="images/hall_1/2.webp" alt="The Royal Lawn" loading="lazy" data-venue="02" data-idx="1"><button class="vl-img-hover-btn" tabindex="-1" aria-hidden="true"><span class="material-symbols-outlined">arrow_outward</span></button></div></div>
+            <div class="vl-img-card"><div class="vl-img-wrap"><img src="images/hall_1/3.webp" alt="The Royal Lawn" loading="lazy" data-venue="02" data-idx="2"><button class="vl-img-hover-btn" tabindex="-1" aria-hidden="true"><span class="material-symbols-outlined">arrow_outward</span></button></div></div>
+            <div class="vl-img-card"><div class="vl-img-wrap"><img src="images/hall_1/4.webp" alt="The Royal Lawn" loading="lazy" data-venue="02" data-idx="3"><button class="vl-img-hover-btn" tabindex="-1" aria-hidden="true"><span class="material-symbols-outlined">arrow_outward</span></button></div></div>
+          </div>
+          <div class="vl-img-row">
+            <div class="vl-img-card"><div class="vl-img-wrap"><img src="images/hall_1/5.webp" alt="The Royal Lawn" loading="lazy" data-venue="02" data-idx="4"><button class="vl-img-hover-btn" tabindex="-1" aria-hidden="true"><span class="material-symbols-outlined">arrow_outward</span></button></div></div>
+            <div class="vl-img-card"><div class="vl-img-wrap"><img src="images/hall_1/1.webp" alt="The Royal Lawn" loading="lazy" data-venue="02" data-idx="0"><button class="vl-img-hover-btn" tabindex="-1" aria-hidden="true"><span class="material-symbols-outlined">arrow_outward</span></button></div></div>
+            <div class="vl-img-card"><div class="vl-img-wrap"><img src="images/hall_1/2.webp" alt="The Royal Lawn" loading="lazy" data-venue="02" data-idx="1"><button class="vl-img-hover-btn" tabindex="-1" aria-hidden="true"><span class="material-symbols-outlined">arrow_outward</span></button></div></div>
+          </div>
         </div>
       </div>
     </article>
@@ -115,34 +119,36 @@
     <!-- ── 03 — THE ROYAL LAWN ─────────────────────────── -->
     <article class="vl-row" data-venue="03">
       <div class="vl-row__header" role="button" tabindex="0" aria-expanded="false" aria-controls="vl-body-03">
-        <span class="vl-row__toggle" aria-hidden="true">+</span>
+        <button class="vl-row__toggle" aria-hidden="true" tabindex="-1"><span class="material-symbols-outlined">add</span></button>
         <div class="vl-row__meta">
-          <span class="vl-row__num">03</span>
           <div class="vl-row__titles">
-            <h2 class="vl-row__title">The Royal Lawn</h2>
-            <p class="vl-row__subtitle">Majestic outdoor events</p>
+            <h2 class="vl-row__title">Banquet Hall 1</h2>
+            <p class="vl-row__subtitle">Elegant indoor receptions</p>
           </div>
         </div>
-        <div class="vl-row__first-row">
-          <div class="vl-grid__cell vl-grid__cell--portrait"><div class="vl-img-wrap"><img src="images/lawn_2/1.webp" alt="The Royal Lawn" loading="lazy" data-venue="03" data-idx="0"><div class="vl-img-overlay"><span class="material-symbols-outlined">open_in_full</span></div></div></div>
-          <div class="vl-grid__cell vl-grid__cell--portrait"><div class="vl-img-wrap"><img src="images/lawn_2/2.webp" alt="The Royal Lawn" loading="lazy" data-venue="03" data-idx="1"><div class="vl-img-overlay"><span class="material-symbols-outlined">open_in_full</span></div></div></div>
-          <div class="vl-grid__cell vl-grid__cell--portrait"><div class="vl-img-wrap"><img src="images/lawn_2/3.webp" alt="The Royal Lawn" loading="lazy" data-venue="03" data-idx="2"><div class="vl-img-overlay"><span class="material-symbols-outlined">open_in_full</span></div></div></div>
+        <div class="vl-img-row">
+          <div class="vl-img-card"><div class="vl-img-wrap"><img src="images/lawn_2/1.webp" alt="Banquet Hall 1" loading="lazy" data-venue="03" data-idx="0"><button class="vl-img-hover-btn" tabindex="-1" aria-hidden="true"><span class="material-symbols-outlined">arrow_outward</span></button></div></div>
+          <div class="vl-img-card"><div class="vl-img-wrap"><img src="images/lawn_2/2.webp" alt="Banquet Hall 1" loading="lazy" data-venue="03" data-idx="1"><button class="vl-img-hover-btn" tabindex="-1" aria-hidden="true"><span class="material-symbols-outlined">arrow_outward</span></button></div></div>
+          <div class="vl-img-card"><div class="vl-img-wrap"><img src="images/lawn_2/3.webp" alt="Banquet Hall 1" loading="lazy" data-venue="03" data-idx="2"><button class="vl-img-hover-btn" tabindex="-1" aria-hidden="true"><span class="material-symbols-outlined">arrow_outward</span></button></div></div>
         </div>
       </div>
       <div class="vl-row__body" id="vl-body-03">
         <div class="vl-grid">
-          <!-- Row B: landscape · portrait · landscape -->
-          <div class="vl-grid__cell vl-grid__cell--landscape"><div class="vl-img-wrap"><img src="images/lawn_2/4.webp" alt="The Royal Lawn" loading="lazy" data-venue="03" data-idx="3"><div class="vl-img-overlay"><span class="material-symbols-outlined">open_in_full</span></div></div></div>
-          <div class="vl-grid__cell vl-grid__cell--portrait"><div class="vl-img-wrap"><img src="images/lawn_2/5.webp" alt="The Royal Lawn" loading="lazy" data-venue="03" data-idx="4"><div class="vl-img-overlay"><span class="material-symbols-outlined">open_in_full</span></div></div></div>
-          <div class="vl-grid__cell vl-grid__cell--landscape"><div class="vl-img-wrap"><img src="images/lawn_2/1.webp" alt="The Royal Lawn" loading="lazy" data-venue="03" data-idx="0"><div class="vl-img-overlay"><span class="material-symbols-outlined">open_in_full</span></div></div></div>
-          <!-- Row C: portrait · landscape · portrait -->
-          <div class="vl-grid__cell vl-grid__cell--portrait"><div class="vl-img-wrap"><img src="images/lawn_2/2.webp" alt="The Royal Lawn" loading="lazy" data-venue="03" data-idx="1"><div class="vl-img-overlay"><span class="material-symbols-outlined">open_in_full</span></div></div></div>
-          <div class="vl-grid__cell vl-grid__cell--landscape"><div class="vl-img-wrap"><img src="images/lawn_2/3.webp" alt="The Royal Lawn" loading="lazy" data-venue="03" data-idx="2"><div class="vl-img-overlay"><span class="material-symbols-outlined">open_in_full</span></div></div></div>
-          <div class="vl-grid__cell vl-grid__cell--portrait"><div class="vl-img-wrap"><img src="images/lawn_2/4.webp" alt="The Royal Lawn" loading="lazy" data-venue="03" data-idx="3"><div class="vl-img-overlay"><span class="material-symbols-outlined">open_in_full</span></div></div></div>
-          <!-- Row D: landscape · portrait · landscape -->
-          <div class="vl-grid__cell vl-grid__cell--landscape"><div class="vl-img-wrap"><img src="images/lawn_2/5.webp" alt="The Royal Lawn" loading="lazy" data-venue="03" data-idx="4"><div class="vl-img-overlay"><span class="material-symbols-outlined">open_in_full</span></div></div></div>
-          <div class="vl-grid__cell vl-grid__cell--portrait"><div class="vl-img-wrap"><img src="images/lawn_2/1.webp" alt="The Royal Lawn" loading="lazy" data-venue="03" data-idx="0"><div class="vl-img-overlay"><span class="material-symbols-outlined">open_in_full</span></div></div></div>
-          <div class="vl-grid__cell vl-grid__cell--landscape"><div class="vl-img-wrap"><img src="images/lawn_2/2.webp" alt="The Royal Lawn" loading="lazy" data-venue="03" data-idx="1"><div class="vl-img-overlay"><span class="material-symbols-outlined">open_in_full</span></div></div></div>
+          <div class="vl-img-row">
+            <div class="vl-img-card"><div class="vl-img-wrap"><img src="images/lawn_2/4.webp" alt="Banquet Hall 1" loading="lazy" data-venue="03" data-idx="3"><button class="vl-img-hover-btn" tabindex="-1" aria-hidden="true"><span class="material-symbols-outlined">arrow_outward</span></button></div></div>
+            <div class="vl-img-card"><div class="vl-img-wrap"><img src="images/lawn_2/5.webp" alt="Banquet Hall 1" loading="lazy" data-venue="03" data-idx="4"><button class="vl-img-hover-btn" tabindex="-1" aria-hidden="true"><span class="material-symbols-outlined">arrow_outward</span></button></div></div>
+            <div class="vl-img-card"><div class="vl-img-wrap"><img src="images/lawn_2/1.webp" alt="Banquet Hall 1" loading="lazy" data-venue="03" data-idx="0"><button class="vl-img-hover-btn" tabindex="-1" aria-hidden="true"><span class="material-symbols-outlined">arrow_outward</span></button></div></div>
+          </div>
+          <div class="vl-img-row">
+            <div class="vl-img-card"><div class="vl-img-wrap"><img src="images/lawn_2/2.webp" alt="Banquet Hall 1" loading="lazy" data-venue="03" data-idx="1"><button class="vl-img-hover-btn" tabindex="-1" aria-hidden="true"><span class="material-symbols-outlined">arrow_outward</span></button></div></div>
+            <div class="vl-img-card"><div class="vl-img-wrap"><img src="images/lawn_2/3.webp" alt="Banquet Hall 1" loading="lazy" data-venue="03" data-idx="2"><button class="vl-img-hover-btn" tabindex="-1" aria-hidden="true"><span class="material-symbols-outlined">arrow_outward</span></button></div></div>
+            <div class="vl-img-card"><div class="vl-img-wrap"><img src="images/lawn_2/4.webp" alt="Banquet Hall 1" loading="lazy" data-venue="03" data-idx="3"><button class="vl-img-hover-btn" tabindex="-1" aria-hidden="true"><span class="material-symbols-outlined">arrow_outward</span></button></div></div>
+          </div>
+          <div class="vl-img-row">
+            <div class="vl-img-card"><div class="vl-img-wrap"><img src="images/lawn_2/5.webp" alt="Banquet Hall 1" loading="lazy" data-venue="03" data-idx="4"><button class="vl-img-hover-btn" tabindex="-1" aria-hidden="true"><span class="material-symbols-outlined">arrow_outward</span></button></div></div>
+            <div class="vl-img-card"><div class="vl-img-wrap"><img src="images/lawn_2/1.webp" alt="Banquet Hall 1" loading="lazy" data-venue="03" data-idx="0"><button class="vl-img-hover-btn" tabindex="-1" aria-hidden="true"><span class="material-symbols-outlined">arrow_outward</span></button></div></div>
+            <div class="vl-img-card"><div class="vl-img-wrap"><img src="images/lawn_2/2.webp" alt="Banquet Hall 1" loading="lazy" data-venue="03" data-idx="1"><button class="vl-img-hover-btn" tabindex="-1" aria-hidden="true"><span class="material-symbols-outlined">arrow_outward</span></button></div></div>
+          </div>
         </div>
       </div>
     </article>
@@ -150,34 +156,36 @@
     <!-- ── 04 — THE GARDEN TERRACE ─────────────────────── -->
     <article class="vl-row" data-venue="04">
       <div class="vl-row__header" role="button" tabindex="0" aria-expanded="false" aria-controls="vl-body-04">
-        <span class="vl-row__toggle" aria-hidden="true">+</span>
+        <button class="vl-row__toggle" aria-hidden="true" tabindex="-1"><span class="material-symbols-outlined">add</span></button>
         <div class="vl-row__meta">
-          <span class="vl-row__num">04</span>
           <div class="vl-row__titles">
-            <h2 class="vl-row__title">The Garden Terrace</h2>
-            <p class="vl-row__subtitle">Intimate garden gatherings</p>
+            <h2 class="vl-row__title">Banquet Hall 2</h2>
+            <p class="vl-row__subtitle">Intimate indoor celebrations</p>
           </div>
         </div>
-        <div class="vl-row__first-row">
-          <div class="vl-grid__cell vl-grid__cell--portrait"><div class="vl-img-wrap"><img src="images/lawn_1/1.webp" alt="The Garden Terrace" loading="lazy" data-venue="04" data-idx="0"><div class="vl-img-overlay"><span class="material-symbols-outlined">open_in_full</span></div></div></div>
-          <div class="vl-grid__cell vl-grid__cell--portrait"><div class="vl-img-wrap"><img src="images/lawn_1/2.webp" alt="The Garden Terrace" loading="lazy" data-venue="04" data-idx="1"><div class="vl-img-overlay"><span class="material-symbols-outlined">open_in_full</span></div></div></div>
-          <div class="vl-grid__cell vl-grid__cell--portrait"><div class="vl-img-wrap"><img src="images/lawn_1/3.webp" alt="The Garden Terrace" loading="lazy" data-venue="04" data-idx="2"><div class="vl-img-overlay"><span class="material-symbols-outlined">open_in_full</span></div></div></div>
+        <div class="vl-img-row">
+          <div class="vl-img-card"><div class="vl-img-wrap"><img src="images/lawn_1/1.webp" alt="Banquet Hall 2" loading="lazy" data-venue="04" data-idx="0"><button class="vl-img-hover-btn" tabindex="-1" aria-hidden="true"><span class="material-symbols-outlined">arrow_outward</span></button></div></div>
+          <div class="vl-img-card"><div class="vl-img-wrap"><img src="images/lawn_1/2.webp" alt="Banquet Hall 2" loading="lazy" data-venue="04" data-idx="1"><button class="vl-img-hover-btn" tabindex="-1" aria-hidden="true"><span class="material-symbols-outlined">arrow_outward</span></button></div></div>
+          <div class="vl-img-card"><div class="vl-img-wrap"><img src="images/lawn_1/3.webp" alt="Banquet Hall 2" loading="lazy" data-venue="04" data-idx="2"><button class="vl-img-hover-btn" tabindex="-1" aria-hidden="true"><span class="material-symbols-outlined">arrow_outward</span></button></div></div>
         </div>
       </div>
       <div class="vl-row__body" id="vl-body-04">
         <div class="vl-grid">
-          <!-- Row B: landscape · portrait · landscape -->
-          <div class="vl-grid__cell vl-grid__cell--landscape"><div class="vl-img-wrap"><img src="images/lawn_1/4.webp" alt="The Garden Terrace" loading="lazy" data-venue="04" data-idx="3"><div class="vl-img-overlay"><span class="material-symbols-outlined">open_in_full</span></div></div></div>
-          <div class="vl-grid__cell vl-grid__cell--portrait"><div class="vl-img-wrap"><img src="images/lawn_1/5.webp" alt="The Garden Terrace" loading="lazy" data-venue="04" data-idx="4"><div class="vl-img-overlay"><span class="material-symbols-outlined">open_in_full</span></div></div></div>
-          <div class="vl-grid__cell vl-grid__cell--landscape"><div class="vl-img-wrap"><img src="images/lawn_1/1.webp" alt="The Garden Terrace" loading="lazy" data-venue="04" data-idx="0"><div class="vl-img-overlay"><span class="material-symbols-outlined">open_in_full</span></div></div></div>
-          <!-- Row C: portrait · landscape · portrait -->
-          <div class="vl-grid__cell vl-grid__cell--portrait"><div class="vl-img-wrap"><img src="images/lawn_1/2.webp" alt="The Garden Terrace" loading="lazy" data-venue="04" data-idx="1"><div class="vl-img-overlay"><span class="material-symbols-outlined">open_in_full</span></div></div></div>
-          <div class="vl-grid__cell vl-grid__cell--landscape"><div class="vl-img-wrap"><img src="images/lawn_1/3.webp" alt="The Garden Terrace" loading="lazy" data-venue="04" data-idx="2"><div class="vl-img-overlay"><span class="material-symbols-outlined">open_in_full</span></div></div></div>
-          <div class="vl-grid__cell vl-grid__cell--portrait"><div class="vl-img-wrap"><img src="images/lawn_1/4.webp" alt="The Garden Terrace" loading="lazy" data-venue="04" data-idx="3"><div class="vl-img-overlay"><span class="material-symbols-outlined">open_in_full</span></div></div></div>
-          <!-- Row D: landscape · portrait · landscape -->
-          <div class="vl-grid__cell vl-grid__cell--landscape"><div class="vl-img-wrap"><img src="images/lawn_1/5.webp" alt="The Garden Terrace" loading="lazy" data-venue="04" data-idx="4"><div class="vl-img-overlay"><span class="material-symbols-outlined">open_in_full</span></div></div></div>
-          <div class="vl-grid__cell vl-grid__cell--portrait"><div class="vl-img-wrap"><img src="images/lawn_1/1.webp" alt="The Garden Terrace" loading="lazy" data-venue="04" data-idx="0"><div class="vl-img-overlay"><span class="material-symbols-outlined">open_in_full</span></div></div></div>
-          <div class="vl-grid__cell vl-grid__cell--landscape"><div class="vl-img-wrap"><img src="images/lawn_1/2.webp" alt="The Garden Terrace" loading="lazy" data-venue="04" data-idx="1"><div class="vl-img-overlay"><span class="material-symbols-outlined">open_in_full</span></div></div></div>
+          <div class="vl-img-row">
+            <div class="vl-img-card"><div class="vl-img-wrap"><img src="images/lawn_1/4.webp" alt="Banquet Hall 2" loading="lazy" data-venue="04" data-idx="3"><button class="vl-img-hover-btn" tabindex="-1" aria-hidden="true"><span class="material-symbols-outlined">arrow_outward</span></button></div></div>
+            <div class="vl-img-card"><div class="vl-img-wrap"><img src="images/lawn_1/5.webp" alt="Banquet Hall 2" loading="lazy" data-venue="04" data-idx="4"><button class="vl-img-hover-btn" tabindex="-1" aria-hidden="true"><span class="material-symbols-outlined">arrow_outward</span></button></div></div>
+            <div class="vl-img-card"><div class="vl-img-wrap"><img src="images/lawn_1/1.webp" alt="Banquet Hall 2" loading="lazy" data-venue="04" data-idx="0"><button class="vl-img-hover-btn" tabindex="-1" aria-hidden="true"><span class="material-symbols-outlined">arrow_outward</span></button></div></div>
+          </div>
+          <div class="vl-img-row">
+            <div class="vl-img-card"><div class="vl-img-wrap"><img src="images/lawn_1/2.webp" alt="Banquet Hall 2" loading="lazy" data-venue="04" data-idx="1"><button class="vl-img-hover-btn" tabindex="-1" aria-hidden="true"><span class="material-symbols-outlined">arrow_outward</span></button></div></div>
+            <div class="vl-img-card"><div class="vl-img-wrap"><img src="images/lawn_1/3.webp" alt="Banquet Hall 2" loading="lazy" data-venue="04" data-idx="2"><button class="vl-img-hover-btn" tabindex="-1" aria-hidden="true"><span class="material-symbols-outlined">arrow_outward</span></button></div></div>
+            <div class="vl-img-card"><div class="vl-img-wrap"><img src="images/lawn_1/4.webp" alt="Banquet Hall 2" loading="lazy" data-venue="04" data-idx="3"><button class="vl-img-hover-btn" tabindex="-1" aria-hidden="true"><span class="material-symbols-outlined">arrow_outward</span></button></div></div>
+          </div>
+          <div class="vl-img-row">
+            <div class="vl-img-card"><div class="vl-img-wrap"><img src="images/lawn_1/5.webp" alt="Banquet Hall 2" loading="lazy" data-venue="04" data-idx="4"><button class="vl-img-hover-btn" tabindex="-1" aria-hidden="true"><span class="material-symbols-outlined">arrow_outward</span></button></div></div>
+            <div class="vl-img-card"><div class="vl-img-wrap"><img src="images/lawn_1/1.webp" alt="Banquet Hall 2" loading="lazy" data-venue="04" data-idx="0"><button class="vl-img-hover-btn" tabindex="-1" aria-hidden="true"><span class="material-symbols-outlined">arrow_outward</span></button></div></div>
+            <div class="vl-img-card"><div class="vl-img-wrap"><img src="images/lawn_1/2.webp" alt="Banquet Hall 2" loading="lazy" data-venue="04" data-idx="1"><button class="vl-img-hover-btn" tabindex="-1" aria-hidden="true"><span class="material-symbols-outlined">arrow_outward</span></button></div></div>
+          </div>
         </div>
       </div>
     </article>
@@ -185,34 +193,36 @@
     <!-- ── 05 — THE CRYSTAL HALL ───────────────────────── -->
     <article class="vl-row" data-venue="05">
       <div class="vl-row__header" role="button" tabindex="0" aria-expanded="false" aria-controls="vl-body-05">
-        <span class="vl-row__toggle" aria-hidden="true">+</span>
+        <button class="vl-row__toggle" aria-hidden="true" tabindex="-1"><span class="material-symbols-outlined">add</span></button>
         <div class="vl-row__meta">
-          <span class="vl-row__num">05</span>
           <div class="vl-row__titles">
-            <h2 class="vl-row__title">The Crystal Hall</h2>
-            <p class="vl-row__subtitle">Luxury banquet affairs</p>
+            <h2 class="vl-row__title">The Tent</h2>
+            <p class="vl-row__subtitle">All-weather marquee celebrations</p>
           </div>
         </div>
-        <div class="vl-row__first-row">
-          <div class="vl-grid__cell vl-grid__cell--portrait"><div class="vl-img-wrap"><img src="images/hall_1/1.webp" alt="The Crystal Hall" loading="lazy" data-venue="05" data-idx="0"><div class="vl-img-overlay"><span class="material-symbols-outlined">open_in_full</span></div></div></div>
-          <div class="vl-grid__cell vl-grid__cell--portrait"><div class="vl-img-wrap"><img src="images/hall_1/2.webp" alt="The Crystal Hall" loading="lazy" data-venue="05" data-idx="1"><div class="vl-img-overlay"><span class="material-symbols-outlined">open_in_full</span></div></div></div>
-          <div class="vl-grid__cell vl-grid__cell--portrait"><div class="vl-img-wrap"><img src="images/hall_1/3.webp" alt="The Crystal Hall" loading="lazy" data-venue="05" data-idx="2"><div class="vl-img-overlay"><span class="material-symbols-outlined">open_in_full</span></div></div></div>
+        <div class="vl-img-row">
+          <div class="vl-img-card"><div class="vl-img-wrap"><img src="images/hall_1/1.webp" alt="The Tent" loading="lazy" data-venue="05" data-idx="0"><button class="vl-img-hover-btn" tabindex="-1" aria-hidden="true"><span class="material-symbols-outlined">arrow_outward</span></button></div></div>
+          <div class="vl-img-card"><div class="vl-img-wrap"><img src="images/hall_1/2.webp" alt="The Tent" loading="lazy" data-venue="05" data-idx="1"><button class="vl-img-hover-btn" tabindex="-1" aria-hidden="true"><span class="material-symbols-outlined">arrow_outward</span></button></div></div>
+          <div class="vl-img-card"><div class="vl-img-wrap"><img src="images/hall_1/3.webp" alt="The Tent" loading="lazy" data-venue="05" data-idx="2"><button class="vl-img-hover-btn" tabindex="-1" aria-hidden="true"><span class="material-symbols-outlined">arrow_outward</span></button></div></div>
         </div>
       </div>
       <div class="vl-row__body" id="vl-body-05">
         <div class="vl-grid">
-          <!-- Row B: landscape · portrait · landscape -->
-          <div class="vl-grid__cell vl-grid__cell--landscape"><div class="vl-img-wrap"><img src="images/hall_1/4.webp" alt="The Crystal Hall" loading="lazy" data-venue="05" data-idx="3"><div class="vl-img-overlay"><span class="material-symbols-outlined">open_in_full</span></div></div></div>
-          <div class="vl-grid__cell vl-grid__cell--portrait"><div class="vl-img-wrap"><img src="images/hall_1/5.webp" alt="The Crystal Hall" loading="lazy" data-venue="05" data-idx="4"><div class="vl-img-overlay"><span class="material-symbols-outlined">open_in_full</span></div></div></div>
-          <div class="vl-grid__cell vl-grid__cell--landscape"><div class="vl-img-wrap"><img src="images/hall_1/1.webp" alt="The Crystal Hall" loading="lazy" data-venue="05" data-idx="0"><div class="vl-img-overlay"><span class="material-symbols-outlined">open_in_full</span></div></div></div>
-          <!-- Row C: portrait · landscape · portrait -->
-          <div class="vl-grid__cell vl-grid__cell--portrait"><div class="vl-img-wrap"><img src="images/hall_1/2.webp" alt="The Crystal Hall" loading="lazy" data-venue="05" data-idx="1"><div class="vl-img-overlay"><span class="material-symbols-outlined">open_in_full</span></div></div></div>
-          <div class="vl-grid__cell vl-grid__cell--landscape"><div class="vl-img-wrap"><img src="images/hall_1/3.webp" alt="The Crystal Hall" loading="lazy" data-venue="05" data-idx="2"><div class="vl-img-overlay"><span class="material-symbols-outlined">open_in_full</span></div></div></div>
-          <div class="vl-grid__cell vl-grid__cell--portrait"><div class="vl-img-wrap"><img src="images/hall_1/4.webp" alt="The Crystal Hall" loading="lazy" data-venue="05" data-idx="3"><div class="vl-img-overlay"><span class="material-symbols-outlined">open_in_full</span></div></div></div>
-          <!-- Row D: landscape · portrait · landscape -->
-          <div class="vl-grid__cell vl-grid__cell--landscape"><div class="vl-img-wrap"><img src="images/hall_1/5.webp" alt="The Crystal Hall" loading="lazy" data-venue="05" data-idx="4"><div class="vl-img-overlay"><span class="material-symbols-outlined">open_in_full</span></div></div></div>
-          <div class="vl-grid__cell vl-grid__cell--portrait"><div class="vl-img-wrap"><img src="images/hall_1/1.webp" alt="The Crystal Hall" loading="lazy" data-venue="05" data-idx="0"><div class="vl-img-overlay"><span class="material-symbols-outlined">open_in_full</span></div></div></div>
-          <div class="vl-grid__cell vl-grid__cell--landscape"><div class="vl-img-wrap"><img src="images/hall_1/2.webp" alt="The Crystal Hall" loading="lazy" data-venue="05" data-idx="1"><div class="vl-img-overlay"><span class="material-symbols-outlined">open_in_full</span></div></div></div>
+          <div class="vl-img-row">
+            <div class="vl-img-card"><div class="vl-img-wrap"><img src="images/hall_1/4.webp" alt="The Tent" loading="lazy" data-venue="05" data-idx="3"><button class="vl-img-hover-btn" tabindex="-1" aria-hidden="true"><span class="material-symbols-outlined">arrow_outward</span></button></div></div>
+            <div class="vl-img-card"><div class="vl-img-wrap"><img src="images/hall_1/5.webp" alt="The Tent" loading="lazy" data-venue="05" data-idx="4"><button class="vl-img-hover-btn" tabindex="-1" aria-hidden="true"><span class="material-symbols-outlined">arrow_outward</span></button></div></div>
+            <div class="vl-img-card"><div class="vl-img-wrap"><img src="images/hall_1/1.webp" alt="The Tent" loading="lazy" data-venue="05" data-idx="0"><button class="vl-img-hover-btn" tabindex="-1" aria-hidden="true"><span class="material-symbols-outlined">arrow_outward</span></button></div></div>
+          </div>
+          <div class="vl-img-row">
+            <div class="vl-img-card"><div class="vl-img-wrap"><img src="images/hall_1/2.webp" alt="The Tent" loading="lazy" data-venue="05" data-idx="1"><button class="vl-img-hover-btn" tabindex="-1" aria-hidden="true"><span class="material-symbols-outlined">arrow_outward</span></button></div></div>
+            <div class="vl-img-card"><div class="vl-img-wrap"><img src="images/hall_1/3.webp" alt="The Tent" loading="lazy" data-venue="05" data-idx="2"><button class="vl-img-hover-btn" tabindex="-1" aria-hidden="true"><span class="material-symbols-outlined">arrow_outward</span></button></div></div>
+            <div class="vl-img-card"><div class="vl-img-wrap"><img src="images/hall_1/4.webp" alt="The Tent" loading="lazy" data-venue="05" data-idx="3"><button class="vl-img-hover-btn" tabindex="-1" aria-hidden="true"><span class="material-symbols-outlined">arrow_outward</span></button></div></div>
+          </div>
+          <div class="vl-img-row">
+            <div class="vl-img-card"><div class="vl-img-wrap"><img src="images/hall_1/5.webp" alt="The Tent" loading="lazy" data-venue="05" data-idx="4"><button class="vl-img-hover-btn" tabindex="-1" aria-hidden="true"><span class="material-symbols-outlined">arrow_outward</span></button></div></div>
+            <div class="vl-img-card"><div class="vl-img-wrap"><img src="images/hall_1/1.webp" alt="The Tent" loading="lazy" data-venue="05" data-idx="0"><button class="vl-img-hover-btn" tabindex="-1" aria-hidden="true"><span class="material-symbols-outlined">arrow_outward</span></button></div></div>
+            <div class="vl-img-card"><div class="vl-img-wrap"><img src="images/hall_1/2.webp" alt="The Tent" loading="lazy" data-venue="05" data-idx="1"><button class="vl-img-hover-btn" tabindex="-1" aria-hidden="true"><span class="material-symbols-outlined">arrow_outward</span></button></div></div>
+          </div>
         </div>
       </div>
     </article>
