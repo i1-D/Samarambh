@@ -1297,7 +1297,7 @@ p { margin: 0; }
   position: absolute;
   inset: 0;
   background-blend-mode: color-dodge;
-  background: linear-gradient(to bottom, rgba(20, 69, 47, 0) 40%, rgba(20, 69, 47, 0.72) 100%), url(/Samarambh/images/noise.png) repeat;
+  background: linear-gradient(to bottom, rgba(20, 69, 47, 0) 40%, rgba(20, 69, 47, 0.72) 100%), url(images/noise.png) repeat;
 }
 
 .rv-card__quote {
