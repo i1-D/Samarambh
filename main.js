@@ -370,7 +370,9 @@ document.addEventListener('DOMContentLoaded', () => {
       pin: '.venues-sticky',
       pinSpacing: true,
       onUpdate: (self) => {
-        progressFill.style.transform = `scaleY(${self.progress})`;
+        progressFill.style.transform = window.innerWidth <= 768
+          ? `scaleX(${self.progress})`
+          : `scaleY(${self.progress})`;
 
         const idx = Math.min(
           Math.floor(self.progress * totalVenues),
