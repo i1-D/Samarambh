@@ -3029,14 +3029,14 @@ p { margin: 0; }
   }
 
   .hero-stats {
-    flex-direction: row;
-    flex-wrap: nowrap;
-    gap: 12px;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
   }
 
   .hero-stat {
-    flex: 1;
-    min-width: 0;
+    width: 100%;
+    text-align: center;
   }
 
   .hero-stat-number {
@@ -3245,6 +3245,17 @@ p { margin: 0; }
 
   .hero-tagline {
     font-size: clamp(24px, 7.5vw, 40px);
+  }
+
+  .hero-stats {
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .hero-stat {
+    width: 100%;
+    text-align: center;
   }
 
   .hero-stat-number {
