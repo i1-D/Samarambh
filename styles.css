@@ -336,7 +336,7 @@ p { margin: 0; }
 .hero-logo {
   display: flex;
   justify-content: center;
-  height: 14vw;
+  height: 13vw;
   margin: 40vh 0 25vh 0;
 }
 
@@ -1900,7 +1900,7 @@ p { margin: 0; }
   box-sizing: border-box;
 }
 .footer-signature-logo {
-  width: clamp(120px, 15vw, 360px);
+  width: clamp(120px, 13vw, 360px);
   height: auto;
 }
 
@@ -2255,7 +2255,7 @@ p { margin: 0; }
 
 .vl-img-card {
   flex: 1 0 0;
-  height: 240px;
+  height: 15.625vw;
   overflow: hidden;
   min-width: 1px;
 }
