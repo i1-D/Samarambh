@@ -1,9 +1,5 @@
 import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Lenis from 'lenis';
-
-// ─── Register GSAP Plugins ──────────────────────────────
-gsap.registerPlugin(ScrollTrigger);
 
 // ─── Lenis Smooth Scroll ────────────────────────────────
 const lenis = new Lenis({
@@ -69,7 +65,6 @@ gsap.from('.gp-hero__title, .gp-hero__desc, .gp-hero__badge', {
       height: 'auto',
       duration: 0.6,
       ease: 'power3.inOut',
-      onComplete: () => requestAnimationFrame(() => ScrollTrigger.refresh()),
     });
   }
 
@@ -85,7 +80,6 @@ gsap.from('.gp-hero__title, .gp-hero__desc, .gp-hero__badge', {
       ease: 'power3.inOut',
       onComplete: () => {
         body.hidden = true;
-        requestAnimationFrame(() => ScrollTrigger.refresh());
       },
     });
   }

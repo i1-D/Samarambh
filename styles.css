@@ -305,7 +305,7 @@ p { margin: 0; }
 .hero-video-bg:after {
     content: '';
     background-blend-mode: color-dodge;
-    background: linear-gradient(111.45deg, rgba(26, 26, 26, 0.4) 50%, rgba(26, 26, 26, 0.4) 100%), url(images/noise.png) repeat;
+    background: linear-gradient(111.45deg, rgba(26, 26, 26, 0.4) 50%, rgba(26, 26, 26, 0.4) 100%), url(images/noise.webp) repeat;
     inset: 0;
     position: absolute;
 }
@@ -1297,7 +1297,7 @@ p { margin: 0; }
   position: absolute;
   inset: 0;
   background-blend-mode: color-dodge;
-  background: linear-gradient(to bottom, rgba(20, 69, 47, 0) 40%, rgba(20, 69, 47, 0.72) 100%), url(images/noise.png) repeat;
+  background: linear-gradient(to bottom, rgba(20, 69, 47, 0) 40%, rgba(20, 69, 47, 0.72) 100%), url(images/noise.webp) repeat;
 }
 
 .rv-card__quote {
@@ -2309,6 +2309,9 @@ p { margin: 0; }
   object-fit: cover;
   display: block;
   transition: transform 0.45s var(--ease-out);
+}
+
+.vl-img-wrap:hover img {
   will-change: transform;
 }
 
