@@ -10,6 +10,27 @@ const lenis = new Lenis({
 gsap.ticker.add((time) => lenis.raf(time * 1000));
 gsap.ticker.lagSmoothing(500, 33);
 
+// ─── Hide nav when footer is in view ───────────────────
+(function initNavFooterHide() {
+  const observer = new IntersectionObserver(
+    ([entry]) => {
+      const nav = document.querySelector('.hero-nav');
+      if (!nav) return;
+      nav.classList.toggle('hero-nav--hidden', entry.isIntersecting);
+    },
+    { threshold: 0 }
+  );
+
+  // Footer is injected async by components.js — wait for it
+  const poll = setInterval(() => {
+    const footer = document.querySelector('.site-footer');
+    if (footer) {
+      observer.observe(footer);
+      clearInterval(poll);
+    }
+  }, 100);
+})();
+
 // ─── Hero entrance (fires on load) ─────────────────────
 gsap.from('.gp-hero__title, .gp-hero__desc, .gp-hero__badge', {
   opacity: 0,
