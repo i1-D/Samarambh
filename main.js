@@ -944,7 +944,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // ─── 6. Services — Scroll-Triggered Card Reveal ──────
   const svcCards = gsap.utils.toArray('.svc-card');
-  if (svcCards.length) {
+  if (svcCards.length && window.innerWidth > 900) {
     gsap.set(svcCards[0], { zIndex: 3 });
     gsap.set(svcCards[1], { opacity: 0, y: -480, zIndex: 2 });
     gsap.set(svcCards[2], { opacity: 0, y: -480, zIndex: 1 });
@@ -971,21 +971,23 @@ document.addEventListener('DOMContentLoaded', () => {
   // GSAP ScrollTrigger integrates properly via
   // lenis.on('scroll', ScrollTrigger.update).
 
-  gsap.utils.toArray('.reveal-text').forEach(el => {
-    gsap.fromTo(el,
-      { clipPath: 'inset(0 100% 0 0)' },
-      {
-        clipPath: 'inset(0 0% 0 0)',
-        duration: 1,
-        ease: 'power3.out',
-        scrollTrigger: {
-          trigger: el,
-          start: 'top 85%',
-          toggleActions: 'play none none none',
+  if (window.innerWidth > 600) {
+    gsap.utils.toArray('.reveal-text').forEach(el => {
+      gsap.fromTo(el,
+        { clipPath: 'inset(0 100% 0 0)' },
+        {
+          clipPath: 'inset(0 0% 0 0)',
+          duration: 1,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: el,
+            start: 'top 85%',
+            toggleActions: 'play none none none',
+          }
         }
-      }
-    );
-  });
+      );
+    });
+  }
 
   gsap.utils.toArray('.reveal-fade, .reveal-fade-delay').forEach(el => {
     gsap.fromTo(el,
@@ -1095,7 +1097,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // ─── Social section — parallax columns ──────────────
   const socialSection = document.querySelector('.social-section');
-  if (socialSection) {
+  if (socialSection && window.innerWidth > 600) {
     const oddCols  = socialSection.querySelectorAll('.social-col:nth-child(odd)');
     const evenCols = socialSection.querySelectorAll('.social-col:nth-child(even)');
 
@@ -1121,6 +1123,25 @@ document.addEventListener('DOMContentLoaded', () => {
         scrub: 1.5,
       },
     });
+  }
+
+  // ─── Reviews — Swiper slider on mobile ───────────────
+  // Initialized on 'load' so the Swiper CDN script (non-module) is guaranteed to have run.
+  if (window.innerWidth <= 900) {
+    const initReviewSwiper = () => {
+      if (typeof Swiper !== 'undefined') {
+        new Swiper('.rv-swiper', {
+          slidesPerView: 1.5,
+          spaceBetween: 16,
+          grabCursor: true,
+        });
+      }
+    };
+    if (document.readyState === 'complete') {
+      initReviewSwiper();
+    } else {
+      window.addEventListener('load', initReviewSwiper, { once: true });
+    }
   }
 
   // Safety refresh — all pin spacers now in DOM; force recalculation of all trigger positions

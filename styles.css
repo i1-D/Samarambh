@@ -634,7 +634,7 @@ p { margin: 0; }
 .venue-slider-pagination {
   position: absolute;
   bottom: 24px;
-  left: 48px;
+  left: 24px;
   right: 24px;
   display: none;
   align-items: center;
@@ -1264,6 +1264,11 @@ p { margin: 0; }
   flex: 1;
   overflow: hidden;
   height: 100%;
+}
+
+/* ── Swiper container — overflow visible on desktop so GSAP scrub isn't clipped ── */
+.rv-swiper {
+  overflow: visible;
 }
 
 /* ── Track — scrubbed upward by GSAP ── */
@@ -2762,7 +2767,6 @@ p { margin: 0; }
     height: auto;
     width: 18vw;
     min-width: 80px;
-    margin: 35vh 0 20vh;
   }
 
   .hero-headline {
@@ -2876,7 +2880,7 @@ p { margin: 0; }
   }
 
   .rv-track {
-    transform: none !important;
+    transform: none;
     padding: 0;
     gap: var(--sp-7);
   }
@@ -3003,7 +3007,6 @@ p { margin: 0; }
   .hero-logo {
     width: 55vw;
     max-width: 200px;
-    margin: 28vh 0 14vh;
   }
 
   .hero-headline {
@@ -3072,21 +3075,82 @@ p { margin: 0; }
     height: clamp(160px, 50vw, 240px);
   }
 
+  .svc-heading br {
+    display: none;
+  }
+
+  .svc-title {
+    font-size: clamp(1.3rem, 6vw, 1.8rem);
+    white-space: nowrap;
+  }
+
+  /* — Amenities — */
+  .amenities-section .section-title-block h2 br {
+    display: none;
+  }
+
+  .amenities-section .section-header {
+    flex-direction: column;
+    gap: var(--sp-2);
+    align-items: flex-start;
+  }
+
+  .amenities-section .section-desc {
+    text-align: left;
+    line-height: 1.5;
+  }
+
+  .amenities-section .section-title-block h2 {
+    white-space: nowrap;
+    font-size: clamp(1.1rem, 5.5vw, 1.7rem);
+  }
+
   /* — Gallery index preview — */
   .gallery-grid {
     flex-direction: column;
   }
 
+  .gallery-col {
+    width: 100%;
+    flex-direction: column;
+  }
+
   .gallery-col:nth-child(2) {
+    display: flex;
+  }
+
+  .gallery-col:nth-child(2) .gallery-row {
     display: none;
   }
 
   .gallery-img--large {
     aspect-ratio: 4 / 3;
+    order: 1;
   }
 
-  .gallery-row {
-    height: clamp(120px, 45vw, 200px);
+  .gallery-col:nth-child(1) .gallery-row {
+    order: 2;
+    height: clamp(100px, 40vw, 180px);
+  }
+
+  .gallery-col:nth-child(2) .gallery-col-bottom {
+    order: 3;
+    display: flex;
+    flex-direction: row;
+    gap: 6px;
+    height: clamp(100px, 40vw, 180px);
+  }
+
+  .gallery-col:nth-child(2) .gallery-img--fill {
+    flex: 1;
+    height: 100%;
+  }
+
+  .gallery-view-btn-wrap {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .gallery-view-btn {
@@ -3100,6 +3164,44 @@ p { margin: 0; }
     gap: var(--sp-5);
   }
 
+  .rv-heading {
+    white-space: nowrap;
+    font-size: clamp(1.3rem, 6vw, 1.8rem);
+  }
+
+  .rv-heading br {
+    display: none;
+  }
+
+  .rv-right {
+    overflow: hidden;
+  }
+
+  .rv-swiper {
+    width: 100%;
+    overflow: hidden;
+  }
+
+  /* Swiper needs row direction — override the global column-flex on .rv-track */
+  .rv-track.swiper-wrapper {
+    flex-direction: row;
+    gap: 0;
+    padding: 0;
+    transform: none;
+  }
+
+  .rv-card.swiper-slide {
+    min-height: auto;
+    height: auto;
+    flex-shrink: 0;
+    width: auto;
+  }
+
+  .rv-card__img {
+    aspect-ratio: 3 / 2;
+    max-height: 220px;
+  }
+
   .rv-card__quote {
     font-size: clamp(0.95rem, 3.5vw, 1.4rem);
     padding: 24px 16px;
@@ -3109,6 +3211,42 @@ p { margin: 0; }
     flex-direction: column;
     align-items: flex-start;
     gap: 8px;
+  }
+
+  /* — Map / Find Us — */
+  .find-us-section {
+    flex-direction: column;
+    height: auto;
+    padding: 0;
+  }
+
+  .find-us-map {
+    width: 100%;
+    height: 300px;
+    order: 3;
+    padding: 0 var(--sp-6);
+  }
+
+  .find-us-content {
+    order: 1;
+    width: 100%;
+    padding: var(--sp-6) var(--sp-6);
+    gap: var(--sp-6);
+    justify-content: flex-start;
+    flex: 0;
+  }
+
+  /* — Social — */
+  .social-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    overflow: visible;
+  }
+
+  .social-col {
+    flex: unset;
+    margin-top: 0 !important;
   }
 
   /* — FAQ — */
@@ -3220,7 +3358,6 @@ p { margin: 0; }
   /* — Hero — */
   .hero-logo {
     width: 60vw;
-    margin: 25vh 0 12vh;
   }
 
   .hero-headline {

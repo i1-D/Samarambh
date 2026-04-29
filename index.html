@@ -28,6 +28,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Infant:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500;1,600&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,300,1,0" />
   <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
   <script type="module" src="components.js"></script>
 </head>
 <body>
@@ -680,11 +681,12 @@
       <p class="rv-sub">Behind every review is a celebration we poured ourselves into. These words mean everything to us.</p>
     </div>
 
-    <!-- Right — scrolling cards (clipped viewport; track scrubs upward) -->
+    <!-- Right — scrolling cards (desktop: clipped viewport scrubs upward; mobile: Swiper slider) -->
     <div class="rv-right">
-      <div class="rv-track">
+      <div class="rv-swiper swiper">
+      <div class="rv-track swiper-wrapper">
 
-      <article class="rv-card">
+      <article class="rv-card swiper-slide">
         <div class="rv-card__img">
           <img src="images/review/review1.webp" alt="Anita Mahajan review" loading="lazy">
           <div class="rv-card__scrim"></div>
@@ -700,7 +702,7 @@
         </div>
       </article>
 
-      <article class="rv-card">
+      <article class="rv-card swiper-slide">
         <div class="rv-card__img">
           <img src="images/review/review2.webp" alt="Vikram Singhania review" loading="lazy">
           <div class="rv-card__scrim"></div>
@@ -716,7 +718,7 @@
         </div>
       </article>
 
-      <article class="rv-card">
+      <article class="rv-card swiper-slide">
         <div class="rv-card__img">
           <img src="images/review/review3.webp" alt="Priya &amp; Rahul review" loading="lazy">
           <div class="rv-card__scrim"></div>
@@ -732,7 +734,7 @@
         </div>
       </article>
 
-      <article class="rv-card">
+      <article class="rv-card swiper-slide">
         <div class="rv-card__img">
           <img src="images/review/review4.webp" alt="Sunita Sharma review" loading="lazy">
           <div class="rv-card__scrim"></div>
@@ -748,7 +750,7 @@
         </div>
       </article>
 
-      <article class="rv-card">
+      <article class="rv-card swiper-slide">
         <div class="rv-card__img">
           <img src="images/review/review5.webp" alt="Priya &amp; Rajan Mehta review" loading="lazy">
           <div class="rv-card__scrim"></div>
@@ -764,7 +766,8 @@
         </div>
       </article>
 
-      </div><!-- /.rv-track -->
+      </div><!-- /.rv-track swiper-wrapper -->
+      </div><!-- /.rv-swiper swiper -->
     </div><!-- /.rv-right -->
   </section>
 
@@ -1205,6 +1208,7 @@
   <!-- ═══════════════════════════════════════════════════
        SCRIPTS
        ═══════════════════════════════════════════════════ -->
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
   <script type="module" src="main.js"></script>
 
 </body>
