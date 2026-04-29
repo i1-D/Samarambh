@@ -524,35 +524,38 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
   // ─── 6. Moments Sections — Gallery-Style Pinned Scroll ──
-  // Same pattern as gallery.js: section pins to viewport,
-  // image grid scrubs upward, centered title stays fixed.
-  // On mobile (≤900px) pinning is skipped — CSS sets height:auto instead.
-  if (window.innerWidth > 900) {
-    document.querySelectorAll('.moments-scroll-section').forEach(section => {
-      const grid = section.querySelector('.gp-pin-grid');
-      if (!grid) return;
+  // Section pins to viewport, image grid scrubs upward, centered title stays fixed.
+  document.querySelectorAll('.moments-scroll-section').forEach(section => {
+    const grid = section.querySelector('.gp-pin-grid');
+    if (!grid) return;
 
-      const tl = gsap.timeline({ paused: true });
-      tl.to(grid, {
-        y: () => -(grid.scrollHeight - window.innerHeight),
-        ease: 'none',
-      });
+    const getScrollDist = () => grid.scrollHeight - window.innerHeight;
 
-      ScrollTrigger.create({
-        trigger: section,
-        start: 'top top',
-        end: () => `+=${grid.scrollHeight - window.innerHeight}`,
-        pin: true,
-        scrub: 1,
-        animation: tl,
-        invalidateOnRefresh: true,
-      });
+    const tl = gsap.timeline({ paused: true });
+    tl.to(grid, {
+      y: () => -getScrollDist(),
+      ease: 'none',
     });
-  }
+
+    ScrollTrigger.create({
+      trigger: section,
+      start: 'top top',
+      end: () => `+=${getScrollDist()}`,
+      pin: true,
+      pinSpacing: true,
+      scrub: true,
+      animation: tl,
+      invalidateOnRefresh: true,
+      onRefresh(self) {
+        // If grid is shorter than viewport, kill this trigger to avoid phantom spacing
+        if (getScrollDist() <= 0) self.kill();
+      },
+    });
+  });
 
 
   // ─── Experience Section — 4 discrete reveal stops ────
-  // On mobile (≤900px) cover panels are hidden via CSS; skip pinning entirely.
+  // Desktop (>900px): wheel-driven. Mobile (≤900px): touch-driven.
   const expSection = document.querySelector('.experience-section');
   if (expSection && window.innerWidth > 900) {
     const line1  = expSection.querySelector('.exp-line--1');
@@ -732,6 +735,209 @@ document.addEventListener('DOMContentLoaded', () => {
 
       wheelCooldown = true;
       setTimeout(() => { wheelCooldown = false; }, 550);
+    }, { passive: false });
+
+  } else if (expSection) {
+    // ─── Experience Section — Mobile (≤900px) ─────────
+    const line1  = expSection.querySelector('.exp-line--1');
+    const line2  = expSection.querySelector('.exp-line--2');
+    const cvTop  = expSection.querySelector('.exp-cover--top');
+    const cvBot  = expSection.querySelector('.exp-cover--bottom');
+    const cvLeft = expSection.querySelector('.exp-cover--left');
+    const cvRt   = expSection.querySelector('.exp-cover--right');
+
+    const STATES = [
+      { h: 50,    w: 50    },
+      { h: 45,    w: 45    },
+      { h: 25.00, w: 25.00 },
+      { h: 11.27, w: 11.27 },
+      { h: 0,     w: 0     },
+    ];
+    const TOTAL = 4;
+    let stopIdx     = 0;
+    let isAnimating = false;
+    let expActive   = false;
+    let expST;
+
+    const LERP_MIN = 0.14;
+    const LERP_MAX = 0.32;
+    const SETTLE_THRESHOLD = 0.015;
+    let curH = 50, curW = 50;
+    let tgtH = 50, tgtW = 50;
+    let velocity = 0;
+    let lerpTicker = null;
+    let textSync = null;
+
+    function startLerpM() {
+      if (lerpTicker) return;
+      lerpTicker = gsap.ticker.add(() => {
+        velocity *= 0.80;
+        const dynamicLerp = LERP_MIN + velocity * (LERP_MAX - LERP_MIN);
+        curH += (tgtH - curH) * dynamicLerp;
+        curW += (tgtW - curW) * dynamicLerp;
+
+        gsap.set([cvTop, cvBot], { height: `${curH}%` });
+        gsap.set([cvLeft, cvRt],  { width:  `${curW}%` });
+
+        if (textSync) {
+          const range    = textSync.startH - textSync.endH;
+          const progress = range === 0 ? 1 : Math.min(1, (textSync.startH - curH) / range);
+          const t        = progress * progress * progress;
+          gsap.set(line1, { y: textSync.y1start + (textSync.y1end - textSync.y1start) * t, opacity: 1 - t });
+          gsap.set(line2, { y: textSync.y2start + (textSync.y2end - textSync.y2start) * t, opacity: 1 - t });
+          if (progress >= 1) {
+            gsap.set([line1, line2], { visibility: 'hidden' });
+            textSync = null;
+          }
+        }
+
+        const doneH = Math.abs(tgtH - curH) < SETTLE_THRESHOLD;
+        const doneW = Math.abs(tgtW - curW) < SETTLE_THRESHOLD;
+        if (doneH && doneW) {
+          gsap.set([cvTop, cvBot], { height: `${tgtH}%` });
+          gsap.set([cvLeft, cvRt],  { width:  `${tgtW}%` });
+          curH = tgtH; curW = tgtW;
+          gsap.ticker.remove(lerpTicker);
+          lerpTicker = null;
+          isAnimating = false;
+        }
+      });
+    }
+
+    function goToM(idx) {
+      if (isAnimating || idx === stopIdx) return;
+      const prev = stopIdx;
+      stopIdx = idx;
+      isAnimating = true;
+      tgtH = STATES[idx].h;
+      tgtW = STATES[idx].w;
+      startLerpM();
+
+      if (prev === 0 && idx === 1) {
+        gsap.to(line1, { y: -40, ease: 'power3.inOut', duration: 0.55 });
+        gsap.to(line2, { y:  40, ease: 'power3.inOut', duration: 0.55 });
+      }
+      if (prev === 1 && idx === 2) {
+        textSync = { startH: curH, endH: tgtH, y1start: -40, y1end: -110, y2start: 40, y2end: 110 };
+      }
+      if (idx >= 3) {
+        textSync = null;
+        gsap.set([line1, line2], { opacity: 0, visibility: 'hidden' });
+      }
+      if (prev >= 2 && idx === 1) {
+        textSync = null;
+        gsap.set([line1, line2], { visibility: 'visible' });
+        gsap.to(line1, { y: -40, opacity: 1, ease: 'expo.out', duration: 0.35 });
+        gsap.to(line2, { y:  40, opacity: 1, ease: 'expo.out', duration: 0.35 });
+      }
+      if (prev > 0 && idx === 0) {
+        gsap.set([line1, line2], { visibility: 'visible' });
+        gsap.to(line1, { y: 0, opacity: 1, ease: 'power3.inOut', duration: 0.5 });
+        gsap.to(line2, { y: 0, opacity: 1, ease: 'power3.inOut', duration: 0.5 });
+      }
+    }
+
+    expST = ScrollTrigger.create({
+      trigger: expSection,
+      start: 'top top',
+      end: () => `+=${window.innerHeight * (TOTAL + 1)}`,
+      pin: true,
+      pinSpacing: true,
+      invalidateOnRefresh: true,
+      onEnter:     () => { expActive = true;  },
+      onLeave:     () => { expActive = false; },
+      onEnterBack: () => { expActive = true;  },
+      onLeaveBack: () => {
+        expActive = false;
+        if (lerpTicker) { gsap.ticker.remove(lerpTicker); lerpTicker = null; }
+        curH = 50; curW = 50; tgtH = 50; tgtW = 50;
+        gsap.set([cvTop, cvBot], { height: '50%' });
+        gsap.set([cvLeft, cvRt],  { width:  '50%' });
+        gsap.set([line1, line2], { y: 0, opacity: 1, visibility: 'visible' });
+        stopIdx = 0; isAnimating = false;
+      },
+    });
+
+    // Touch: one swipe = one step. Minimum 40px vertical movement required.
+    // touchmove must be passive:false to call preventDefault (blocks native scroll
+    // during pinned swipes). touchstart/end can stay passive for performance.
+    const SWIPE_THRESHOLD = 40;
+    let touchStartY   = null;
+    let touchCooldown = false;
+
+    expSection.addEventListener('touchstart', (e) => {
+      if (!expActive) return;
+      touchStartY = e.touches[0].clientY;
+    }, { passive: true });
+
+    expSection.addEventListener('touchmove', (e) => {
+      if (!expActive || touchStartY === null) return;
+      e.preventDefault();
+    }, { passive: false });
+
+    expSection.addEventListener('touchend', (e) => {
+      if (!expActive || touchStartY === null) return;
+      const dy = touchStartY - e.changedTouches[0].clientY; // positive = swipe up
+      touchStartY = null;
+      if (Math.abs(dy) < SWIPE_THRESHOLD) return;
+
+      const dir  = dy > 0 ? 1 : -1;
+      const next = stopIdx + dir;
+
+      if (next < 0) return;
+
+      if (next > TOTAL) {
+        if (!touchCooldown) {
+          lenis.scrollTo(expST.end + 10, { duration: 0.4 });
+          touchCooldown = true;
+          setTimeout(() => { touchCooldown = false; }, 500);
+        }
+        return;
+      }
+
+      if (isAnimating || touchCooldown) return;
+
+      velocity = 0.5;
+      goToM(next);
+
+      const syncPos = expST.start + (next / (TOTAL + 1)) * (expST.end - expST.start);
+      lenis.scrollTo(syncPos, { immediate: true });
+
+      touchCooldown = true;
+      setTimeout(() => { touchCooldown = false; }, 550);
+    }, { passive: true });
+
+    let wheelCooldownM = false;
+
+    window.addEventListener('wheel', (e) => {
+      if (!expActive) return;
+
+      const dir  = e.deltaY > 0 ? 1 : -1;
+      const next = stopIdx + dir;
+
+      if (next < 0) return;
+
+      if (next > TOTAL) {
+        e.preventDefault();
+        if (!wheelCooldownM) {
+          lenis.scrollTo(expST.end + 10, { duration: 0.4 });
+          wheelCooldownM = true;
+          setTimeout(() => { wheelCooldownM = false; }, 500);
+        }
+        return;
+      }
+
+      e.preventDefault();
+      if (isAnimating || wheelCooldownM) return;
+
+      velocity = Math.min(1.0, velocity + Math.abs(e.deltaY) * 0.006);
+      goToM(next);
+
+      const syncPos = expST.start + (next / (TOTAL + 1)) * (expST.end - expST.start);
+      lenis.scrollTo(syncPos, { immediate: true });
+
+      wheelCooldownM = true;
+      setTimeout(() => { wheelCooldownM = false; }, 550);
     }, { passive: false });
   }
 
