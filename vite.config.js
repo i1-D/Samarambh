@@ -8,7 +8,6 @@ export default defineConfig({
       input: {
         main: resolve(__dirname, 'index.html'),
         gallery: resolve(__dirname, 'gallery.html'),
-        faq: resolve(__dirname, 'samarambh-faq.html'),
       },
     },
   },
