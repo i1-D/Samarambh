@@ -3357,13 +3357,19 @@ p { margin: 0; }
   .social-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 8px;
+    gap: 12px;
     overflow: visible;
   }
 
   .social-col {
     flex: unset;
+    gap: 12px;
     margin-top: 0 !important;
+  }
+
+  .social-col:nth-child(2),
+  .social-col:nth-child(3) {
+    display: none;
   }
 
   /* — FAQ — */
