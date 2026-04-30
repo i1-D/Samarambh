@@ -421,7 +421,7 @@ p { margin: 0; }
   font-family: var(--font-serif);
   font-size: clamp(48px, 5.5vw, 100px);
   font-weight: 300;
-  line-height: 1.1;
+  line-height: 1.8;
   letter-spacing: -2.5px;
   background: linear-gradient(90deg, #FFFFFF 0%, #FFFFFF 60%, #C9A84C 100%);
   background-clip: text;
@@ -3056,16 +3056,22 @@ p { margin: 0; }
   .hero-logo {
     width: 55vw;
     max-width: 200px;
+    margin: 40vh 0 20vh 0;
+  }
+
+  .hero-track {
+    padding: 0 var(--sp-5) var(--sp-8);
   }
 
   .hero-headline {
     font-size: clamp(32px, 8vw, 52px);
-    letter-spacing: -1px;
+    letter-spacing: -0.04em;
   }
 
   .hero-tagline {
-    font-size: clamp(28px, 7.5vw, 48px);
-    letter-spacing: -1px;
+    font-size: clamp(28px, 8vw, 48px);
+    letter-spacing: -0.04em;
+    font-weight: 500;
   }
 
   .hero-stats {
@@ -3077,6 +3083,7 @@ p { margin: 0; }
   .hero-stat {
     width: 100%;
     text-align: center;
+    gap: var(--sp-4);
   }
 
   .hero-stat-number {
@@ -3084,7 +3091,7 @@ p { margin: 0; }
   }
 
   .hero-stat-label {
-    font-size: 11px;
+    font-size: clamp(14px, 4vw, 20px);
     text-align: center;
   }
 
@@ -3479,10 +3486,11 @@ p { margin: 0; }
 
   .hero-headline {
     font-size: clamp(28px, 8.5vw, 44px);
+    font-weight: 500;
   }
 
   .hero-tagline {
-    font-size: clamp(24px, 7.5vw, 40px);
+    font-size: clamp(24px, 8vw, 40px);
   }
 
   .hero-stats {
@@ -3497,7 +3505,7 @@ p { margin: 0; }
   }
 
   .hero-stat-number {
-    font-size: clamp(32px, 9.5vw, 54px);
+    font-size: clamp(32px, 15vw, 72px);
   }
 
   /* — Venues — */
