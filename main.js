@@ -524,9 +524,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
   // ─── 6. Moments Sections — Gallery-Style Pinned Scroll ──
-  // Section pins to viewport, image grid scrubs upward, centered title stays fixed.
-  // Mobile (≤900px) uses a plain stacked layout — no pinning needed.
-  if (window.innerWidth > 900) document.querySelectorAll('.moments-scroll-section').forEach(section => {
+  // Section pins to viewport, image grid scrubs upward, title stays fixed at top.
+  // Runs on both desktop and mobile (mobile uses 2-col CSS grid layout via CSS).
+  document.querySelectorAll('.moments-scroll-section').forEach(section => {
     const grid = section.querySelector('.gp-pin-grid');
     if (!grid) return;
 

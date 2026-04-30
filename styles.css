@@ -2797,32 +2797,39 @@ p { margin: 0; }
     height: 48px;
   }
 
-  /* — Moments — */
-  .moments-scroll-section {
-    height: auto;
-    overflow: visible;
-  }
+  /* — Moments (mobile) — pinned scroll kept; 2-col CSS grid per row — */
 
+  /* Title: anchor to top (not vertically centred like desktop) */
   .moments-title-overlay {
-    position: relative;
-    top: auto;
-    left: auto;
-    transform: none;
-    text-align: center;
-    padding: var(--sp-9) var(--sp-11) var(--sp-7);
-    white-space: normal;
+    top: 36px;
+    transform: translateX(-50%);
+    white-space: nowrap;
   }
 
+  /* Smaller title font on mobile */
+  .moments-title-overlay h2 {
+    font-size: 39px;
+    letter-spacing: -1px;
+  }
+
+  /* Grid: compact gap, top padding clears the title overlay */
   .gp-pin-grid {
-    gap: 40px;
-    padding: 24px max(4vw, 16px);
+    gap: 16px;
+    padding: 150px var(--sp-5) var(--sp-5);
   }
 
-  /* Hide columns 3 & 4 on mobile — keeps the 2-column layout */
-  .gp-pin-cell:nth-child(n+3) { display: none; }
+  /* Each row becomes a 2-column CSS grid (shows all 4 cells as 2×2) */
+  .gp-pin-row {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
 
-  .gp-pin-cell--portrait  { height: 280px; }
-  .gp-pin-cell--landscape { height: 160px; }
+  /* Ensure all 4 cells are visible in the 2×2 grid */
+  .gp-pin-cell:nth-child(n+3) { display: block; }
+
+  .gp-pin-cell--portrait  { height: 200px; }
+  .gp-pin-cell--landscape { height: 140px; }
 
   /* — Services — */
   .svc-card-inner {
@@ -3073,15 +3080,15 @@ p { margin: 0; }
 
   /* — Moments — */
   .gp-pin-grid {
-    gap: 24px;
-    padding: 16px;
+    gap: 12px;
+    padding: 130px 16px 16px; /* preserve title clearance on small screens */
   }
 
   .gp-pin-row {
-    gap: 8px;
+    gap: 12px;
   }
 
-  .gp-pin-cell--portrait  { height: 200px; }
+  .gp-pin-cell--portrait  { height: 180px; }
   .gp-pin-cell--landscape { height: 120px; }
 
   /* — Services — */
