@@ -1120,32 +1120,55 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // ─── Social section — parallax columns ──────────────
   const socialSection = document.querySelector('.social-section');
-  if (socialSection && window.innerWidth > 600) {
-    const oddCols  = socialSection.querySelectorAll('.social-col:nth-child(odd)');
-    const evenCols = socialSection.querySelectorAll('.social-col:nth-child(even)');
+  if (socialSection) {
+    const cols = socialSection.querySelectorAll('.social-col');
+    const isMobile = window.innerWidth <= 900;
 
-    // Odd cols drift upward, even cols drift downward — opposite directions create depth
-    gsap.to(oddCols, {
-      y: -80,
-      ease: 'none',
-      scrollTrigger: {
-        trigger: socialSection,
-        start: 'top bottom',
-        end: 'bottom top',
-        scrub: 1.5,
-      },
-    });
-
-    gsap.to(evenCols, {
-      y: 80,
-      ease: 'none',
-      scrollTrigger: {
-        trigger: socialSection,
-        start: 'top bottom',
-        end: 'bottom top',
-        scrub: 1.5,
-      },
-    });
+    if (!isMobile) {
+      // Desktop: cols 1,3,5 scroll slowly; cols 2,4 scroll fast
+      gsap.to([cols[0], cols[2], cols[4]], {
+        y: -60,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: socialSection,
+          start: 'top bottom',
+          end: 'bottom top',
+          scrub: 1.5,
+        },
+      });
+      gsap.to([cols[1], cols[3]], {
+        y: -180,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: socialSection,
+          start: 'top bottom',
+          end: 'bottom top',
+          scrub: 1.5,
+        },
+      });
+    } else {
+      // Mobile: cols 2&3 are hidden; col 1 and 5 scroll slowly, col 4 scrolls fast
+      gsap.to([cols[0], cols[4]], {
+        y: -50,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: socialSection,
+          start: 'top bottom',
+          end: 'bottom top',
+          scrub: 1.5,
+        },
+      });
+      gsap.to(cols[3], {
+        y: -120,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: socialSection,
+          start: 'top bottom',
+          end: 'bottom top',
+          scrub: 1.5,
+        },
+      });
+    }
   }
 
   // ─── Reviews — Swiper slider on mobile ───────────────
