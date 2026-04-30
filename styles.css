@@ -2746,12 +2746,10 @@ p { margin: 0; }
 @media (max-width: 900px) {
 
   /* — Spacing tokens — */
-  :root {
-  }
 
   /* — Navigation — */
   .hero-nav {
-    padding: 20px var(--sp-11);
+    padding: var(--sp-3) var(--sp-5);
   }
 
   .hero-nav .nav-group {
@@ -3448,8 +3446,6 @@ p { margin: 0; }
 @media (max-width: 480px) {
 
   /* — Spacing tokens — */
-  :root {
-  }
 
   /* — Hero — */
   .hero-logo {

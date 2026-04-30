@@ -879,6 +879,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     expSection.addEventListener('touchmove', (e) => {
       if (!expActive || touchStartY === null) return;
+      if (stopIdx === TOTAL && e.touches[0].clientY < touchStartY) return;
       e.preventDefault();
     }, { passive: false });
 
@@ -895,6 +896,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       if (next > TOTAL) {
         if (!touchCooldown) {
+          expActive = false;
           lenis.scrollTo(expST.end + 10, { duration: 0.4 });
           touchCooldown = true;
           setTimeout(() => { touchCooldown = false; }, 500);
