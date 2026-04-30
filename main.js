@@ -70,7 +70,8 @@ document.addEventListener('DOMContentLoaded', () => {
           ScrollTrigger.refresh();
           requestAnimationFrame(() => {
             const nav = getNav();
-            nav?.classList.remove('hero-nav--hidden');
+            // On mobile the bar lives at the bottom — keep it hidden while hero is in view
+            if (window.innerWidth > 600) nav?.classList.remove('hero-nav--hidden');
             nav?.classList.remove('nav--dark');
           });
         });
@@ -190,7 +191,8 @@ document.addEventListener('DOMContentLoaded', () => {
         if (self.progress > 0) {
           nav.classList.add('hero-nav--hidden');
         } else {
-          nav.classList.remove('hero-nav--hidden');
+          // At progress=0 hero is fully visible — keep nav hidden on mobile (bar is at bottom)
+          if (window.innerWidth > 600) nav.classList.remove('hero-nav--hidden');
           nav.classList.remove('nav--dark');
           getNavLogo()?.classList.add('nav-logo--hidden');
         }
@@ -200,7 +202,9 @@ document.addEventListener('DOMContentLoaded', () => {
         getNavLogo()?.classList.remove('nav-logo--hidden');
       },
       onLeaveBack: () => {
-        getNav()?.classList.remove('hero-nav--hidden');
+        // Scrolled back into hero — hide the bottom bar on mobile
+        if (window.innerWidth > 600) getNav()?.classList.remove('hero-nav--hidden');
+        else getNav()?.classList.add('hero-nav--hidden');
         getNavLogo()?.classList.add('nav-logo--hidden');
       },
     });
@@ -213,8 +217,9 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!nav) return;
 
     if (scroll < 10) {
-      // Always show at page top in light mode — even during refresh seek events
-      nav.classList.remove('hero-nav--hidden');
+      // Always show at page top in light mode — even during refresh seek events.
+      // On mobile the nav is at the bottom — keep it hidden while hero is in view.
+      if (window.innerWidth > 600) nav.classList.remove('hero-nav--hidden');
       nav.classList.remove('nav--dark');
       getNavLogo()?.classList.add('nav-logo--hidden');
       lastScroll = scroll;
@@ -228,7 +233,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     if (scroll > lastScroll) {
-      nav.classList.add('hero-nav--hidden');
+      if (window.innerWidth > 600) nav.classList.add('hero-nav--hidden');
     } else if (scroll < lastScroll) {
       nav.classList.remove('hero-nav--hidden');
     }
@@ -525,39 +530,48 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // ─── 6. Moments Sections — Gallery-Style Pinned Scroll ──
   // Section pins to viewport, image grid scrubs upward, title stays fixed at top.
-  // Runs on both desktop and mobile (mobile uses 2-col CSS grid layout via CSS).
-  document.querySelectorAll('.moments-scroll-section').forEach(section => {
-    const grid = section.querySelector('.gp-pin-grid');
-    if (!grid) return;
+  // Desktop only — mobile uses a plain 2-col CSS grid (no pinning needed, and
+  // pinSpacing spacers on mobile shift the DOM positions of Find Us / Gallery,
+  // causing scroll jumps near those sections).
+  if (window.innerWidth > 900) {
+    document.querySelectorAll('.moments-scroll-section').forEach(section => {
+      const grid = section.querySelector('.gp-pin-grid');
+      if (!grid) return;
 
-    const getScrollDist = () => grid.scrollHeight - (window.visualViewport?.height ?? window.innerHeight);
+      const getScrollDist = () => grid.scrollHeight - (window.visualViewport?.height ?? window.innerHeight);
 
-    const tl = gsap.timeline({ paused: true });
-    tl.to(grid, {
-      y: () => -getScrollDist(),
-      ease: 'none',
+      const tl = gsap.timeline({ paused: true });
+      tl.to(grid, {
+        y: () => -getScrollDist(),
+        ease: 'none',
+      });
+
+      ScrollTrigger.create({
+        trigger: section,
+        start: 'top top',
+        end: () => `+=${getScrollDist()}`,
+        pin: true,
+        pinSpacing: true,
+        scrub: true,
+        animation: tl,
+        invalidateOnRefresh: true,
+        onRefresh(self) {
+          // If grid is shorter than viewport, kill this trigger to avoid phantom spacing
+          if (getScrollDist() <= 0) self.kill();
+        },
+      });
     });
-
-    ScrollTrigger.create({
-      trigger: section,
-      start: 'top top',
-      end: () => `+=${getScrollDist()}`,
-      pin: true,
-      pinSpacing: true,
-      scrub: true,
-      animation: tl,
-      invalidateOnRefresh: true,
-      onRefresh(self) {
-        // If grid is shorter than viewport, kill this trigger to avoid phantom spacing
-        if (getScrollDist() <= 0) self.kill();
-      },
-    });
-  });
+  }
 
   // iOS address bar show/hide fires visualViewport.resize, not window.resize,
   // so window.resize-based invalidateOnRefresh misses it — refresh manually.
+  // Debounced so mid-scroll address-bar transitions don't trigger rapid recalculations.
   if (window.visualViewport) {
-    window.visualViewport.addEventListener('resize', () => ScrollTrigger.refresh());
+    let _vpRefreshTimer;
+    window.visualViewport.addEventListener('resize', () => {
+      clearTimeout(_vpRefreshTimer);
+      _vpRefreshTimer = setTimeout(() => ScrollTrigger.refresh(), 150);
+    });
   }
 
 
@@ -1151,6 +1165,25 @@ document.addEventListener('DOMContentLoaded', () => {
     } else {
       window.addEventListener('load', initReviewSwiper, { once: true });
     }
+  }
+
+  // ─── Mobile bottom nav — hide over hero & footer ───
+  // On mobile the nav floats at the bottom. Hide it when the hero or footer is in view.
+  if (window.innerWidth <= 600) {
+    // Hide immediately on load — hero is in view at page top.
+    getNav()?.classList.add('hero-nav--hidden');
+
+    // Footer is injected async by components.js — wait for load to query it.
+    window.addEventListener('load', () => {
+      const footerEl = document.querySelector('.site-footer');
+      if (!footerEl) return;
+      ScrollTrigger.create({
+        trigger: footerEl,
+        start: 'top bottom',
+        onEnter:     () => getNav()?.classList.add('hero-nav--hidden'),
+        onLeaveBack: () => getNav()?.classList.remove('hero-nav--hidden'),
+      });
+    }, { once: true });
   }
 
   // Safety refresh — all pin spacers now in DOM; force recalculation of all trigger positions
