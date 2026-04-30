@@ -1541,8 +1541,8 @@ p { margin: 0; }
 .gp-pin-grid {
   display: flex;
   flex-direction: column;
-  gap: 96px;
-  padding: 60px max(5vw, 40px);
+  gap: var(--sp-9);
+  padding: var(--sp-11);
   will-change: transform;
 }
 
@@ -2817,6 +2817,9 @@ p { margin: 0; }
     gap: 40px;
     padding: 24px max(4vw, 16px);
   }
+
+  /* Hide columns 3 & 4 on mobile — keeps the 2-column layout */
+  .gp-pin-cell:nth-child(n+3) { display: none; }
 
   .gp-pin-cell--portrait  { height: 280px; }
   .gp-pin-cell--landscape { height: 160px; }
