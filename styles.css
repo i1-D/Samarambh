@@ -1557,8 +1557,8 @@ p { margin: 0; }
   overflow: hidden;
 }
 
-.gp-pin-cell--portrait  { height: 400px; }
-.gp-pin-cell--landscape { height: 240px; }
+.gp-pin-cell--portrait  { height: 20.833vw; }
+.gp-pin-cell--landscape { height: 12.5vw; }
 .gp-pin-cell--empty     { background: transparent; border-radius: 0; }
 
 .gp-img-wrap {
@@ -2713,8 +2713,8 @@ p { margin: 0; }
     height: clamp(500px, 45vw, 1050px);
   }
 
-  .gp-pin-cell--portrait  { height: 480px; }
-  .gp-pin-cell--landscape { height: 300px; }
+  .gp-pin-cell--portrait  { height: 25vw; }
+  .gp-pin-cell--landscape { height: 15.625vw; }
 }
 
 
@@ -2828,8 +2828,8 @@ p { margin: 0; }
   /* Ensure all 4 cells are visible in the 2×2 grid */
   .gp-pin-cell:nth-child(n+3) { display: block; }
 
-  .gp-pin-cell--portrait  { height: 200px; }
-  .gp-pin-cell--landscape { height: 140px; }
+  .gp-pin-cell--portrait  { height: 10.417vw; }
+  .gp-pin-cell--landscape { height: 7.292vw; }
 
   /* — Services — */
   .svc-card-inner {
@@ -3088,8 +3088,8 @@ p { margin: 0; }
     gap: 12px;
   }
 
-  .gp-pin-cell--portrait  { height: 180px; }
-  .gp-pin-cell--landscape { height: 120px; }
+  .gp-pin-cell--portrait  { height: 9.375vw; }
+  .gp-pin-cell--landscape { height: 6.25vw; }
 
   /* — Services — */
   .svc-card-inner {
@@ -3415,8 +3415,8 @@ p { margin: 0; }
   }
 
   /* — Moments — */
-  .gp-pin-cell--portrait  { height: 160px; }
-  .gp-pin-cell--landscape { height: 100px; }
+  .gp-pin-cell--portrait  { height: 8.333vw; }
+  .gp-pin-cell--landscape { height: 5.208vw; }
 
   /* — Services — */
   .svc-card-inner {
