@@ -1138,7 +1138,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const initReviewSwiper = () => {
       if (typeof Swiper !== 'undefined') {
         new Swiper('.rv-swiper', {
-          slidesPerView: 1.5,
+          slidesPerView: 1.2,
           spaceBetween: 16,
           grabCursor: true,
         });

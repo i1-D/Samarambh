@@ -47,7 +47,8 @@
       "Bash(awk 'NR>=3372 && NR<=3430 {print NR\": \"$0}' /Users/ivandsouza/Documents/Samarambh/styles.css)",
       "Bash(node -e ' *)",
       "Bash(awk 'NR>=758 && NR<=830 {print NR\": \"$0}' /Users/ivandsouza/Documents/Samarambh/styles.css)",
-      "Bash(node)"
+      "Bash(node)",
+      "Bash(awk -F: '$2 <= 3069 && $2 >= 3000')"
     ]
   }
 }
