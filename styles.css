@@ -2798,9 +2798,24 @@ p { margin: 0; }
   }
 
   /* — Moments — */
+  .moments-scroll-section {
+    height: auto;
+    overflow: visible;
+  }
+
+  .moments-title-overlay {
+    position: relative;
+    top: auto;
+    left: auto;
+    transform: none;
+    text-align: center;
+    padding: var(--sp-9) var(--sp-11) var(--sp-7);
+    white-space: normal;
+  }
+
   .gp-pin-grid {
     gap: 40px;
-    padding: 100vh max(4vw, 16px) 24px;
+    padding: 24px max(4vw, 16px);
   }
 
   .gp-pin-cell--portrait  { height: 280px; }
