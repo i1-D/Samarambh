@@ -530,7 +530,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const grid = section.querySelector('.gp-pin-grid');
     if (!grid) return;
 
-    const getScrollDist = () => grid.scrollHeight - window.innerHeight;
+    const getScrollDist = () => grid.scrollHeight - (window.visualViewport?.height ?? window.innerHeight);
 
     const tl = gsap.timeline({ paused: true });
     tl.to(grid, {
@@ -553,6 +553,12 @@ document.addEventListener('DOMContentLoaded', () => {
       },
     });
   });
+
+  // iOS address bar show/hide fires visualViewport.resize, not window.resize,
+  // so window.resize-based invalidateOnRefresh misses it — refresh manually.
+  if (window.visualViewport) {
+    window.visualViewport.addEventListener('resize', () => ScrollTrigger.refresh());
+  }
 
 
   // ─── Experience Section — 4 discrete reveal stops ────

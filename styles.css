@@ -757,9 +757,10 @@ p { margin: 0; }
 /* Image grid reuses gallery's .gp-pin-grid / .gp-pin-row / .gp-pin-cell */
 .moments-scroll-section {
   position: relative;
-  height: 100vh;
+  height: 100dvh;
   overflow: hidden;
   background: var(--color-bg);
+  isolation: isolate;
 }
 
 .moments-title-overlay {
@@ -2815,7 +2816,7 @@ p { margin: 0; }
   /* Grid: compact gap, top padding clears the title overlay */
   .gp-pin-grid {
     gap: 16px;
-    padding: 150px var(--sp-5) var(--sp-5);
+    padding: 160px var(--sp-5) var(--sp-5);
   }
 
   /* Each row becomes a 2-column CSS grid (shows all 4 cells as 2×2) */
@@ -2828,8 +2829,8 @@ p { margin: 0; }
   /* Ensure all 4 cells are visible in the 2×2 grid */
   .gp-pin-cell:nth-child(n+3) { display: block; }
 
-  .gp-pin-cell--portrait  { height: 10.417vw; }
-  .gp-pin-cell--landscape { height: 7.292vw; }
+  .gp-pin-cell--portrait  { height: 22.222vw; }
+  .gp-pin-cell--landscape { height: 15.556vw; }
 
   /* — Services — */
   .svc-card-inner {
@@ -3081,15 +3082,15 @@ p { margin: 0; }
   /* — Moments — */
   .gp-pin-grid {
     gap: 12px;
-    padding: 130px 16px 16px; /* preserve title clearance on small screens */
+    padding: 180px 16px 16px; /* preserve title clearance on small screens */
   }
 
   .gp-pin-row {
     gap: 12px;
   }
 
-  .gp-pin-cell--portrait  { height: 9.375vw; }
-  .gp-pin-cell--landscape { height: 6.25vw; }
+  .gp-pin-cell--portrait  { height: 33.333vw; }
+  .gp-pin-cell--landscape { height: 23.333vw; }
 
   /* — Services — */
   .svc-card-inner {
@@ -3415,8 +3416,8 @@ p { margin: 0; }
   }
 
   /* — Moments — */
-  .gp-pin-cell--portrait  { height: 8.333vw; }
-  .gp-pin-cell--landscape { height: 5.208vw; }
+  .gp-pin-cell--portrait  { height: 29.167vw; }
+  .gp-pin-cell--landscape { height: 41.667vw; }
 
   /* — Services — */
   .svc-card-inner {
