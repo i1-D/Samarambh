@@ -462,8 +462,9 @@ document.addEventListener('DOMContentLoaded', () => {
         outSlide.classList.add('is-prev');
         setTimeout(() => {
           outSlide.style.transition = 'none';
+          void outSlide.offsetWidth; // force reflow so browser commits transition:none before class change
           outSlide.classList.remove('is-prev');
-          requestAnimationFrame(() => { outSlide.style.transition = ''; });
+          requestAnimationFrame(() => requestAnimationFrame(() => { outSlide.style.transition = ''; }));
         }, 650);
 
         state.current = (idx + slides.length) % slides.length;
