@@ -894,7 +894,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     expSection.addEventListener('touchmove', (e) => {
       if (!expActive || touchStartY === null) return;
-      if (stopIdx === TOTAL && e.touches[0].clientY < touchStartY) return;
       e.preventDefault();
     }, { passive: false });
 
@@ -912,7 +911,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (next > TOTAL) {
         if (!touchCooldown) {
           expActive = false;
-          lenis.scrollTo(expST.end + 10, { duration: 0.4 });
+          lenis.scrollTo(expST.end + 1, { immediate: true });
           touchCooldown = true;
           setTimeout(() => { touchCooldown = false; }, 500);
         }
@@ -923,9 +922,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
       velocity = 0.5;
       goToM(next);
-
-      const syncPos = expST.start + (next / (TOTAL + 1)) * (expST.end - expST.start);
-      lenis.scrollTo(syncPos, { immediate: true });
 
       touchCooldown = true;
       setTimeout(() => { touchCooldown = false; }, 550);
@@ -956,9 +952,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
       velocity = Math.min(1.0, velocity + Math.abs(e.deltaY) * 0.006);
       goToM(next);
-
-      const syncPos = expST.start + (next / (TOTAL + 1)) * (expST.end - expST.start);
-      lenis.scrollTo(syncPos, { immediate: true });
 
       wheelCooldownM = true;
       setTimeout(() => { wheelCooldownM = false; }, 550);
