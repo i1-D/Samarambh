@@ -1701,22 +1701,8 @@ p { margin: 0; }
   z-index: 1;
 }
 
-.social-card-overlay {
-  position: absolute;
-  bottom: 24px;
-  left: 0;
-  right: 0;
-  text-align: center;
-  padding: 0 var(--sp-7);
-  z-index: 2;
-  font-family: var(--font-sans);
-  font-size: 16px;
-  color: var(--color-text-on-dark);
-  line-height: 1.25;
-}
-
-.social-card-overlay p {
-  margin: 0;
+.social-col .social-card:nth-child(n+4) {
+  display: none;
 }
 
 .social-tag {
@@ -3370,6 +3356,10 @@ p { margin: 0; }
   .social-col:nth-child(2),
   .social-col:nth-child(3) {
     display: none;
+  }
+
+  .social-col .social-card:nth-child(n+4) {
+    display: block;
   }
 
   /* — FAQ — */
