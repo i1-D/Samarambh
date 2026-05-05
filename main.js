@@ -1048,20 +1048,25 @@ document.addEventListener('DOMContentLoaded', () => {
     onEnterBack: () => getNav()?.classList.add('nav--dark'),
   });
 
-  // Light: services section
-  ScrollTrigger.create({
-    trigger: '.services-section',
-    start: 'top top',
-    onEnter:     () => getNav()?.classList.remove('nav--dark'),
-    onLeaveBack: () => getNav()?.classList.add('nav--dark'),
+  // Services, amenities, reviews — all light-bg sections needing dark nav.
+  // Each trigger explicitly adds nav--dark on both enter directions so
+  // scrolling back up through these sections never reverts to light text.
+  ['.svc-section', '.amenities-section', '.rv-section'].forEach(sel => {
+    ScrollTrigger.create({
+      trigger: sel,
+      start: 'top top',
+      onEnter:     () => getNav()?.classList.add('nav--dark'),
+      onLeaveBack: () => getNav()?.classList.add('nav--dark'),
+    });
   });
 
-  // Dark: gallery and beyond (find-us, reviews, faq, footer)
+  // Gallery and beyond — keep dark nav; do NOT remove on leave-back because
+  // reviews/amenities/services above also need dark nav (handled above).
   ScrollTrigger.create({
     trigger: '.gallery-section',
     start: 'top top',
     onEnter:     () => getNav()?.classList.add('nav--dark'),
-    onLeaveBack: () => getNav()?.classList.remove('nav--dark'),
+    onLeaveBack: () => getNav()?.classList.add('nav--dark'),
   });
 
 
