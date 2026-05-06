@@ -995,7 +995,7 @@ p { margin: 0; }
 .gallery-header__desc {
   text-align: right;
   flex-shrink: 0;
-  max-width: 36ch;
+  max-width: 20vw;
 }
 
 /* Two-column masonry grid */
@@ -1654,6 +1654,7 @@ p { margin: 0; }
 
 .social-subtitle {
   text-align: right;
+  max-width: 20vw;
 }
 
 .social-grid {
@@ -2013,6 +2014,8 @@ p { margin: 0; }
   width: 100%;
   color: var(--color-text-on-dark);
   box-sizing: border-box;
+  transform-origin: center;
+  will-change: transform, opacity;
 }
 .footer-info-item {
   display: flex;

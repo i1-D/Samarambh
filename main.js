@@ -1265,21 +1265,40 @@ document.addEventListener('DOMContentLoaded', () => {
     tl.addLabel('heading', '-=0.1');
     tl.fromTo(headingWords,
       { y: '100%' },
-      { y: '0%', duration: 0.7, stagger: 0.035 },
+      { y: '0%', duration: 0.45, stagger: 0.025 },
       'heading'
     );
     if (sig) {
       tl.fromTo(sig,
         { opacity: 0 },
-        { opacity: 1, duration: 0.9 },
+        { opacity: 1, duration: 0.6 },
         'heading'
       );
     }
     tl.fromTo(cta,
       { y: 20, opacity: 0 },
-      { y: 0, opacity: 1, duration: 0.6 },
-      '-=0.2'
+      { y: 0, opacity: 1, duration: 0.4 },
+      '-=0.1'
     );
+
+    const info = document.querySelector('.footer-info');
+    if (info) {
+      gsap.fromTo(info,
+        { scaleY: 0, opacity: 0 },
+        {
+          scaleY: 1,
+          opacity: 1,
+          duration: 0.8,
+          ease: 'power3.out',
+          transformOrigin: 'center center',
+          scrollTrigger: {
+            trigger: info,
+            start: 'top 90%',
+            toggleActions: 'play none none none',
+          },
+        }
+      );
+    }
   }, { once: true });
 
   // ─── 7b. Heading block reveal (.reveal-heading) ──────
