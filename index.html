@@ -482,7 +482,7 @@
 
       <!-- Video + 4 cream cover panels -->
       <div class="exp-video-wrap">
-        <video preload="metadata" autoplay muted loop playsinline>
+        <video preload="metadata" autoplay muted loop playsinline controls>
           <source src="images/experience-video.mp4" type="video/mp4">
         </video>
         <div class="exp-cover exp-cover--top"></div>
@@ -508,7 +508,9 @@
 
     <!-- Heading — normal flow, scrolls away -->
     <div class="svc-heading">
-      <h2 class="svc-title">Every Detail,<br><em>Thoughtfully Arranged</em></h2>
+      <div class="heading-reveal-wrap reveal-heading">
+        <h2 class="svc-title section-heading">Every Detail, <em>Thoughtfully Arranged</em></h2>
+      </div>
     </div>
 
     <!-- Sticky cards wrap -->
@@ -574,11 +576,13 @@
 
     <div class="section-header">
       <div class="section-title-block">
-        <h2>
-          Everything You Need to <em>Know</em>
-        </h2>
+        <div class="heading-reveal-wrap reveal-heading">
+          <h2 class="section-heading">
+            Everything You Need to <em>Know</em>
+          </h2>
+        </div>
       </div>
-      <p class="section-desc reveal-fade-delay">Policies, facilities, and logistics — so you can&#10;focus on the celebration, not the paperwork.</p>
+      <p class="section-desc section-subheading reveal-words">Policies, facilities, and logistics — so you can&#10;focus on the celebration, not the paperwork.</p>
     </div>
 
     <!-- Stats row -->
@@ -689,8 +693,10 @@
 
     <!-- Left — sticky heading -->
     <div class="rv-left">
-      <h2 class="rv-heading">Moments worth <br><em>Talking about</em></h2>
-      <p class="rv-sub">Behind every review is a celebration we poured ourselves into. These words mean everything to us.</p>
+      <div class="heading-reveal-wrap reveal-heading">
+        <h2 class="rv-heading section-heading">Moments worth <br><em>Talking about</em></h2>
+      </div>
+      <p class="rv-sub section-subheading reveal-words">Behind every review is a celebration we poured ourselves into. These words mean everything to us.</p>
     </div>
 
     <!-- Right — scrolling cards (desktop: clipped viewport scrubs upward; mobile: Swiper slider) -->
@@ -799,12 +805,15 @@
         referrerpolicy="no-referrer-when-downgrade"
         title="Samarambh Lawn and Banquets location"
       ></iframe>
+      <div class="map-overlay" onclick="style.pointerEvents='none'"></div>
     </div>
 
     <!-- Contact content -->
     <div class="find-us-content">
       <div class="find-us-title">
-        <h2 class="reveal-text">In the Heart of<br><em>Thane, Mumbai</em></h2>
+        <div class="heading-reveal-wrap reveal-heading">
+          <h2 class="section-heading">In the Heart of<br><em>Thane, Mumbai</em></h2>
+        </div>
       </div>
 
       <div class="contact-list">
@@ -845,10 +854,12 @@
 
     <!-- Header: title left, description right -->
     <div class="gallery-header">
-      <h2 class="reveal-text gallery-header__title">
-        Where Moments <em>Come Alive</em>
-      </h2>
-      <p class="gallery-header__desc reveal-fade-delay">
+      <div class="heading-reveal-wrap reveal-heading">
+        <h2 class="gallery-header__title section-heading">
+          Where Moments <em>Come Alive</em>
+        </h2>
+      </div>
+      <p class="gallery-header__desc section-subheading reveal-words">
         Every photograph tells the story of a celebration<br>
         we had the honour of hosting.
       </p>
@@ -914,8 +925,10 @@
   <section class="faq-section" id="faq">
 
       <div class="faq-left">
-        <h2 class="faq-heading">Everything You<br>Need to Know</h2>
-        <p class="faq-subtext">Still have questions? Our team is available 7 days a week to guide you through every detail.</p>
+        <div class="heading-reveal-wrap reveal-heading">
+          <h2 class="faq-heading section-heading">Everything You<br>Need to Know</h2>
+        </div>
+        <p class="faq-subtext section-subheading reveal-words">Still have questions? Our team is available 7 days a week to guide you through every detail.</p>
       </div>
 
       <div class="faq-right">
@@ -1089,8 +1102,10 @@
        ═══════════════════════════════════════════════════ -->
   <section class="social-section" id="social">
     <div class="social-header">
-      <h2 class="social-title">Follow Our <em>Story</em></h2>
-      <p class="social-subtitle">Every frame, a memory. Every reel,<br>a celebration waiting to be yours.</p>
+      <div class="heading-reveal-wrap reveal-heading">
+        <h2 class="social-title section-heading">Follow Our <em>Story</em></h2>
+      </div>
+      <p class="social-subtitle section-subheading reveal-words">Every frame, a memory. Every reel,<br>a celebration waiting to be yours.</p>
     </div>
     <div class="social-grid">
       <!-- Col 1 (odd) -->

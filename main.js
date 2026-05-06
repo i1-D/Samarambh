@@ -576,10 +576,11 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
 
-  // ─── Experience Section — 4 discrete reveal stops ────
+  // ─── Experience Section — 3 discrete reveal stops ────
   // Desktop (>900px): wheel-driven. Mobile (≤900px): touch-driven.
   const expSection = document.querySelector('.experience-section');
   if (expSection && window.innerWidth > 900) {
+    const expVideo = expSection.querySelector('video');
     const line1  = expSection.querySelector('.exp-line--1');
     const line2  = expSection.querySelector('.exp-line--2');
     const cvTop  = expSection.querySelector('.exp-cover--top');
@@ -588,13 +589,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const cvRt   = expSection.querySelector('.exp-cover--right');
 
     const STATES = [
-      { h: 50,    w: 50    },  // 0: fully covered, text in place
-      { h: 45, w: 45 },  // 1: 5% visible — text nudges slightly
-      { h: 25.00, w: 25.00 },  // 2: 25% visible
-      { h: 11.27, w: 11.27 },  // 3: 60% visible
-      { h: 0,     w: 0     },  // 4: 100% revealed
+      { h: 50,    w: 50    },   // 0: fully covered
+      { h: 43.00, w: 43.75 },   // 1: 15% revealed
+      { h: 26.67, w: 29.17 },   // 2: 50% revealed
+      { h: 3.333, w: 0 },       // 3: 100% revealed — left/right fully open, top/bottom at padding edge
     ];
-    const TOTAL = 4;
+    const TOTAL = 3;
     let stopIdx    = 0;
     let isAnimating = false;
     let expActive   = false;
@@ -705,11 +705,12 @@ document.addEventListener('DOMContentLoaded', () => {
       pin: true,
       pinSpacing: true,
       invalidateOnRefresh: true,
-      onEnter:     () => { expActive = true;  },
-      onLeave:     () => { expActive = false; },
-      onEnterBack: () => { expActive = true;  },
+      onEnter:     () => { expActive = true;  expVideo?.play(); },
+      onLeave:     () => { expActive = false; expVideo?.pause(); },
+      onEnterBack: () => { expActive = true;  expVideo?.play(); },
       onLeaveBack: () => {
         expActive = false;
+        expVideo?.pause();
         // Hard-reset covers instantly when scrolling back above section
         if (lerpTicker) { gsap.ticker.remove(lerpTicker); lerpTicker = null; }
         curH = 50; curW = 50; tgtH = 50; tgtW = 50;
@@ -761,6 +762,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   } else if (expSection) {
     // ─── Experience Section — Mobile (≤900px) ─────────
+    const expVideo = expSection.querySelector('video');
     const line1  = expSection.querySelector('.exp-line--1');
     const line2  = expSection.querySelector('.exp-line--2');
     const cvTop  = expSection.querySelector('.exp-cover--top');
@@ -769,13 +771,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const cvRt   = expSection.querySelector('.exp-cover--right');
 
     const STATES = [
-      { h: 50,    w: 50    },
-      { h: 45,    w: 45    },
-      { h: 25.00, w: 25.00 },
-      { h: 11.27, w: 11.27 },
-      { h: 0,     w: 0     },
+      { h: 50,    w: 50    },   // 0: fully covered
+      { h: 43.00, w: 43.75 },   // 1: 15% revealed
+      { h: 26.67, w: 29.17 },   // 2: 50% revealed
+      { h: 3.333, w: 0 },       // 3: 100% revealed — left/right fully open, top/bottom at padding edge
     ];
-    const TOTAL = 4;
+    const TOTAL = 3;
     let stopIdx     = 0;
     let isAnimating = false;
     let expActive   = false;
@@ -866,11 +867,12 @@ document.addEventListener('DOMContentLoaded', () => {
       pin: true,
       pinSpacing: true,
       invalidateOnRefresh: true,
-      onEnter:     () => { expActive = true;  },
-      onLeave:     () => { expActive = false; },
-      onEnterBack: () => { expActive = true;  },
+      onEnter:     () => { expActive = true;  expVideo?.play(); },
+      onLeave:     () => { expActive = false; expVideo?.pause(); },
+      onEnterBack: () => { expActive = true;  expVideo?.play(); },
       onLeaveBack: () => {
         expActive = false;
+        expVideo?.pause();
         if (lerpTicker) { gsap.ticker.remove(lerpTicker); lerpTicker = null; }
         curH = 50; curW = 50; tgtH = 50; tgtW = 50;
         gsap.set([cvTop, cvBot], { height: '50%' });
@@ -982,6 +984,20 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+
+  // ─── 7a. Word-split DOM prep ─────────────────────────
+  // DOM mutation must happen early so layout is correct when pins are set up.
+  function splitWords(el) {
+    if (el.dataset.wordsSplit) return;
+    el.dataset.wordsSplit = '1';
+    const rawHTML = el.innerHTML.replace(/&#10;/g, '<br>');
+    el.innerHTML = rawHTML.replace(
+      /([^\s<>]+)/g,
+      '<div class="word-line"><span class="word">$1</span></div>'
+    );
+  }
+
+  gsap.utils.toArray('.reveal-words').forEach(el => splitWords(el));
 
   // ─── 7. Text Reveal with GSAP ScrollTrigger ──────────
   // Replaces IntersectionObserver (unreliable with Lenis).
@@ -1207,6 +1223,97 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     }, { once: true });
   }
+
+  // ─── Footer reveal — async-injected, must wait for load ─
+  window.addEventListener('load', () => {
+    const footerInner = document.querySelector('.footer-inner');
+    if (!footerInner) return;
+
+    footerInner.querySelectorAll('.footer-heading-line').forEach(el => splitWords(el));
+
+    const star         = footerInner.querySelector('.footer-decoration-star');
+    const lines        = footerInner.querySelectorAll('.footer-decoration-line');
+    const headingWords = footerInner.querySelectorAll('.footer-heading-line .word');
+    const cta          = footerInner.querySelector('.footer-cta');
+    const sig          = document.querySelector('.footer-signature');
+
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: footerInner,
+        start: 'top 75%',
+        toggleActions: 'play none none none',
+      },
+      defaults: { ease: 'power3.out' },
+    });
+
+    tl.fromTo(star,
+      { scale: 0, opacity: 0 },
+      { scale: 1, opacity: 1, duration: 0.5, ease: 'back.out(1.7)' }
+    );
+    tl.fromTo(lines,
+      { scaleX: 0 },
+      { scaleX: 1, duration: 0.5, transformOrigin: 'center center' },
+      '-=0.1'
+    );
+    tl.addLabel('heading', '-=0.1');
+    tl.fromTo(headingWords,
+      { y: '100%' },
+      { y: '0%', duration: 0.7, stagger: 0.035 },
+      'heading'
+    );
+    if (sig) {
+      tl.fromTo(sig,
+        { opacity: 0 },
+        { opacity: 1, duration: 0.9 },
+        'heading'
+      );
+    }
+    tl.fromTo(cta,
+      { y: 20, opacity: 0 },
+      { y: 0, opacity: 1, duration: 0.6 },
+      '-=0.2'
+    );
+  }, { once: true });
+
+  // ─── 7b. Heading block reveal (.reveal-heading) ──────
+  // Registered here — after all pin spacers — so scroll positions are accurate.
+  gsap.utils.toArray('.reveal-heading').forEach(el => {
+    const triggerEl = el.querySelector('h2') || el;
+    gsap.fromTo(el,
+      { y: 40, opacity: 0 },
+      {
+        y: 0,
+        opacity: 1,
+        duration: 1,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: triggerEl,
+          start: 'top 85%',
+          toggleActions: 'play none none none',
+        },
+      }
+    );
+  });
+
+  // ─── 7c. Word slide-up (.reveal-words) ───────────────
+  gsap.utils.toArray('.reveal-words').forEach(el => {
+    const words = el.querySelectorAll('.word');
+    if (!words.length) return;
+    gsap.fromTo(words,
+      { y: '100%' },
+      {
+        y: '0%',
+        duration: 0.75,
+        ease: 'power3.out',
+        stagger: 0.04,
+        scrollTrigger: {
+          trigger: el,
+          start: 'top 85%',
+          toggleActions: 'play none none none',
+        },
+      }
+    );
+  });
 
   // Safety refresh — all pin spacers now in DOM; force recalculation of all trigger positions
   ScrollTrigger.refresh();
