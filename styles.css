@@ -1145,7 +1145,7 @@ p { margin: 0; }
   display: flex;
   flex-direction: column;
   gap: var(--sp-8);
-  padding: var(--sp-10) 0;
+  padding-right: var(--sp-9);
   height: 100%;
   justify-content: center;
 }
@@ -1215,6 +1215,76 @@ p { margin: 0; }
   line-height: 26px;
   color: var(--color-text-on-dark);
   white-space: pre-line;
+}
+
+/* ── Contact CTAs — circular icon buttons ── */
+.contact-ctas {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+}
+
+.contact-cta-btn {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  border: 1px solid rgba(250, 248, 240, 0.35);
+  color: var(--color-text-on-dark);
+  text-decoration: none;
+  overflow: hidden;
+  transition: border-color 0.4s ease, color 0.4s ease;
+}
+
+.contact-cta-btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--color-green-primary);
+  transform: translateY(100%);
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 50%;
+}
+
+.contact-cta-btn:hover::before {
+  transform: translateY(0);
+}
+
+.contact-cta-btn:hover {
+  border-color: var(--color-green-primary);
+  color: #fff;
+}
+
+.contact-cta-btn .material-symbols-outlined {
+  position: relative;
+  z-index: 1;
+  font-size: 22px;
+  line-height: 1;
+}
+
+.contact-cta-wa-icon {
+  position: relative;
+  z-index: 1;
+  width: 22px;
+  height: 22px;
+}
+
+.contact-cta-tip {
+  position: absolute;
+  bottom: -22px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--font-sans);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--color-text-on-dark);
+  white-space: nowrap;
+  opacity: 0.6;
 }
 
 
@@ -1854,6 +1924,83 @@ p { margin: 0; }
   transform: translateX(4px);
 }
 
+/* ── Floating Contact Button ── */
+.floating-contact-btn {
+  position: fixed;
+  bottom: 48px;
+  right: 48px;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 56px;
+  padding: 0 40px;
+  background: var(--color-gold-primary);
+  color: #FFFFFF;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 1.5px;
+  text-decoration: none;
+  text-transform: uppercase;
+  overflow: hidden;
+  box-shadow: 0 100px 80px 0 rgba(56, 56, 56, 0.10), 0 64.815px 46.852px 0 rgba(56, 56, 56, 0.08), 0 38.519px 25.481px 0 rgba(56, 56, 56, 0.06), 0 20px 13px 0 rgba(56, 56, 56, 0.05), 0 8.148px 6.519px 0 rgba(56, 56, 56, 0.04), 0 1.852px 3.148px 0 rgba(56, 56, 56, 0.02);
+  transition: background 0.3s ease, color 0.3s ease, transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.floating-contact-btn--hidden {
+  transform: translateX(calc(100% + 64px));
+}
+
+.floating-contact-btn:hover {
+  background: var(--color-green-primary);
+  color: #fff;
+}
+
+.floating-contact-label {
+  position: relative;
+  display: inline-flex;
+  flex-direction: column;
+  overflow: hidden;
+  height: 1em;
+  line-height: 1em;
+  width: 100px;
+  white-space: nowrap;
+}
+
+.floating-contact-label::before {
+  content: attr(data-text);
+  display: block;
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.floating-contact-label::after {
+  content: attr(data-hover);
+  display: block;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.floating-contact-btn:hover .floating-contact-label::before,
+.floating-contact-btn:hover .floating-contact-label::after {
+  transform: translateY(-100%);
+}
+
+.floating-contact-arrow {
+  font-size: 20px;
+  line-height: 1em;
+  padding-bottom: 4px;
+  display: inline-block;
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.floating-contact-btn:hover .floating-contact-arrow {
+  transform: translateX(4px);
+}
+
 .footer-info {
   flex-shrink: 0;
   display: flex;
@@ -1905,6 +2052,7 @@ p { margin: 0; }
   padding: 0 64px;
   width: 100%;
   overflow: hidden;
+  opacity: 0;
   box-sizing: border-box;
 }
 .footer-signature-logo {

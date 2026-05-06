@@ -72,7 +72,14 @@ document.addEventListener('DOMContentLoaded', () => {
             const nav = getNav();
             // On mobile the bar lives at the bottom — keep it hidden while hero is in view
             if (window.innerWidth > 600) nav?.classList.remove('hero-nav--hidden');
-            nav?.classList.remove('nav--dark');
+            // Set initial nav mode based on current scroll position (handles mid-page reloads)
+            const heroSection = document.querySelector('.hero-section');
+            const heroBottom = heroSection ? heroSection.getBoundingClientRect().bottom : 0;
+            if (heroBottom <= 0) {
+              nav?.classList.add('nav--dark');
+            } else {
+              nav?.classList.remove('nav--dark');
+            }
           });
         });
       },
@@ -1314,6 +1321,24 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     );
   });
+
+  // ─── Floating Contact Button — hide during hero and footer ───────────────
+  const floatingBtn = document.querySelector('.floating-contact-btn');
+  if (floatingBtn) {
+    floatingBtn.classList.add('floating-contact-btn--hidden');
+
+    let cachedFooter = null;
+
+    lenis.on('scroll', () => {
+      const inHero = heroST && heroST.isActive;
+
+      if (!cachedFooter) cachedFooter = document.querySelector('.site-footer');
+      const footerRect = cachedFooter ? cachedFooter.getBoundingClientRect() : null;
+      const inFooter = footerRect && footerRect.top < window.innerHeight;
+
+      floatingBtn.classList.toggle('floating-contact-btn--hidden', inHero || inFooter);
+    });
+  }
 
   // Safety refresh — all pin spacers now in DOM; force recalculation of all trigger positions
   ScrollTrigger.refresh();
