@@ -1281,24 +1281,6 @@ document.addEventListener('DOMContentLoaded', () => {
       '-=0.1'
     );
 
-    const info = document.querySelector('.footer-info');
-    if (info) {
-      gsap.fromTo(info,
-        { scaleY: 0, opacity: 0 },
-        {
-          scaleY: 1,
-          opacity: 1,
-          duration: 0.8,
-          ease: 'power3.out',
-          transformOrigin: 'center center',
-          scrollTrigger: {
-            trigger: info,
-            start: 'top 90%',
-            toggleActions: 'play none none none',
-          },
-        }
-      );
-    }
   }, { once: true });
 
   // ─── 7b. Heading block reveal (.reveal-heading) ──────

@@ -2001,6 +2001,12 @@ p { margin: 0; }
   transform: translateX(4px);
 }
 
+.floating-contact-icon {
+  display: none;
+  font-size: 22px;
+  line-height: 1;
+}
+
 .footer-info {
   flex-shrink: 0;
   display: flex;
@@ -3144,6 +3150,26 @@ p { margin: 0; }
 
   .nav-hamburger {
     display: flex;
+  }
+
+  /* — Floating contact — */
+  .floating-contact-btn {
+    bottom: 90px;
+    right: 20px;
+    width: 52px;
+    height: 52px;
+    padding: 0;
+    border-radius: 50%;
+    justify-content: center;
+  }
+  .floating-contact-label {
+    display: none;
+  }
+  .floating-contact-icon {
+    display: block;
+  }
+  .floating-contact-btn--hidden {
+    transform: translateX(calc(100% + 28px));
   }
 
   /* — Hero — */
