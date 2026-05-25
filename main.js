@@ -1242,7 +1242,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const lines        = footerInner.querySelectorAll('.footer-decoration-line');
     const headingWords = footerInner.querySelectorAll('.footer-heading-line .word');
     const cta          = footerInner.querySelector('.footer-cta');
-    const sig          = document.querySelector('.footer-signature');
 
     const tl = gsap.timeline({
       scrollTrigger: {
@@ -1268,13 +1267,6 @@ document.addEventListener('DOMContentLoaded', () => {
       { y: '0%', duration: 0.45, stagger: 0.025 },
       'heading'
     );
-    if (sig) {
-      tl.fromTo(sig,
-        { opacity: 0 },
-        { opacity: 1, duration: 0.6 },
-        'heading'
-      );
-    }
     tl.fromTo(cta,
       { y: 20, opacity: 0 },
       { y: 0, opacity: 1, duration: 0.4 },
