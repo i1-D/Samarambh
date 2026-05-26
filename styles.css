@@ -887,12 +887,26 @@ p { margin: 0; }
 
 .svc-section {
   background: var(--color-bg);
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 /* Heading — normal flow, scrolls away */
 .svc-heading {
-  padding: var(--sp-10) var(--sp-11) var(--sp-9);
+  flex-shrink: 0;
+  padding: var(--sp-8) var(--sp-11);
   text-align: center;
+}
+
+.svc-body {
+  flex: 1;
+  overflow: hidden;
+  height: 100%;
+}
+
+.svc-cards-wrap {
+  will-change: transform;
 }
 
 .svc-title {
@@ -2077,100 +2091,6 @@ p { margin: 0; }
    INFO & AMENITIES SECTION
    ═══════════════════════════════════════════════════════ */
 
-.amenities-section {
-  background: var(--color-gold-cream);
-  padding: var(--sp-10) var(--sp-11);
-  display: flex;
-  flex-direction: column;
-  gap: var(--sp-7);
-}
-
-/* Stats row */
-.amenities-stats {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  text-align: center;
-}
-.amenity-stat {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: center;
-  flex: 1;
-  padding: var(--sp-2) var(--sp-5);
-}
-.amenity-stat-number {
-  font-family: var(--font-sans);
-  font-size: clamp(48px, 4vw, 72px);
-  font-weight: 600;
-  color: var(--color-green-primary);
-  letter-spacing: -0.5px;
-  line-height: 1.4;
-}
-.amenity-stat-label {
-  font-family: var(--font-sans);
-  font-size: clamp(14px, 1vw, 20px);
-  font-weight: 500;
-  color: var(--color-text-primary);
-  line-height: 1.4;
-}
-
-/* Cards grid */
-.amenities-grid {
-  display: flex;
-  flex-direction: column;
-  gap: var(--sp-7);
-}
-.amenities-row {
-  display: flex;
-  align-items: stretch;
-  justify-content: space-between;
-}
-.amenity-card {
-  flex: 1;
-  border-left: 1px solid var(--color-green-light);
-  padding: var(--sp-5);
-  display: flex;
-  flex-direction: column;
-  gap: var(--sp-4);
-}
-
-/* Pill heading */
-.amenity-card-pill-head {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid var(--color-green-primary);
-  border-radius: 120px;
-  padding: 8px 16px;
-  align-self: flex-start;
-}
-.amenity-card-pill-head h3 {
-  font-family: var(--font-sans);
-  font-size: clamp(14px, 1vw, 20px);
-  font-weight: 600;
-  color: var(--color-green-primary);
-  line-height: 1.36;
-  white-space: nowrap;
-}
-
-/* List items */
-.amenity-list {
-  list-style: disc;
-  padding-left: 22px;
-  display: flex;
-  flex-direction: column;
-  gap: var(--sp-4);
-}
-.amenity-list li {
-  font-family: var(--font-sans);
-  font-size: clamp(14px, 1vw, 16px);
-  font-weight: 400;
-  line-height: 1.6;
-  color: var(--color-text-primary);
-}
-
 
 /* ─────────────────────────────────────────────────────── */
 
@@ -2827,6 +2747,13 @@ p { margin: 0; }
   .gp-pin-cell--landscape { height: 12.625vw; }
 }
 
+@media (max-width: 1600px) {
+
+  .social-grid {
+    max-height: 200vh;
+  }
+}
+
 
 /* ═══════════════════════════════════════════════════════
    RESPONSIVE — 1360px (large tablet / small desktop)
@@ -2840,6 +2767,10 @@ p { margin: 0; }
   .svc-card-img {
     width: 22vw;
     height: 14vw;
+  }
+
+  .social-grid {
+    max-height: 100vh;
   }
 }
 
@@ -2935,6 +2866,16 @@ p { margin: 0; }
   .gp-pin-cell--landscape { height: 15.556vw; }
 
   /* — Services — */
+  .svc-section {
+    height: auto;
+    overflow: visible;
+  }
+
+  .svc-body {
+    overflow: visible;
+    height: auto;
+  }
+
   .svc-card-inner {
     flex-wrap: wrap;
     gap: var(--sp-4);
@@ -3021,13 +2962,8 @@ p { margin: 0; }
     aspect-ratio: 4 / 3;
   }
 
-  /* — Amenities — */
-  .amenities-row {
-    flex-wrap: wrap;
-    gap: var(--sp-4);
-  }
-  .amenity-card {
-    flex: 0 0 calc(50% - var(--sp-4) / 2);
+  .social-grid {
+    max-height: 76vh;
   }
 
   /* — Footer — */
@@ -3275,37 +3211,6 @@ p { margin: 0; }
     margin: 0;
   }
 
-  /* — Amenities — */
-
-  .amenities-section {
-    padding: var(--sp-8) var(--sp-5);
-    gap: var(--sp-6);
-  }
-
-  .amenities-section .section-title-block h2 br {
-    display: none;
-  }
-
-  .amenities-section .section-header {
-    flex-direction: column;
-    gap: var(--sp-2);
-    align-items: flex-start;
-  }
-
-  .amenities-section .section-desc {
-    text-align: left;
-    line-height: 1.5;
-  }
-
-  .amenities-section .section-title-block h2 {
-    white-space: nowrap;
-  }
-
-  .amenities-stats {
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-
   /* — Gallery index preview — */
 
   .gallery-section {
@@ -3487,7 +3392,7 @@ p { margin: 0; }
     overflow: hidden;
     margin-left: -16px;
     margin-right: -16px;
-    max-height: 90vh;
+    max-height: 110vh;
   }
 
   .social-col {
@@ -3535,23 +3440,6 @@ p { margin: 0; }
 
   .faq-answer {
     font-size: 16px;
-  }
-
-  /* — Amenities — */
-  .amenities-row {
-    flex-direction: column;
-    gap: var(--sp-4);
-  }
-  .amenity-card {
-    flex: none;
-    width: 100%;
-  }
-  .amenities-stats {
-    gap: var(--sp-4);
-  }
-  .amenity-stat {
-    align-items: center;
-    padding: 0;
   }
 
   .section-subtitle {

@@ -968,27 +968,29 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
 
-  // ─── 6. Services — Scroll-Triggered Card Reveal ──────
-  const svcCards = gsap.utils.toArray('.svc-card');
-  if (svcCards.length && window.innerWidth > 900) {
-    gsap.set(svcCards[0], { zIndex: 3 });
-    gsap.set(svcCards[1], { opacity: 0, y: -480, zIndex: 2 });
-    gsap.set(svcCards[2], { opacity: 0, y: -480, zIndex: 1 });
+  // ─── 6. Services — Pin section, scrub cards upward ──────
+  if (window.innerWidth > 900) {
+    const svcSection = document.querySelector('.svc-section');
+    if (svcSection) {
+      const svcWrap = svcSection.querySelector('.svc-cards-wrap');
+      const svcHeading = svcSection.querySelector('.svc-heading');
 
-    svcCards.slice(1).forEach(card => {
-      gsap.to(card, {
-        opacity: 1,
-        y: 0,
-        ease: 'power2.out',
-        scrollTrigger: {
-          trigger: card,
-          start: 'top 20%',
-          end: 'top 100%',
-          scrub: 2,
-          invalidateOnRefresh: true,
-        },
+      const svcTl = gsap.timeline({ paused: true });
+      svcTl.to(svcWrap, {
+        y: () => -(svcWrap.scrollHeight - (svcSection.offsetHeight - svcHeading.offsetHeight)),
+        ease: 'none',
       });
-    });
+
+      ScrollTrigger.create({
+        trigger: svcSection,
+        start: 'top top',
+        end: () => `+=${svcWrap.scrollHeight - (svcSection.offsetHeight - svcHeading.offsetHeight)}`,
+        pin: true,
+        scrub: 1,
+        animation: svcTl,
+        invalidateOnRefresh: true,
+      });
+    }
   }
 
 
@@ -1071,10 +1073,10 @@ document.addEventListener('DOMContentLoaded', () => {
     onEnterBack: () => getNav()?.classList.add('nav--dark'),
   });
 
-  // Services, amenities, reviews — all light-bg sections needing dark nav.
+  // Services and reviews — light-bg sections needing dark nav.
   // Each trigger explicitly adds nav--dark on both enter directions so
   // scrolling back up through these sections never reverts to light text.
-  ['.svc-section', '.amenities-section', '.rv-section'].forEach(sel => {
+  ['.svc-section', '.rv-section'].forEach(sel => {
     ScrollTrigger.create({
       trigger: sel,
       start: 'top top',
@@ -1084,7 +1086,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // Gallery and beyond — keep dark nav; do NOT remove on leave-back because
-  // reviews/amenities/services above also need dark nav (handled above).
+  // reviews/services above also need dark nav (handled above).
   ScrollTrigger.create({
     trigger: '.gallery-section',
     start: 'top top',
