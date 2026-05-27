@@ -1127,15 +1127,15 @@ p { margin: 0; }
   min-height: 100vh;
   overflow: hidden;
   gap: var(--sp-10);
+  padding: 0 var(--sp-11);
 }
 
 .find-us-map {
   position: relative;
   width: 60%;
-  height: 100vh;
+  height: 80vh;
   flex-shrink: 0;
   overflow: hidden;
-  padding: var(--sp-4);
 }
 
 .map-overlay {
@@ -1159,7 +1159,6 @@ p { margin: 0; }
   display: flex;
   flex-direction: column;
   gap: var(--sp-8);
-  padding-right: var(--sp-9);
   height: 100%;
   justify-content: center;
 }
