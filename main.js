@@ -28,8 +28,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   gsap.to(loaderPaths, {
     strokeDashoffset: 0,
-    duration: 1.2,
-    stagger: 0.07,
+    duration: 0.9,
+    stagger: 0.05,
     ease: 'power2.inOut',
     onComplete() {
       gsap.to(loaderPaths, {
@@ -46,18 +46,14 @@ document.addEventListener('DOMContentLoaded', () => {
   const counterObj = { val: 0 };
   gsap.to(counterObj, {
     val: 100,
-    duration: 2.6,
+    duration: 2.0,
     ease: 'power1.inOut',
     onUpdate() {
       counterEl.textContent = Math.round(counterObj.val);
     },
   });
 
-  // Exit: left slides left, right slides right — after ≥3s AND video loaded
-  const heroVideo = document.querySelector('.hero-video-bg video');
-  let videoReady = heroVideo ? heroVideo.readyState >= 4 : true;
-  let timerDone  = false;
-
+  // Exit: left slides left, right slides right — after timer only (poster covers video gap)
   function exitLoader() {
     gsap.to('.loader-content', { opacity: 0, duration: 0.3, ease: 'power2.in' });
     gsap.to('.loader-left',  { x: '-100%', duration: 0.9, ease: 'power3.inOut', delay: 0.15 });
@@ -86,21 +82,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  function tryExit() {
-    if (videoReady && timerDone) exitLoader();
-  }
-
-  if (heroVideo) {
-    heroVideo.addEventListener('canplaythrough', () => {
-      videoReady = true;
-      tryExit();
-    }, { once: true });
-  }
-
-  setTimeout(() => {
-    timerDone = true;
-    tryExit();
-  }, 3000);
+  setTimeout(exitLoader, 2000);
 
 
   // ─── 1. GSAP Plugin Registration ────────────────────
