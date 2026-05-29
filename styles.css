@@ -382,7 +382,7 @@ p { margin: 0; }
 .hero-headline {
   text-align: center;
   font-family: var(--font-serif);
-  font-size: clamp(56px, 5vw, 90px);
+  font-size: clamp(48px, 4vw, 80px);
   font-weight: 300;
   line-height: 1.1;
   letter-spacing: -2.5px;
@@ -426,14 +426,14 @@ p { margin: 0; }
 
 .hero-stat-number {
   font-family: var(--font-serif);
-  font-size: clamp(80px, 9vw, 160px);
+  font-size: clamp(70px, 7vw, 140px);
   font-weight: 600;
   line-height: 1;
   color: #FFF;
 }
 
 .hero-stat-star {
-  font-size: clamp(40px, 4vw, 80px);
+  font-size: clamp(30px, 3vw, 60px);
 }
 
 .hero-stat-label {
@@ -448,7 +448,7 @@ p { margin: 0; }
 .hero-tagline {
   text-align: center;
   font-family: var(--font-serif);
-  font-size: clamp(48px, 5.5vw, 100px);
+  font-size: clamp(48px, 4vw, 70px);
   font-weight: 300;
   line-height: 1.8;
   letter-spacing: -2.5px;
@@ -2599,7 +2599,7 @@ p { margin: 0; }
 .exp-line {
   font-family: var(--font-serif);
   font-weight: 500;
-  font-size: clamp(36px, 5.2vw, 100px);
+  font-size: clamp(48px, 4vw, 80px);
   font-style: normal;
   line-height: 1.4;
   letter-spacing: -0.025em;

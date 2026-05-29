@@ -22,13 +22,44 @@
   <!-- Preload hero video -->
   <link rel="preload" as="video" href="images/hero-video.mp4" type="video/mp4">
 
-  <!-- Preconnect for fonts -->
+  <!-- Preconnect for fonts & CDN -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Infant:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500;1,600&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,300,1,0" />
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+
+  <!-- Async font loading — no render block -->
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Cormorant+Infant:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500;1,600&family=Outfit:wght@300;400;500;600&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Cormorant+Infant:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500;1,600&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet"></noscript>
+
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,300,1,0&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,300,1,0&display=swap"></noscript>
+
+  <!-- Async Swiper CSS — no render block -->
+  <link rel="preload" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"></noscript>
+
+  <!-- Critical CSS: tokens + reset + loader (above-the-fold, prevents FOUC) -->
+  <style>
+    :root{--color-bg:#FBF3E4;--color-gold-primary:#c9a84c;--color-text-primary:#2a2522;--color-text-on-dark:#faf8f0;--color-green-dark:#14452f;--color-green-primary:#1B5E3A;--color-warm-gray:#a89f90;--font-serif:'Cormorant Infant',serif;--font-sans:'Outfit',sans-serif;--fs-loader-counter:clamp(28px,4.167vw,60px);--ease-out:cubic-bezier(0.16,1,0.3,1);}
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    html{scroll-behavior:auto;overflow-x:hidden;}
+    body{background-color:var(--color-bg);color:var(--color-text-primary);font-family:var(--font-sans);overflow-x:hidden;-webkit-font-smoothing:antialiased;}
+    img{display:block;max-width:100%;}
+    a{text-decoration:none;color:inherit;}
+    ul{list-style:none;}
+    p{margin:0;}
+    .loader{position:fixed;inset:0;z-index:9999;}
+    .loader-panel{position:absolute;top:0;bottom:0;width:50%;background:var(--color-green-primary);}
+    .loader-left{left:0;}
+    .loader-right{right:0;}
+    .loader-content{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;gap:48px;z-index:1;white-space:nowrap;}
+    .loader-logo svg{width:713px;max-width:80vw;display:block;}
+    .loader-logo path{fill:transparent;stroke:white;stroke-width:0.5;}
+    .loader-counter{font-family:var(--font-sans);font-size:var(--fs-loader-counter);font-weight:400;color:white;letter-spacing:-0.5px;text-align:center;line-height:1;}
+  </style>
+
   <link rel="stylesheet" href="styles.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
   <script type="module" src="components.js"></script>
 </head>
 <body>
