@@ -10,6 +10,45 @@ const lenis = new Lenis({
 gsap.ticker.add((time) => lenis.raf(time * 1000));
 gsap.ticker.lagSmoothing(500, 33);
 
+// ─── Hamburger / drawer ─────────────────────────────────
+(function initHamburger() {
+  let _nav = null, _drawer = null;
+  const getNav    = () => _nav    || (_nav    = document.querySelector('.hero-nav'));
+  const getDrawer = () => _drawer || (_drawer = document.querySelector('.nav-drawer'));
+
+  function openDrawer() {
+    const nav = getNav(), drawer = getDrawer();
+    if (!nav || !drawer) return;
+    nav.classList.add('nav--open');
+    drawer.classList.add('is-open');
+    nav.querySelector('.nav-hamburger')?.setAttribute('aria-expanded', 'true');
+    drawer.setAttribute('aria-hidden', 'false');
+    lenis.stop();
+  }
+
+  function closeDrawer() {
+    const nav = getNav(), drawer = getDrawer();
+    if (!nav || !drawer) return;
+    nav.classList.remove('nav--open');
+    drawer.classList.remove('is-open');
+    nav.querySelector('.nav-hamburger')?.setAttribute('aria-expanded', 'false');
+    drawer.setAttribute('aria-hidden', 'true');
+    lenis.start();
+  }
+
+  document.addEventListener('click', (e) => {
+    if (e.target.closest('.nav-hamburger')) {
+      getNav()?.classList.contains('nav--open') ? closeDrawer() : openDrawer();
+      return;
+    }
+    if (e.target.closest('.nav-drawer a')) closeDrawer();
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeDrawer();
+  });
+})();
+
 // ─── Hide nav when footer is in view ───────────────────
 (function initNavFooterHide() {
   const observer = new IntersectionObserver(

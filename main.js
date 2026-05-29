@@ -1204,6 +1204,9 @@ document.addEventListener('DOMContentLoaded', () => {
           slidesPerView: 1.2,
           spaceBetween: 16,
           grabCursor: true,
+          touchStartPreventDefault: false,
+          touchAngle: 30,
+          threshold: 10,
         });
       }
     };

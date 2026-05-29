@@ -1468,7 +1468,7 @@ p { margin: 0; }
   flex: 0 0 38%;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  justify-content: center;
   gap: var(--sp-5);
   padding: var(--sp-10) 0;
 }
@@ -3007,10 +3007,6 @@ p { margin: 0; }
     padding-left: calc(36px + clamp(16px, 2.5vw, 40px) + 200px + clamp(16px, 2.5vw, 40px));
   }
 
-  .vl-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
   /* — Experience section — mobile matches desktop pinned reveal — */
   .exp-sticky {
     height: 100vh;
@@ -3094,7 +3090,7 @@ p { margin: 0; }
 
   /* — Floating contact — */
   .floating-contact-btn {
-    bottom: 90px;
+    bottom: 12vh;
     right: 20px;
     width: 52px;
     height: 52px;
@@ -3157,7 +3153,7 @@ p { margin: 0; }
 
   /* — Venues — */
   .venues-sticky {
-    padding: var(--sp-6) var(--sp-5);
+    padding: var(--sp-6) var(--sp-5) 12vh;
     gap: 16px;
   }
 
@@ -3322,8 +3318,8 @@ p { margin: 0; }
   }
 
   .rv-card__img {
-    aspect-ratio: 4 / 3;
-    max-height: 280px;
+    aspect-ratio: 3 / 4;
+    max-height: none;
   }
 
   .rv-card__quote {
@@ -3493,17 +3489,54 @@ p { margin: 0; }
   }
 
   .vl-row__meta {
+    flex: 0 0 100%;
     min-width: 0;
-    width: 100%;
+  }
+
+  /* Header preview: wrap to 2 images per row */
+  .vl-row__header .vl-img-row {
+    flex: 0 0 100%;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .vl-row__header .vl-img-card {
+    flex: 0 0 calc(50% - 4px);
+    height: 28vw;
+  }
+
+  .vl-row__header .vl-img-card:nth-child(3) {
+    display: none;
   }
 
   .vl-row__body {
     padding-left: 0;
   }
 
+  /* Expanded grid: flatten vl-img-row wrappers so cards flow into 2-column grid */
   .vl-grid {
+    display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 8px;
+    padding-top: 8px;
+  }
+
+  .vl-grid .vl-img-row {
+    display: contents;
+  }
+
+  .vl-grid .vl-img-card {
+    height: 28vw;
+    flex: unset;
+  }
+
+  /* — Lightbox nav buttons: move to bottom alongside counter — */
+  .lb__nav {
+    top: auto;
+    transform: none;
+    bottom: 8px;
+    width: 44px;
+    height: 44px;
   }
 
   .exp-video-wrap {
@@ -3577,7 +3610,7 @@ p { margin: 0; }
 
   /* — Reviews — */
   .rv-card__img {
-    aspect-ratio: 1 / 1;
+    aspect-ratio: 3 / 4;
   }
 
   /* — FAQ — */
@@ -3620,6 +3653,11 @@ p { margin: 0; }
 
   .vl-grid {
     gap: 6px;
+  }
+
+  .vl-grid .vl-img-card,
+  .vl-row__header .vl-img-card {
+    height: 30vw;
   }
 }
 
