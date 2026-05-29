@@ -19,8 +19,8 @@
   <meta name="twitter:description" content="A premium wedding &amp; celebration venue with stunning lawns, elegant halls, in-house catering, and complete event management.">
   <meta name="twitter:image" content="https://i1-d.github.io/Samarambh/images/moments/wedding1.webp">
 
-  <!-- Preload hero video -->
-  <link rel="preload" as="video" href="images/hero-video.mp4" type="video/mp4">
+  <!-- Preload hero poster (LCP element) -->
+  <link rel="preload" as="image" href="images/hero-poster.jpg" fetchpriority="high">
 
   <!-- Preconnect for fonts & CDN -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -39,9 +39,9 @@
   <link rel="preload" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
   <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"></noscript>
 
-  <!-- Critical CSS: tokens + reset + loader (above-the-fold, prevents FOUC) -->
+  <!-- Critical CSS: tokens + reset + loader + hero + nav (above-the-fold, prevents FOUC) -->
   <style>
-    :root{--color-bg:#FBF3E4;--color-gold-primary:#c9a84c;--color-text-primary:#2a2522;--color-text-on-dark:#faf8f0;--color-green-dark:#14452f;--color-green-primary:#1B5E3A;--color-warm-gray:#a89f90;--font-serif:'Cormorant Infant',serif;--font-sans:'Outfit',sans-serif;--fs-loader-counter:clamp(28px,4.167vw,60px);--ease-out:cubic-bezier(0.16,1,0.3,1);}
+    :root{--color-bg:#FBF3E4;--color-gold-primary:#c9a84c;--color-text-primary:#2a2522;--color-text-on-dark:#faf8f0;--color-green-dark:#14452f;--color-green-primary:#1B5E3A;--color-green-medium:#2d7a4f;--color-warm-gray:#a89f90;--font-serif:'Cormorant Infant',serif;--font-sans:'Outfit',sans-serif;--fs-loader-counter:clamp(28px,4.167vw,60px);--ease-out:cubic-bezier(0.16,1,0.3,1);--sp-1:4px;--sp-2:8px;--sp-3:12px;--sp-4:16px;--sp-5:24px;--sp-6:32px;--sp-7:2.5vw;--sp-8:3.333vw;--sp-9:5vw;--sp-10:6.667vw;--sp-11:8.333vw;}
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
     html{scroll-behavior:auto;overflow-x:hidden;}
     body{background-color:var(--color-bg);color:var(--color-text-primary);font-family:var(--font-sans);overflow-x:hidden;-webkit-font-smoothing:antialiased;}
@@ -57,10 +57,61 @@
     .loader-logo svg{width:713px;max-width:80vw;display:block;}
     .loader-logo path{fill:transparent;stroke:white;stroke-width:0.5;}
     .loader-counter{font-family:var(--font-sans);font-size:var(--fs-loader-counter);font-weight:400;color:white;letter-spacing:-0.5px;text-align:center;line-height:1;}
+    /* Nav critical */
+    .hero-nav{position:fixed;left:0;right:0;display:flex;align-items:center;justify-content:space-between;padding:24px var(--sp-11);z-index:1000;pointer-events:none;border-bottom:1px solid #FFFFFF26;transition:transform 0.5s ease,border-color 0.4s ease;}
+    .hero-nav--hidden{transform:translateY(-100%);}
+    .hero-nav .nav-group{display:flex;gap:var(--sp-8);pointer-events:all;}
+    .hero-nav a{font-family:var(--font-sans);font-size:16px;font-weight:400;line-height:20px;color:var(--color-text-on-dark);white-space:nowrap;transition:ease 0.2s;}
+    .hero-nav a:hover{color:var(--color-green-medium);}
+    .hero-nav.nav--dark{border-bottom-color:rgba(42,37,34,0.15);}
+    .hero-nav.nav--dark a{color:var(--color-text-primary);}
+    .hero-nav.nav--dark a:hover{color:var(--color-green-medium);}
+    .nav-logo{position:absolute;left:50%;transform:translateX(-50%);pointer-events:none;transition:opacity 0.4s ease;}
+    .nav-logo--hidden{opacity:0;}
+    .nav-logo img{width:80px;display:block;}
+    /* Hero critical */
+    .hero-section{position:relative;height:100vh;}
+    .hero-video-bg{position:absolute;inset:0;z-index:0;}
+    .hero-video-bg:after{content:'';background-blend-mode:color-dodge;background:linear-gradient(111.45deg,rgba(26,26,26,0.4) 50%,rgba(26,26,26,0.4) 100%),url(images/noise.webp) repeat;inset:0;position:absolute;}
+    .hero-video-bg video{width:100%;height:100%;object-fit:cover;}
+    .hero-video-overlay{position:absolute;inset:0;background:linear-gradient(180deg,rgba(20,69,47,0.00) 10.56%,rgba(20,69,47,0.80) 95.31%);}
+    .hero-track{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;gap:var(--sp-9);padding:0 var(--sp-10) var(--sp-9);will-change:transform;}
+    .hero-logo{display:flex;justify-content:center;height:13vw;margin:40vh 0 25vh 0;}
+    .hero-logo img{width:100%;height:100%;opacity:0.8;}
+    .hero-headline{text-align:center;font-family:var(--font-serif);font-size:clamp(48px,4vw,80px);font-weight:300;line-height:1.1;letter-spacing:-2.5px;}
+    .hero-headline p{margin:0;background:linear-gradient(90deg,#FFFFFF 0%,#FFFFFF 60%,#C9A84C 100%);background-clip:text;-webkit-background-clip:text;-webkit-text-fill-color:transparent;padding:12px;}
+    .hero-headline em{font-style:italic;}
+    .hero-divider{width:2px;height:8.333vw;background:#FFFFFF;opacity:0.6;flex-shrink:0;}
+    .hero-stats{display:flex;flex-direction:column;width:100%;max-width:900px;gap:var(--sp-10);}
+    .hero-stat{display:flex;flex-direction:column;align-items:center;gap:var(--sp-2);}
+    .hero-stat-number{font-family:var(--font-serif);font-size:clamp(70px,7vw,140px);font-weight:600;line-height:1;color:#FFF;}
+    .hero-stat-star{font-size:clamp(30px,3vw,60px);}
+    .hero-stat-label{font-family:var(--font-sans);font-size:clamp(20px,1.5vw,32px);font-weight:300;line-height:1.2;letter-spacing:-0.5px;color:#FFF;}
+    .hero-tagline{text-align:center;font-family:var(--font-serif);font-size:clamp(48px,4vw,70px);font-weight:300;line-height:1.8;letter-spacing:-2.5px;background:linear-gradient(90deg,#FFFFFF 0%,#FFFFFF 60%,#C9A84C 100%);background-clip:text;-webkit-background-clip:text;-webkit-text-fill-color:transparent;padding:12px;}
+    .hero-tagline em{font-style:italic;}
+    @media(max-width:1024px){
+      .hero-nav{padding:var(--sp-3) var(--sp-5);}
+      .hero-nav .nav-group{gap:20px;}
+      .hero-nav a{font-size:14px;}
+      .hero-logo{height:auto;width:18vw;min-width:80px;}
+      .hero-headline{font-size:clamp(40px,5vw,72px);letter-spacing:-1.5px;}
+      .hero-tagline{font-size:clamp(36px,5vw,72px);letter-spacing:-1.5px;}
+      .hero-stats{flex-direction:row;justify-content:center;max-width:100%;}
+      .hero-stat-number{font-size:clamp(48px,6vw,96px);}
+      .hero-stat-label{font-size:clamp(13px,1.5vw,20px);}
+      .hero-divider{height:48px;}
+    }
+    @media(max-width:480px){
+      .hero-nav{top:auto;bottom:24px;left:24px;right:24px;padding:var(--sp-2) var(--sp-5);background:rgb(20 69 47/90%);box-shadow:0 100px 80px 0 rgba(56,56,56,0.10),0 64.815px 46.852px 0 rgba(56,56,56,0.08),0 38.519px 25.481px 0 rgba(56,56,56,0.06),0 20px 13px 0 rgba(56,56,56,0.05),0 8.148px 6.519px 0 rgba(56,56,56,0.04),0 1.852px 3.148px 0 rgba(56,56,56,0.02);border-bottom:none;backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);}
+      .hero-nav--hidden{transform:translateY(calc(100% + 24px));}
+      .hero-nav .nav-group{display:none;}
+      .nav-logo{position:static;transform:none;}
+      .nav-logo img{width:64px;}
+    }
   </style>
 
-  <link rel="stylesheet" href="styles.css">
-  <script type="module" src="components.js"></script>
+  <link rel="preload" href="styles.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="styles.css"></noscript>
 </head>
 <body>
 
@@ -92,7 +143,7 @@
   <section class="hero-section" id="hero">
     <!-- Background video -->
     <div class="hero-video-bg">
-      <video preload="metadata" autoplay muted loop playsinline>
+      <video preload="metadata" autoplay muted loop playsinline poster="images/hero-poster.jpg">
         <source src="images/hero-video.mp4" type="video/mp4">
       </video>
     </div>
@@ -1160,7 +1211,8 @@
   <div class="footer-curtain"></div>
   <div id="site-footer"></div>
 
-  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+  <script type="module" src="components.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
   <script type="module" src="main.js"></script>
 
   <!-- Floating Contact Button -->

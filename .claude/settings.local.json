@@ -50,7 +50,9 @@
       "Bash(node)",
       "Bash(awk -F: '$2 <= 3069 && $2 >= 3000')",
       "Bash(npx sharp-cli *)",
-      "Bash(git rm *)"
+      "Bash(git rm *)",
+      "Bash(ffmpeg -ss 00:00:06 -i /Users/ivandsouza/Documents/Samarambh/images/hero-video.mp4 -vframes 1 -q:v 5 -vf scale=1280:-1 -update 1 /Users/ivandsouza/Documents/Samarambh/images/hero-poster.jpg -y)",
+      "Bash(ffmpeg -ss 0 -i /Users/ivandsouza/Documents/Samarambh/images/hero-video.mp4 -vframes 1 -q:v 5 -vf scale=1280:-1 -update 1 /Users/ivandsouza/Documents/Samarambh/images/hero-poster.jpg -y)"
     ]
   }
 }
